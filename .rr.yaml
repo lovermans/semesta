@@ -4,13 +4,14 @@ rpc:
 server:
     command: 'php ./vendor/bin/roadrunner-worker'
     env:
-      - APP_ENV: 'local'
+      - APP_ENV: 'production'
       - APP_BASE_PATH: 'D:\pengembangan\semesta'
       - LARAVEL_OCTANE: '1'
 http:
     fcgi:
         address: tcp://0.0.0.0:9000
     address: '127.0.0.1:8000'
+    access_logs: false
     middleware: [ 'static' ]
     static:
         dir: 'public'
@@ -18,3 +19,8 @@ http:
         num_workers: 1
         supervisor:
             exec_ttl: 120s
+logs:
+    mode: off
+    level: debug
+    output: stdout
+    encoding: json
