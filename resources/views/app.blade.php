@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', $app->getLocale()) }}">
 
-	<head></head>
+	<head>
+
+	</head>
 
 	<body>
 
