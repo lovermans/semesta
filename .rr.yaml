@@ -12,7 +12,7 @@ http:
         address: tcp://0.0.0.0:9000
     address: '127.0.0.1:8000'
     access_logs: false
-    middleware: [ 'static' ]
+    middleware: [ 'sendfile', 'static' ]
     static:
         dir: 'public'
     pool:
