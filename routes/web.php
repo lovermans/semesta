@@ -3,9 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('app');
-});
+Route::view('/', 'start')->name('start');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
