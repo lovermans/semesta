@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'start')->name('start');
+Route::view('/need-javascript', 'need-javascript')->name('need-javascript');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -123,4 +123,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'author' => env('APP_AUTHOR', 'https://laravel.com'),
+    'publisher' => env('APP_PUBLISHER', 'https://laravel.com'),
+    'description' => env('APP_DESCRIPTION', 'Laravel'),
+    'organization' => env('APP_ORGANIZATION', 'Laravel'),
+    'valet_domain' => env('APP_VALET', 'laravel'),
+
 ];
