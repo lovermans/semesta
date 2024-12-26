@@ -1,0 +1,185 @@
+html {
+    /* block-size: 100%; */
+    color-scheme: light;
+
+    &[data-theme=dark] {
+        color-scheme: dark
+    }
+}
+
+@supports not (color-scheme: dark) {
+    html[data-theme=dark] {
+        background: #212121
+    }
+}
+
+/* 
+|   CSS Reset
+ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+body {
+    line-height: calc(1em + 0.5rem);
+    -webkit-font-smoothing: antialiased;
+    /* min-height: 100vh; */
+}
+
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: 1rem;
+}
+
+/*  
+ input,
+ button,
+ textarea,
+ select {
+     font: inherit;
+ }
+  */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+        scroll-behavior: smooth;
+        scroll-margin-top: 4rem;
+    }
+}
+
+/* 
+|   Theme Switch Button
+ */
+
+[data-theme="dark"] {
+    .sun-and-moon {
+        &>.sun {
+            transform: scale(1.75);
+        }
+
+        &>.sun-beams {
+            opacity: 0;
+        }
+
+        &>.moon>circle {
+            transform: translateX(-7px);
+        }
+    }
+}
+
+.sun-and-moon {
+    &> :is(.moon, .sun, .sun-beams) {
+        transform-origin: center center;
+    }
+
+    &> :is(.moon, .sun) {
+        fill: var(--icon-fill);
+    }
+
+    &>.sun-beams {
+        stroke: var(--icon-fill);
+        stroke-width: 2px;
+    }
+}
+
+.theme-toggle {
+    --size: 2rem;
+    --icon-fill: hsl(210 10% 30%);
+    --icon-fill-hover: hsl(210 10% 15%);
+    background: none;
+    border: none;
+    padding: 0;
+
+    inline-size: var(--size);
+    block-size: var(--size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    outline-offset: 5px;
+
+    &>svg {
+        inline-size: 100%;
+        block-size: 100%;
+        stroke-linecap: round;
+    }
+
+    [data-theme=dark] & {
+        --icon-fill: hsl(210 10% 70%);
+        --icon-fill-hover: hsl(210 15% 90%);
+    }
+
+    @media (hover: none) {
+        --size: 48px;
+    }
+}

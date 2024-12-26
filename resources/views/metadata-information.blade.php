@@ -44,4 +44,4 @@
 <link href="{{ $app->url->asset('/favicon.ico') }}" rel="icon" type="image/x-icon">
 <link href="{{ $app->url->asset('/favicon.svg') }}" rel="icon" type="image/svg+xml">
 
-<link href="{{ Vite::asset('resources/css/app.css') }}" rel="stylesheet">
+<link href="{{ Vite::asset('resources/css/main.css') }}" rel="stylesheet">

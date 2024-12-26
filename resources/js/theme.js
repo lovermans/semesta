@@ -1,5 +1,3 @@
-import.meta.glob(['../images/app-icon/**']);
-
 (() => {
     const storageKey = 'theme-preference'
 

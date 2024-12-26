@@ -16,7 +16,7 @@ http:
     static:
         dir: 'public'
     pool:
-        num_workers: 1
+        num_workers: 0
         supervisor:
             exec_ttl: 120s
 logs:
