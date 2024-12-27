@@ -40,7 +40,7 @@
     // set early so no page flashes / CSS is made aware
     reflectPreference()
 
-    window.onload = () => {
+    document.addEventListener("DOMContentLoaded", () => {
         // set on load so screen readers can see latest value on the button
         reflectPreference()
 
@@ -48,7 +48,7 @@
         document
             .querySelector('#theme-toggle')
             .addEventListener('click', onClick)
-    }
+    })
 
     // sync with system changes
     window

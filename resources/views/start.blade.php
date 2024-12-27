@@ -9,7 +9,7 @@
 		</noscript>
 
 		{{ Vite::withEntryPoints(['resources/js/theme.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
-		{{ Vite::withEntryPoints(['resources/js/websocket.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }}
+		{{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }}
 	</head>
 
 	<body>
