@@ -2,7 +2,7 @@
 <html dir="ltr" lang="{{ str_replace('_', '-', $app->getLocale()) }}">
 
 	<head>
-		@include('metadata-information')
+		@include('include-metadata')
 	</head>
 
 	<body>

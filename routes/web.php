@@ -3,8 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'start')->name('start');
-Route::view('/need-javascript', 'need-javascript')->name('need-javascript');
+Route::view('/', 'root')->name('root');
+Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

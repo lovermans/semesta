@@ -1,60 +1,54 @@
 (() => {
-    const storageKey = 'theme-preference'
+    const THEME_STORAGE_KEY = 'theme-preference';
 
-    const onClick = () => {
+    function saveThemePreference() {
         // flip current value
-        theme.value = theme.value === 'light'
-            ? 'dark'
-            : 'light'
+        theme.value = theme.value === 'light' ? 'dark' : 'light';
 
-        setPreference()
+        setThemePreference();
+    };
+
+    function getThemePreference() {
+        if (localStorage.getItem(THEME_STORAGE_KEY)) {
+            return localStorage.getItem(THEME_STORAGE_KEY)
+        }
+        else {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+    };
+
+    function setThemePreference() {
+        localStorage.setItem(THEME_STORAGE_KEY, theme.value);
+
+        reflectThemePreference();
     }
 
-    const getColorPreference = () => {
-        if (localStorage.getItem(storageKey))
-            return localStorage.getItem(storageKey)
-        else
-            return window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light'
+    function reflectThemePreference() {
+        document.firstElementChild.setAttribute('data-theme', theme.value);
+
+        document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
     }
 
-    const setPreference = () => {
-        localStorage.setItem(storageKey, theme.value)
-        reflectPreference()
-    }
-
-    const reflectPreference = () => {
-        document.firstElementChild
-            .setAttribute('data-theme', theme.value)
-
-        document
-            .querySelector('#theme-toggle')
-            ?.setAttribute('aria-label', theme.value)
-    }
-
-    const theme = {
-        value: getColorPreference(),
+    let theme = {
+        value: getThemePreference()
     }
 
     // set early so no page flashes / CSS is made aware
-    reflectPreference()
+    reflectThemePreference();
 
     document.addEventListener("DOMContentLoaded", () => {
         // set on load so screen readers can see latest value on the button
-        reflectPreference()
+        reflectThemePreference();
 
         // now this script can find and listen for clicks on the control
-        document
-            .querySelector('#theme-toggle')
-            .addEventListener('click', onClick)
+        document.querySelector('#theme-toggle').addEventListener('click', saveThemePreference);
     })
 
     // sync with system changes
-    window
-        .matchMedia('(prefers-color-scheme: dark)')
+    window.matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', ({ matches: isDark }) => {
-            theme.value = isDark ? 'dark' : 'light'
-            setPreference()
+            theme.value = isDark ? 'dark' : 'light';
+
+            setThemePreference();
         })
 })();
