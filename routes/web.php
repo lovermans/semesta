@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'root')->name('root');
 Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
+Route::get('/pwa-manifest.json', 'App\Http\Controllers\RootController@createPwaManifestJson')->name('pwa-manifest');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

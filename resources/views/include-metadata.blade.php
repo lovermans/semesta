@@ -36,12 +36,16 @@
 <link href="{{ Vite::asset('resources/images/app-icon/apple-icon-152x152.png') }}" rel="apple-touch-icon" sizes="152x152">
 <link href="{{ Vite::asset('resources/images/app-icon/apple-icon-180x180.png') }}" rel="apple-touch-icon" sizes="180x180">
 <link href="{{ Vite::asset('resources/images/app-icon/android-icon-192x192.png') }}" rel="icon" sizes="192x192" type="image/png">
+<link href="{{ Vite::asset('resources/images/app-icon/android-icon-512x512.png') }}" rel="icon" sizes="512x512" type="image/png">
 <link href="{{ Vite::asset('resources/images/app-icon/favicon-32x32.png') }}" rel="icon" sizes="32x32" type="image/png">
 <link href="{{ Vite::asset('resources/images/app-icon/favicon-96x96.png') }}" rel="icon" sizes="96x96" type="image/png">
 <link href="{{ Vite::asset('resources/images/app-icon/favicon-16x16.png') }}" rel="icon" sizes="16x16" type="image/png">
+<link href="{{ Vite::asset('resources/images/app-icon/android-icon-192x192.png') }}" rel="shortcut icon">
 <meta content="{{ Vite::asset('resources/images/app-icon/ms-icon-144x144.png') }}" name="msapplication-TileImage">
 
 <link href="{{ $app->url->asset('/favicon.ico') }}" rel="icon" type="image/x-icon">
 <link href="{{ $app->url->asset('/favicon.svg') }}" rel="icon" type="image/svg+xml">
+
+<link crossorigin="use-credentials" href="{{ $app->url->route('pwa-manifest') }}" rel="manifest">
 
 <link href="{{ Vite::asset('resources/css/main.css') }}" rel="stylesheet">
