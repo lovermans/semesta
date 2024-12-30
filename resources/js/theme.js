@@ -21,17 +21,17 @@
         localStorage.setItem(THEME_STORAGE_KEY, theme.value);
 
         reflectThemePreference();
-    }
+    };
 
     function reflectThemePreference() {
         document.firstElementChild.setAttribute('data-theme', theme.value);
 
         document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
-    }
+    };
 
     let theme = {
         value: getThemePreference()
-    }
+    };
 
     // set early so no page flashes / CSS is made aware
     reflectThemePreference();
@@ -42,13 +42,12 @@
 
         // now this script can find and listen for clicks on the control
         document.querySelector('#theme-toggle').addEventListener('click', saveThemePreference);
-    })
+    });
 
     // sync with system changes
-    window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', ({ matches: isDark }) => {
-            theme.value = isDark ? 'dark' : 'light';
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
+        theme.value = isDark ? 'dark' : 'light';
 
-            setThemePreference();
-        })
+        setThemePreference();
+    });
 })();

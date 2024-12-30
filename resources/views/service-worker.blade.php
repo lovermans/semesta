@@ -19,6 +19,8 @@ var resources = [
     "{{ Vite::asset('resources/images/app-icon/favicon-96x96.png') }}",
     "{{ Vite::asset('resources/images/app-icon/favicon-16x16.png') }}",
     "{{ Vite::asset('resources/images/app-icon/ms-icon-144x144.png') }}",
+    "{{ Vite::asset('resources/images/app-icon/maskable_icon_x192.png') }}",
+    "{{ Vite::asset('resources/images/app-icon/maskable_icon_x512.png') }}",
     "{{ $app->url->asset('/favicon.ico') }}",
     "{{ $app->url->asset('/favicon.svg') }}",
     "{{ Vite::asset('resources/css/main.css') }}",
@@ -39,15 +41,16 @@ async function onInstall(event) {
 };
 
 async function onActivate(event) {
-    caches.keys().then(function (cacheNames) {
-        return Promise.all(
-            cacheNames.map(function (cacheName) {
-                if (latestVersion.indexOf(cacheName) === -1) {
-                    return caches.delete(cacheName);
-                }
-            })
-        );
-    });
+    caches.keys()
+        .then(function (cacheNames) {
+            return Promise.all(
+                cacheNames.map(function (cacheName) {
+                    if (latestVersion.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        });
 };
 
 self.addEventListener('install', function (event) {

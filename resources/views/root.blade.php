@@ -15,7 +15,9 @@
 		</script>
 
 		{{-- {{ Vite::withEntryPoints(['resources/js/theme.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
-		{{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }}
+		{{-- {{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }} --}}
+
+		@stack('resources')
 	</head>
 
 	<body>
@@ -40,7 +42,55 @@
 		</button>
 		Hello World
 
-		{{-- @include('include-websocket') --}}
+		@yield('content')
+
+		<script type="module">
+			window.addEventListener('DOMContentLoaded', () => {
+				(() => {
+					if ('serviceWorker' in navigator &&
+						window.location.protocol === 'https:' &&
+						window.self == window.top &&
+						navigator.onLine
+					) {
+						let serviceWorkerUpdated = false;
+						let serviceWorkerActivated = false;
+
+						function checkServiceWorkerUpdateAndRefreshPage() {
+							if (serviceWorkerActivated && serviceWorkerUpdated) {
+								window.location.reload();
+							};
+						};
+
+						navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
+							.then(registration => {
+								registration.addEventListener("updatefound", () => {
+									const worker = registration.installing;
+
+									worker.addEventListener('statechange', () => {
+										console.log({
+											state: worker.state
+										});
+
+										if (worker.state === "activated") {
+											serviceWorkerActivated = true;
+
+											checkServiceWorkerUpdateAndRefreshPage();
+										};
+									});
+								});
+							});
+
+						navigator.serviceWorker.addEventListener('controllerchange', () => {
+							serviceWorkerUpdated = true;
+
+							checkServiceWorkerUpdateAndRefreshPage();
+						});
+
+					};
+				})();
+			});
+		</script>
+
 	</body>
 
 </html>

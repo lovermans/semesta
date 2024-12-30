@@ -3,15 +3,16 @@
     "name": "{{ $app->config->get('app.description') }}",
     "icons": [
         {
-            "src": "{{ Vite::asset('resources/images/app-icon/android-icon-192x192.png') }}",
+            "src": "{{ Vite::asset('resources/images/app-icon/maskable_icon_x192.png') }}",
             "type": "image/png",
-            "sizes": "192x192"
+            "sizes": "192x192",
+            "purpose": "maskable"
         },
         {
-            "src": "{{ Vite::asset('resources/images/app-icon/android-icon-512x512.png') }}",
+            "src": "{{ Vite::asset('resources/images/app-icon/maskable_icon_x512.png') }}",
             "type": "image/png",
             "sizes": "512x512",
-            "purpose": "any maskable"
+            "purpose": "any"
         }
     ],
     "id": "{{ $app->request->getBasePath() . '/' }}",
