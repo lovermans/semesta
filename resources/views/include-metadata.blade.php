@@ -1,19 +1,19 @@
 <title>{{ $app->config->get('app.name') }}</title>
 <meta content="{{ $app->config->get('app.description') }}" name="description">
 
+<link href="{{ $app->request->url() }}" rel="canonical">
+<link href="{{ $app->config->get('app.author') }}" rel="author">
+<link href="{{ $app->config->get('app.publisher') }}" rel="publisher">
+
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
 <meta content="IE=edge" http-equiv="X-UA-Compatible">
 <meta content="Laravel 11" name="generator">
 
-<link href="{{ $app->request->url() }}" rel="canonical">
-<link href="{{ $app->config->get('app.author') }}" rel="author">
-<link href="{{ $app->config->get('app.publisher') }}" rel="publisher">
-
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="preconnect">
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="dns-prefetch">
 
-<meta content="{{ $app->url->route('root') }}" name="msapplication-starturl">
+<meta content="{{ $app->url->route('start') }}" name="msapplication-starturl">
 
 <meta content="{{ $app->config->get('app.name', 'Laravel') }}" name="application-name">
 <meta content="{{ $app->config->get('app.name', 'Laravel') }}" name="apple-mobile-web-app-title">

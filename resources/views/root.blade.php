@@ -3,11 +3,6 @@
 
 	<head>
 		@include('include-metadata')
-
-		<noscript>
-			<meta HTTP-EQUIV="refresh" content="0;url='{{ $app->url->route('page-need-javascript') }}'">
-		</noscript>
-
 		<script>
 			var socketId = null;
 			window.Echo = null;
@@ -16,6 +11,8 @@
 
 		{{-- {{ Vite::withEntryPoints(['resources/js/theme.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
 		{{-- {{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }} --}}
+
+		@stack('metadata')
 
 		@stack('resources')
 	</head>
@@ -40,7 +37,6 @@
 				</g>
 			</svg>
 		</button>
-		Hello World
 
 		@yield('content')
 
@@ -90,7 +86,6 @@
 				})();
 			});
 		</script>
-
 	</body>
 
 </html>

@@ -1,12 +1,5 @@
-<!doctype html>
-<html dir="ltr" lang="{{ str_replace('_', '-', $app->getLocale()) }}">
+@extends('root')
 
-	<head>
-		@include('include-metadata')
-	</head>
-
-	<body>
-		<h1>Mohon aktifkan javascript pada browser</h1>
-	</body>
-
-</html>
+@section('content')
+	<h1>Please Active Javascript On Web Browser</h1>
+@endsection
