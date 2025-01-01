@@ -116,24 +116,8 @@ table {
 }
 
 /* 
-|   Theme Switch Button
+|   Theme Toggle Button
  */
-
-[data-theme="dark"] {
-    .sun-and-moon {
-        &>.sun {
-            transform: scale(1.75);
-        }
-
-        &>.sun-beams {
-            opacity: 0;
-        }
-
-        &>.moon>circle {
-            transform: translateX(-7px);
-        }
-    }
-}
 
 .sun-and-moon {
     &> :is(.moon, .sun, .sun-beams) {
@@ -146,7 +130,28 @@ table {
 
     &>.sun-beams {
         stroke: var(--icon-fill);
-        stroke-width: 2px;
+        stroke-width: 0.125rem;
+    }
+
+    .theme-toggle:is(:hover, :focus-visible)>& {
+        &> :is(.moon, .sun, .sun-beams) {
+            fill: var(--icon-fill-hover);
+        }
+    }
+
+
+    [data-theme="dark"] & {
+        &>.moon>circle {
+            transform: translateX(-0.4375rem);
+        }
+
+        &>.sun-beams {
+            opacity: 0;
+        }
+
+        &>.sun {
+            transform: scale(1.75);
+        }
     }
 }
 
@@ -166,7 +171,7 @@ table {
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    outline-offset: 5px;
+    outline-offset: 0.3125rem;
 
     &>svg {
         inline-size: 100%;
@@ -179,7 +184,7 @@ table {
         --icon-fill-hover: hsl(210 15% 90%);
     }
 
-    @media (hover: none) {
-        --size: 48px;
-    }
+    /*  @media (hover: none) {
+        --size: 2rem;
+    } */
 }

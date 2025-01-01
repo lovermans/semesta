@@ -3,16 +3,22 @@
 
 	<head>
 		@include('include-metadata')
-		<script>
-			var socketId = null;
-			window.Echo = null;
-			{!! Vite::content('resources/js/theme.js') !!}
-		</script>
+
+		@stack('metadata')
+
+		@sectionMissing('page-need-javascript-message')
+			<noscript>
+				<meta HTTP-EQUIV="refresh" content="0;url='{{ $app->url->route('page-need-javascript') }}'">
+			</noscript>
+			<script>
+				var socketId = null;
+				window.Echo = null;
+				{!! Vite::content('resources/js/theme.js') !!}
+			</script>
+		@endif
 
 		{{-- {{ Vite::withEntryPoints(['resources/js/theme.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
 		{{-- {{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }} --}}
-
-		@stack('metadata')
 
 		@stack('resources')
 	</head>
@@ -38,54 +44,60 @@
 			</svg>
 		</button>
 
+		@hasSection('page-need-javascript-message')
+			@yield('page-need-javascript-message')
+		@endif
+
 		@yield('content')
 
-		<script type="module">
-			window.addEventListener('DOMContentLoaded', () => {
-				(() => {
-					if ('serviceWorker' in navigator &&
-						window.location.protocol === 'https:' &&
-						window.self == window.top &&
-						navigator.onLine
-					) {
-						let serviceWorkerUpdated = false;
-						let serviceWorkerActivated = false;
+		@sectionMissing('page-need-javascript-message')
+			<script type="module">
+				window.addEventListener('DOMContentLoaded', () => {
+					(() => {
+						if ('serviceWorker' in navigator &&
+							window.location.protocol === 'https:' &&
+							window.self == window.top &&
+							navigator.onLine
+						) {
+							let serviceWorkerUpdated = false;
+							let serviceWorkerActivated = false;
 
-						function checkServiceWorkerUpdateAndRefreshPage() {
-							if (serviceWorkerActivated && serviceWorkerUpdated) {
-								window.location.reload();
+							function checkServiceWorkerUpdateAndRefreshPage() {
+								if (serviceWorkerActivated && serviceWorkerUpdated) {
+									window.location.reload();
+								};
 							};
-						};
 
-						navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
-							.then(registration => {
-								registration.addEventListener("updatefound", () => {
-									const worker = registration.installing;
+							navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
+								.then(registration => {
+									registration.addEventListener("updatefound", () => {
+										const worker = registration.installing;
 
-									worker.addEventListener('statechange', () => {
-										console.log({
-											state: worker.state
+										worker.addEventListener('statechange', () => {
+											console.log({
+												state: worker.state
+											});
+
+											if (worker.state === "activated") {
+												serviceWorkerActivated = true;
+
+												checkServiceWorkerUpdateAndRefreshPage();
+											};
 										});
-
-										if (worker.state === "activated") {
-											serviceWorkerActivated = true;
-
-											checkServiceWorkerUpdateAndRefreshPage();
-										};
 									});
 								});
+
+							navigator.serviceWorker.addEventListener('controllerchange', () => {
+								serviceWorkerUpdated = true;
+
+								checkServiceWorkerUpdateAndRefreshPage();
 							});
 
-						navigator.serviceWorker.addEventListener('controllerchange', () => {
-							serviceWorkerUpdated = true;
-
-							checkServiceWorkerUpdateAndRefreshPage();
-						});
-
-					};
-				})();
-			});
-		</script>
+						};
+					})();
+				});
+			</script>
+		@endif
 	</body>
 
 </html>
