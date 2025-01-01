@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'start')->name('start');
 Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
+Route::view('/offline-fallback', 'offline-fallback')->name('offline-fallback');
 Route::get('/pwa-manifest.json', [RootController::class, 'createPwaManifestJson'])->name('pwa-manifest');
 Route::get('/service-worker.js', [RootController::class, 'createServiceWorkerJs'])->name('service-worker');
 

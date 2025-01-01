@@ -17,6 +17,10 @@
 			</script>
 		@endif
 
+		<link crossorigin="use-credentials" href="{{ $app->url->route('pwa-manifest') }}" rel="manifest">
+
+		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
+
 		{{-- {{ Vite::withEntryPoints(['resources/js/theme.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
 		{{-- {{ Vite::withEntryPoints(['resources/js/main.js'])->useScriptTagAttributes(['type' => false, 'defer'])->usePreloadTagAttributes(false) }} --}}
 
@@ -70,7 +74,7 @@
 
 							navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
 								.then(registration => {
-									registration.addEventListener("updatefound", () => {
+									registration.addEventListener('updatefound', () => {
 										const worker = registration.installing;
 
 										worker.addEventListener('statechange', () => {
@@ -78,7 +82,7 @@
 												state: worker.state
 											});
 
-											if (worker.state === "activated") {
+											if (worker.state === 'activated') {
 												serviceWorkerActivated = true;
 
 												checkServiceWorkerUpdateAndRefreshPage();

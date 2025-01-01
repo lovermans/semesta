@@ -1,8 +1,13 @@
-var latestVersion = "{{ $app->config->get('app.name', 'Laravel') }}-service-worker-v-" + "{{ filemtime($app->publicPath('build/manifest.json')) }}";
+var CACHE_VERSION = "{{ filemtime($app->publicPath('build/manifest.json')) }}";
+
+var CURRENT_CACHES = {
+    prefetch: "{{ $app->config->get('app.name', 'Laravel') }}-service-worker-v-" + CACHE_VERSION
+};
 
 var resources = [
     "{{ $app->request->getBasePath() . '/' }}",
-    // "offline",
+    "page-need-javascript",
+    "offline-fallback",
     "pwa-manifest.json",
     "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
     "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
@@ -28,8 +33,12 @@ var resources = [
     "{{ Vite::asset('resources/js/echo-esm.js') }}"
 ];
 
+var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
+    return CURRENT_CACHES[key];
+});
+
 async function onInstall(event) {
-    caches.open(latestVersion)
+    caches.open(CURRENT_CACHES.prefetch)
         .then(function (cache) {
             resources.forEach(function (resource) {
                 cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
@@ -45,7 +54,7 @@ async function onActivate(event) {
         .then(function (cacheNames) {
             return Promise.all(
                 cacheNames.map(function (cacheName) {
-                    if (latestVersion.indexOf(cacheName) === -1) {
+                    if (expectedCacheNames.indexOf(cacheName) === -1) {
                         return caches.delete(cacheName);
                     }
                 })
@@ -67,23 +76,27 @@ self.addEventListener('fetch', function (event) {
         (async () => {
             try {
 
-                const cacheOffline = await caches.open(latestVersion);
+                const cacheOffline = await caches.open(CURRENT_CACHES.prefetch);
                 const cachedResponse = await cacheOffline.match(event.request, { ignoreSearch: true, ignoreVary: true });
 
                 if (cachedResponse) return cachedResponse;
+
+                const preloadResponse = await event.preloadResponse;
+                if (preloadResponse) return preloadResponse;
 
                 const networkResponse = await fetch(event.request);
 
                 return networkResponse;
 
             } catch (error) {
+                if (event.request.mode === 'navigate') {
+                    const savedCache = await caches.open(CURRENT_CACHES.prefetch);
+                    const offlineResponse = await savedCache.match('offline-fallback');
 
-                const savedCache = await caches.open(latestVersion);
-                const offlineResponse = await savedCache.match("offline");
+                    console.error('Failed to retrieve cached resources', error);
 
-                console.error('Failed to retrieve cached resources', error);
-
-                return offlineResponse;
+                    return offlineResponse;
+                };
             }
         })()
     )
