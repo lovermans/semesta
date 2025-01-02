@@ -48,6 +48,8 @@
 			</svg>
 		</button>
 
+		<div aria-hidden="true" hidden id="offline-message">You're offline, check your network connection.</div>
+
 		@hasSection('page-need-javascript-message')
 			@yield('page-need-javascript-message')
 		@endif
@@ -57,49 +59,64 @@
 		@sectionMissing('page-need-javascript-message')
 			<script type="module">
 				window.addEventListener('DOMContentLoaded', () => {
-					(() => {
-						if ('serviceWorker' in navigator &&
-							window.location.protocol === 'https:' &&
-							window.self == window.top &&
-							navigator.onLine
-						) {
-							let serviceWorkerUpdated = false;
-							let serviceWorkerActivated = false;
+					var networkAnchor = document.getElementById('offline-message');
 
-							function checkServiceWorkerUpdateAndRefreshPage() {
-								if (serviceWorkerActivated && serviceWorkerUpdated) {
-									window.location.reload();
-								};
+					window.addEventListener('offline', () => {
+						networkAnchor.removeAttribute('hidden');
+						networkAnchor.setAttribute('aria-hidden', false);
+					});
+
+					window.addEventListener('online', () => {
+						networkAnchor.setAttribute('hidden', true);
+						networkAnchor.setAttribute('aria-hidden', true);
+					});
+				});
+				(() => {
+					if ('serviceWorker' in navigator &&
+						window.location.protocol === 'https:' &&
+						window.self == window.top &&
+						navigator.onLine
+					) {
+						let serviceWorkerUpdated = false;
+						let serviceWorkerActivated = false;
+
+						function checkServiceWorkerUpdateAndRefreshPage() {
+							if (serviceWorkerActivated && serviceWorkerUpdated) {
+								console.log('Reload Page');
+								window.location.reload();
 							};
+						};
 
-							navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
-								.then(registration => {
-									registration.addEventListener('updatefound', () => {
-										const worker = registration.installing;
+						navigator.serviceWorker.register('{{ $app->request->getBasePath() . '/service-worker.js' }}')
+							.then(registration => {
+								registration.addEventListener('updatefound', () => {
+									console.log('Service Worker Update Found');
+									const worker = registration.installing;
 
-										worker.addEventListener('statechange', () => {
-											console.log({
-												state: worker.state
-											});
-
-											if (worker.state === 'activated') {
-												serviceWorkerActivated = true;
-
-												checkServiceWorkerUpdateAndRefreshPage();
-											};
+									worker.addEventListener('statechange', () => {
+										console.log({
+											state: worker.state
 										});
+
+										if (worker.state === 'activated') {
+											console.log('Service Worker Activated');
+											serviceWorkerActivated = true;
+
+											checkServiceWorkerUpdateAndRefreshPage();
+										};
 									});
 								});
-
-							navigator.serviceWorker.addEventListener('controllerchange', () => {
-								serviceWorkerUpdated = true;
-
-								checkServiceWorkerUpdateAndRefreshPage();
 							});
 
-						};
-					})();
-				});
+						navigator.serviceWorker.addEventListener('controllerchange', () => {
+							console.log('Service Worker Changed');
+							serviceWorkerUpdated = true;
+
+							checkServiceWorkerUpdateAndRefreshPage();
+						});
+
+					};
+				})();
 			</script>
 		@endif
 	</body>

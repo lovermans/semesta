@@ -7,7 +7,7 @@
 	<button id="check-network-connection" type="button">⤾ Reload</button>
 
 	<!-- Inline the page's JavaScript file. -->
-	<script>
+	{{-- <script>
 		// Manual reload feature.
 		document.getElementById('check-network-connection').addEventListener('click', () => {
 			window.location.reload();
@@ -37,5 +37,5 @@
 		}
 
 		checkNetworkAndReload();
-	</script>
+	</script> --}}
 @endsection

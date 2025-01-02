@@ -1,52 +1,73 @@
 var CACHE_VERSION = "{{ filemtime($app->publicPath('build/manifest.json')) }}";
 
 var CURRENT_CACHES = {
-    prefetch: "{{ $app->config->get('app.name', 'Laravel') }}-service-worker-v-" + CACHE_VERSION
+    assets: "assets-v-" + CACHE_VERSION,
+    pages: "pages-v-" + CACHE_VERSION
 };
 
-var resources = [
-    "{{ $app->request->getBasePath() . '/' }}",
-    "page-need-javascript",
-    "offline-fallback",
-    "pwa-manifest.json",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-72x72.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-76x76.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-114x114.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-120x120.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-144x144.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-152x152.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/apple-icon-180x180.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/android-icon-192x192.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/android-icon-512x512.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/favicon-32x32.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/favicon-96x96.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/favicon-16x16.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/ms-icon-144x144.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/maskable_icon_x192.png') }}",
-    "{{ Vite::asset('resources/images/app-icon/maskable_icon_x512.png') }}",
-    "{{ $app->url->asset('/favicon.ico') }}",
-    "{{ $app->url->asset('/favicon.svg') }}",
-    "{{ Vite::asset('resources/css/main.css') }}",
-    "{{ Vite::asset('resources/js/pusher-esm.js') }}",
-    "{{ Vite::asset('resources/js/echo-esm.js') }}"
-];
+var RESOURCES = {
+    assets: [
+        "page-need-javascript",
+        "offline-fallback",
+        "pwa-manifest.json",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-72x72.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-76x76.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-114x114.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-120x120.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-144x144.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-152x152.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/apple-icon-180x180.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/android-icon-192x192.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/android-icon-512x512.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/favicon-32x32.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/favicon-96x96.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/favicon-16x16.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/ms-icon-144x144.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/maskable_icon_x192.png') }}",
+        "{{ Vite::asset('resources/images/app-icon/maskable_icon_x512.png') }}",
+        "{{ $app->url->asset('/favicon.ico') }}",
+        "{{ $app->url->asset('/favicon.svg') }}",
+        "{{ Vite::asset('resources/css/main.css') }}",
+        "{{ Vite::asset('resources/js/pusher-esm.js') }}",
+        "{{ Vite::asset('resources/js/echo-esm.js') }}"
+    ],
+    pages: [
+        "{{ $app->request->getBasePath() . '/' }}"
+    ]
+};
 
 var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
     return CURRENT_CACHES[key];
 });
 
+// console.log(Object.values(CURRENT_CACHES));
+// console.log(RESOURCES);
+
 async function onInstall(event) {
-    caches.open(CURRENT_CACHES.prefetch)
-        .then(function (cache) {
-            resources.forEach(function (resource) {
-                cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
+    Object.entries(CURRENT_CACHES).forEach(function ([key, value]) {
+        caches.open(value)
+            .then(function (cache) {
+                RESOURCES[key].forEach(function (resource) {
+                    cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
+                });
+            })
+            .catch(function (error) {
+                console.error('Failed to retrieve resources ' + key, error);
             });
-        })
-        .catch(function (error) {
-            console.error('Failed to retrieve resources', error);
-        });
+    });
+
+
+    // caches.open(CURRENT_CACHES.prefetch)
+    //     .then(function (cache) {
+    //         RESOURCES.forEach(function (resource) {
+    //             cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
+    //         });
+    //     })
+    //     .catch(function (error) {
+    //         console.error('Failed to retrieve resources', error);
+    //     });
 };
 
 async function onActivate(event) {
@@ -76,8 +97,7 @@ self.addEventListener('fetch', function (event) {
         (async () => {
             try {
 
-                const cacheOffline = await caches.open(CURRENT_CACHES.prefetch);
-                const cachedResponse = await cacheOffline.match(event.request, { ignoreSearch: true, ignoreVary: true });
+                const cachedResponse = await caches.match(event.request, { ignoreSearch: true, ignoreVary: true });
 
                 if (cachedResponse) return cachedResponse;
 
@@ -90,8 +110,7 @@ self.addEventListener('fetch', function (event) {
 
             } catch (error) {
                 if (event.request.mode === 'navigate') {
-                    const savedCache = await caches.open(CURRENT_CACHES.prefetch);
-                    const offlineResponse = await savedCache.match('offline-fallback');
+                    const offlineResponse = await caches.match('offline-fallback');
 
                     console.error('Failed to retrieve cached resources', error);
 
