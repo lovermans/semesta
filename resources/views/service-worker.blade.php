@@ -10,6 +10,18 @@ var RESOURCES = {
         "page-need-javascript",
         "offline-fallback",
         "pwa-manifest.json",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-100.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-300.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-400.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-500.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-700.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-900.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-100-Italic.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-300-Italic.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-400-Italic.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-500-Italic.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-700-Italic.woff2') }}",
+        "{{ Vite::asset('resources/fonts/woff2/Roboto-900-Italic.woff2') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-72x72.png') }}",
@@ -42,32 +54,18 @@ var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
     return CURRENT_CACHES[key];
 });
 
-// console.log(Object.values(CURRENT_CACHES));
-// console.log(RESOURCES);
-
 async function onInstall(event) {
     Object.entries(CURRENT_CACHES).forEach(function ([key, value]) {
         caches.open(value)
             .then(function (cache) {
                 RESOURCES[key].forEach(function (resource) {
-                    cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
+                    cache.add(new Request(resource, { credentials: 'include' }));
                 });
             })
             .catch(function (error) {
                 console.error('Failed to retrieve resources ' + key, error);
             });
     });
-
-
-    // caches.open(CURRENT_CACHES.prefetch)
-    //     .then(function (cache) {
-    //         RESOURCES.forEach(function (resource) {
-    //             cache.add(new Request(resource), { cache: 'reload', credentials: 'include' });
-    //         });
-    //     })
-    //     .catch(function (error) {
-    //         console.error('Failed to retrieve resources', error);
-    //     });
 };
 
 async function onActivate(event) {

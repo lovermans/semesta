@@ -7,14 +7,14 @@ html {
     }
 }
 
-@supports not (color-scheme: dark) {
+/* @supports not (color-scheme: dark) {
     html[data-theme=dark] {
         background: #212121
     }
-}
+} */
 
 /* 
-|   CSS Reset
+CSS Reset
  */
 
 *,
@@ -30,6 +30,7 @@ html {
 }
 
 body {
+    font: normal normal 400 1rem/normal 'Roboto', arial, sans-serif;
     line-height: calc(1em + 0.5rem);
     -webkit-font-smoothing: antialiased;
     /* min-height: 100vh; */
@@ -51,6 +52,10 @@ img {
     background-repeat: no-repeat;
     background-size: cover;
     shape-margin: 1rem;
+}
+
+:where(svg:not([fill])) {
+    fill: currentColor;
 }
 
 /*  
