@@ -22,6 +22,7 @@ var RESOURCES = {
         "{{ Vite::asset('resources/fonts/woff2/Roboto-500-Italic.woff2') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-700-Italic.woff2') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-900-Italic.woff2') }}",
+        "{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-72x72.png') }}",

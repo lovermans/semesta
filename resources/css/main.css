@@ -121,44 +121,20 @@ table {
 }
 
 /* 
-|   Theme Toggle Button
+Global Style
  */
 
-.sun-and-moon {
-    &> :is(.moon, .sun, .sun-beams) {
-        transform-origin: center center;
-    }
+#inline-svg-icon {
+    display: none;
 
-    &> :is(.moon, .sun) {
-        fill: var(--icon-fill);
-    }
-
-    &>.sun-beams {
-        stroke: var(--icon-fill);
-        stroke-width: 0.125rem;
-    }
-
-    .theme-toggle:is(:hover, :focus-visible)>& {
-        &> :is(.moon, .sun, .sun-beams) {
-            fill: var(--icon-fill-hover);
-        }
-    }
-
-
-    [data-theme="dark"] & {
-        &>.moon>circle {
-            transform: translateX(-0.4375rem);
-        }
-
-        &>.sun-beams {
-            opacity: 0;
-        }
-
-        &>.sun {
-            transform: scale(1.75);
-        }
+    & .sprite {
+        display: block;
     }
 }
+
+/* 
+Theme Toggle Button
+ */
 
 .theme-toggle {
     --size: 2rem;
