@@ -5,10 +5,13 @@ use App\Http\Controllers\RootController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'start')->name('start');
-Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
 Route::view('/offline-fallback', 'offline-fallback')->name('offline-fallback');
-Route::get('/pwa-manifest.json', [RootController::class, 'createPwaManifestJson'])->name('pwa-manifest');
-Route::get('/service-worker.js', [RootController::class, 'createServiceWorkerJs'])->name('service-worker');
+Route::get('/font-face.css', [RootController::class, 'createFontFaceCSS'])->name('css-font-face');
+Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
+Route::get('/pwa-manifest.json', [RootController::class, 'createPwaManifestJson'])->name('json-pwa-manifest');
+Route::get('/register-service-worker.js', [RootController::class, 'registerServiceWorker'])->name('js-register-service-worker');
+Route::get('/service-worker.js', [RootController::class, 'createServiceWorkerJs'])->name('js-service-worker');
+Route::get('/websocket.js', [RootController::class, 'createWebSocketJs'])->name('js-websocket');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

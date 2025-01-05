@@ -3,3 +3,7 @@ import.meta.glob([
     '../images/svg/**',
     '../fonts/woff2/**'
 ]);
+
+window.soketiId = null;
+
+import './theme';

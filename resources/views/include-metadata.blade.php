@@ -45,3 +45,13 @@
 
 <link href="{{ $app->url->asset('/favicon.ico') }}" rel="icon" type="image/x-icon">
 <link href="{{ $app->url->asset('/favicon.svg') }}" rel="icon" type="image/svg+xml">
+
+<meta content="{{ $app->config->get('app.name') }}" property="og:site_name">
+<meta content="{{ $app->config->get('app.name') }}" property="og:title">
+<meta content="website" property="og:type">
+<meta content="{{ $app->config->get('app.description') }}" property="og:description">
+<meta content="{{ str_replace('_', '-', $app->getLocale()) }}" property="og:locale">
+<meta content="{{ $app->request->url() }}" property="og:url">
+<meta content="{{ Vite::asset('resources/images/app-icon/android-icon-512x512.png') }}" property="og:image">
+
+<link crossorigin="use-credentials" href="{{ $app->url->route('json-pwa-manifest') }}" rel="manifest">

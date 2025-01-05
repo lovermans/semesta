@@ -1,14 +1,13 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import manifestSRI from 'vite-plugin-manifest-sri';
-import { resolve } from 'path';
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/js/main.js',
-                'resources/js/theme.js',
+                'resources/js/start.js',
+                'resources/js/svg-sprites-icon-loader.js',
                 'resources/js/websocket-lib.js',
                 'resources/css/main.css',
             ],
