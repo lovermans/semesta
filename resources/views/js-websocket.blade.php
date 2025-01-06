@@ -5,7 +5,8 @@ let echoConfig = {
 	broadcaster: "{{ $app->config->get('broadcasting.default') }}",
 	key: "{{ $app->config->get('broadcasting.connections.pusher.key') }}",
 	cluster: "{{ $app->config->get('broadcasting.connections.pusher.options.cluster') }}",
-	wsHost: window.location.hostname,
+	wsHost: "{{ $app->request->getHttpHost() }}",
+	wsPath: "{{ $app->request->getBasePath() }}",
 	authEndpoint: "{{ $app->request->getBasePath() . '/broadcasting/auth' }}",
 	userAuthentication: {
 		endpoint: "{{ $app->request->getBasePath() . '/broadcasting/user-auth' }}",
