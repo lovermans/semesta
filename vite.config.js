@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/svg-sprites-icon-loader.js',
                 'resources/js/websocket-lib.js',
                 'resources/css/main.css',
+                'resources/js/main-function.js',
             ],
             refresh: true,
         }),
@@ -17,6 +18,9 @@ export default defineConfig({
     ],
     build: {
         target: 'esnext',
+        rollupOptions: {
+            preserveEntrySignatures: 'allow-extension',
+        },
         // minify: false,
     }
 });
