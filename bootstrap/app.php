@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AddSecurityHeaders;
+use App\Http\Middleware\MinifyHtmlResponse;
 use App\Http\Middleware\StartCustomSession;
 use App\Http\Middleware\ValidateCustomCsrfToken;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web(append: [
+            MinifyHtmlResponse::class,
             AddSecurityHeaders::class,
         ]);
 
