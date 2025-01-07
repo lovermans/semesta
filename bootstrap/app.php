@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AddSecurityHeaders;
 use App\Http\Middleware\StartCustomSession;
 use App\Http\Middleware\ValidateCustomCsrfToken;
 use Illuminate\Foundation\Application;
@@ -18,11 +19,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        $middleware->web(replace: [
-            StartSession::class => StartCustomSession::class,
-            ValidateCsrfToken::class => ValidateCustomCsrfToken::class,
-        ]);
-
         $middleware->trustProxies(at: '*');
 
         $middleware->trustProxies(headers: Request::HEADER_X_FORWARDED_FOR |
@@ -31,6 +27,15 @@ return Application::configure(basePath: dirname(__DIR__))
         Request::HEADER_X_FORWARDED_PROTO |
         Request::HEADER_X_FORWARDED_PREFIX
         );
+
+        $middleware->web(replace: [
+            StartSession::class => StartCustomSession::class,
+            ValidateCsrfToken::class => ValidateCustomCsrfToken::class,
+        ]);
+
+        $middleware->web(append: [
+            AddSecurityHeaders::class,
+        ]);
 
     })
     ->withExceptions(function (Exceptions $exceptions) {

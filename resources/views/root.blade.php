@@ -14,7 +14,7 @@
 
 		{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
 
-		<style src="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}"></style>
+		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
 

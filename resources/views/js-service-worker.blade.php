@@ -7,9 +7,9 @@ var CURRENT_CACHES = {
 
 var RESOURCES = {
     assets: [
-        "page-need-javascript",
-        "offline-fallback",
-        "pwa-manifest.json",
+        "{{ $app->url->route('page-need-javascript') }}",
+        "{{ $app->url->route('offline-fallback') }}",
+        "{{ $app->url->route('json-pwa-manifest') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-100.woff2') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-300.woff2') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-400.woff2') }}",
@@ -47,11 +47,12 @@ var RESOURCES = {
         "{{ Vite::asset('resources/js/start.js') }}",
         "{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}",
         "{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}",
+        "{{ Vite::asset('resources/js/svg-sprites-icon-loader.js') }}",
         "{{ Vite::asset('resources/js/pusher-esm.js') }}",
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
     ],
     pages: [
-        "{{ $app->request->getBasePath() . '/' }}"
+        /* "{{ $app->url->route('start') }}", */
     ]
 };
 
@@ -112,6 +113,7 @@ self.addEventListener('fetch', function (event) {
                 return networkResponse;
 
             } catch (error) {
+
                 if (event.request.mode === 'navigate') {
                     const offlineResponse = await caches.match('offline-fallback');
 
@@ -121,5 +123,5 @@ self.addEventListener('fetch', function (event) {
                 };
             }
         })()
-    )
+    );
 });
