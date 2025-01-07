@@ -1,6 +1,9 @@
 html {
     /* block-size: 100%; */
     color-scheme: light;
+    --standard-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
+    --acelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
 
     &[data-theme=dark] {
         color-scheme: dark
@@ -168,4 +171,28 @@ Theme Toggle Button
     /*  @media (hover: none) {
         --size: 2rem;
     } */
+}
+
+.sun-and-moon {
+    &>.sun {
+        transition: transform .5s var(--standard-easing);
+    }
+
+    &>.sun-beams {
+        transition:
+            transform .5s var(--decelerated-easing),
+            opacity .5s var(--decelerated-easing);
+    }
+
+    [data-theme="dark"] & {
+        &>.sun {
+            transition-timing-function: var(--acelerated-easing);
+            transition-duration: .25s;
+        }
+
+        &>.sun-beams {
+            transform: rotateZ(-25deg);
+            transition-duration: .15s;
+        }
+    }
 }
