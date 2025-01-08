@@ -595,6 +595,11 @@ class PusherConnector extends Connector {
         else {
             this.pusher = new Pusher(this.options.key, this.options);
         }
+
+        this.pusher.connection.bind('connected', () => {
+            soketiId = this.pusher.connection.socket_id;
+            console.log('Connected with socket Id : ' + soketiId);
+        })
     }
     /**
      * Sign in the user via Pusher user authentication (https://pusher.com/docs/channels/using_channels/user-authentication/).
