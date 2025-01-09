@@ -8,14 +8,14 @@
                 --icon-fill: hsl(210 10% 30%);
                 --icon-fill-hover: hsl(210 10% 15%);
 
+                &:target {
+                    display: inline;
+                }
+
                 [data-theme=dark] & {
                     --icon-fill: hsl(210 10% 70%);
                     --icon-fill-hover: hsl(210 15% 90%);
                 }
-            }
-
-            .sprite:target {
-                display: inline;
             }
 
             .sun-and-moon {
@@ -38,7 +38,6 @@
                     }
                 }
 
-
                 [data-theme="dark"] & {
                     &>.moon>circle {
                         transform: translateX(-0.4375rem);
@@ -56,9 +55,6 @@
             ]]>
         </style>
     </defs>
-    <g class="sprite" id="menu-icon2">
-        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-    </g>
     <g class="sprite" id="menu">
         <path d="M0 0h24v24H0V0z" fill="none" />
         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />

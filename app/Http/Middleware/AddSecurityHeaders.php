@@ -25,8 +25,9 @@ class AddSecurityHeaders
         ) {
             $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
             $response->headers->set('X-XSS-Protection', '1; mode=block');
-            $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-            $response->headers->set('Content-Security-Policy', "default-src 'self' 'nonce-".Vite::cspNonce()."' 'sha256-gz6Deu1YC1rRRPfaZK5YJCGwAdLeC2NeThighnk6Hn0=';img-src 'self' * data:");
+            $response->headers->set('X-Frame-Options', 'DENY');
+            $response->headers->set('Content-Security-Policy', "default-src 'self' 'nonce-".Vite::cspNonce()."' 'sha256-nVnU7fBtQLHS/XbeVL1LVXgx6BnGdkURyvhCIzK+dtA=';img-src 'self' * data:");
+            $response->headers->set('Vary', 'Accept,Accept-Encoding,X-PJAX');
             // $response->headers->remove('X-Powered-By');
             // $response->headers->remove('Server');
         }

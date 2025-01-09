@@ -1,12 +1,26 @@
 html {
     /* block-size: 100%; */
     color-scheme: light;
+    --header-background: #e0e0e0;
+    --hover-overlay: rgba(0, 0, 0, 0.04);
+    --focus-overlay: rgba(0, 0, 0, 0.12);
+    --activated-overlay: rgba(0, 0, 0, 0.12);
+    --pressed-overlay: rgba(0, 0, 0, 0.16);
+    --selected-overlay: rgba(0, 0, 0, 0.08);
+    --dragged-overlay: rgba(0, 0, 0, 0.08);
     --standard-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
     --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
     --acelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
 
     &[data-theme=dark] {
-        color-scheme: dark
+        color-scheme: dark;
+        --header-background: #212121;
+        --hover-overlay: rgba(255, 255, 255, 0.04);
+        --focus-overlay: rgba(255, 255, 255, 0.12);
+        --activated-overlay: rgba(255, 255, 255, 0.12);
+        --pressed-overlay: rgba(255, 255, 255, 0.10);
+        --selected-overlay: rgba(255, 255, 255, 0.08);
+        --dragged-overlay: rgba(255, 255, 255, 0.08);
     }
 }
 
@@ -82,6 +96,7 @@ h6 {
 
 p {
     text-wrap: pretty;
+    padding: 0.75rem 0;
 }
 
 h1,
@@ -116,15 +131,8 @@ table {
     border-spacing: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    :has(:target) {
-        scroll-behavior: smooth;
-        scroll-margin-top: 4rem;
-    }
-}
-
 /* 
-Global Style
+Inline SVG Style
  */
 
 #inline-svg-icon {
@@ -136,32 +144,73 @@ Global Style
 }
 
 /* 
+Header Style
+ */
+
+header,
+.header-column,
+.title-header {
+    display: flex;
+    align-items: center;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--header-background);
+
+    button {
+        background: none;
+        border: none;
+        padding: 0.75rem;
+        inline-size: 3rem;
+        block-size: 3rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        outline-offset: 0.3125rem;
+
+        &>svg {
+            stroke-linecap: round;
+        }
+
+        &:hover {
+            background: var(--hover-overlay);
+        }
+
+        &:focus {
+            background: var(--focus-overlay);
+        }
+    }
+
+    .header-column:first-child {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .header-column:last-child {
+        margin-left: auto;
+    }
+
+    .title-header {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 0.5rem;
+    }
+}
+
+/* 
 Theme Toggle Button
  */
 
 .theme-toggle {
-    --size: 2rem;
     --icon-fill: hsl(210 10% 30%);
     --icon-fill-hover: hsl(210 10% 15%);
-    background: none;
-    border: none;
-    padding: 0;
-
-    inline-size: var(--size);
-    block-size: var(--size);
-    aspect-ratio: 1;
-    border-radius: 50%;
-
-    cursor: pointer;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    outline-offset: 0.3125rem;
-
-    &>svg {
-        inline-size: 100%;
-        block-size: 100%;
-        stroke-linecap: round;
-    }
 
     [data-theme=dark] & {
         --icon-fill: hsl(210 10% 70%);
@@ -173,26 +222,56 @@ Theme Toggle Button
     } */
 }
 
-.sun-and-moon {
-    &>.sun {
-        transition: transform .5s var(--standard-easing);
+/* 
+Animation Style
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+        scroll-behavior: smooth;
+        scroll-margin-top: 4rem;
     }
 
-    &>.sun-beams {
-        transition:
-            transform .5s var(--decelerated-easing),
-            opacity .5s var(--decelerated-easing);
-    }
-
-    [data-theme="dark"] & {
+    .sun-and-moon {
         &>.sun {
-            transition-timing-function: var(--acelerated-easing);
-            transition-duration: .25s;
+            transition: transform .5s var(--standard-easing);
         }
 
         &>.sun-beams {
-            transform: rotateZ(-25deg);
-            transition-duration: .15s;
+            transition:
+                transform .5s var(--decelerated-easing),
+                opacity .5s var(--decelerated-easing);
         }
+
+        [data-theme="dark"] & {
+            &>.sun {
+                transition-timing-function: var(--acelerated-easing);
+                transition-duration: .25s;
+            }
+
+            &>.sun-beams {
+                transform: rotateZ(-25deg);
+                transition-duration: .15s;
+            }
+        }
+    }
+}
+
+
+/* 
+Animation Style
+ */
+
+@media print {
+    [data-print=block] {
+        display: block;
+    }
+
+    [data-print=inline] {
+        display: inline;
+    }
+
+    [data-print=none] {
+        display: none;
     }
 }
