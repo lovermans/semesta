@@ -28,10 +28,11 @@
 
 	<body>
 		<div aria-hidden="true">
-			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites" type="image/svg+xml"></object>
+			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites" nonce="{{ Vite::cspNonce() }}"
+				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
 		</div>
 
-		{{ Vite::withEntryPoints(['resources/js/svg-sprites-icon-loader.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
+		{{-- {{ Vite::withEntryPoints(['resources/js/svg-sprites-icon-loader.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
 
 		<header data-print="none">
 
