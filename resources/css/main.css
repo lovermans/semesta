@@ -1,6 +1,6 @@
 html {
-    /* block-size: 100%; */
     color-scheme: light;
+    /* block-size: 100%; */
     --header-background: #e0e0e0;
     --hover-overlay: rgba(0, 0, 0, 0.04);
     --focus-overlay: rgba(0, 0, 0, 0.12);
@@ -12,6 +12,41 @@ html {
     --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
     --acelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
 
+    /* 
+    Typography
+     */
+
+    --color-active: rgba(0, 0, 0, 0.87);
+    --color-inactive: rgba(0, 0, 0, 0.60);
+    --color-disabled: rgba(0, 0, 0, 0.38);
+
+    --font-h1: normal normal 300 6rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h1: -0.09375rem;
+    --font-h2: normal normal 300 3.75rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h2: -0.03125rem;
+    --font-h3: normal normal 400 3rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h3: 0;
+    --font-h4: normal normal 400 2.125rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h4: 0.015625rem;
+    --font-h5: normal normal 400 1.5rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h5: 0;
+    --font-h6: normal normal 500 1.25rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-h6: 0.009375rem;
+    --font-subtitle-1: normal normal 400 1rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-subtitle-1: 0.009375rem;
+    --font-subtitle-2: normal normal 500 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-subtitle-2: 0.00625rem;
+    --font-body-1: normal normal 400 1rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-body1: 0.03125rem;
+    --font-body-2: normal normal 400 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-body2: 0.015625rem;
+    --font-button: normal normal 500 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-button: 0.078125rem;
+    --font-caption: normal normal 400 0.75rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-caption: 0.025rem;
+    --font-overline: normal normal 400 0.625rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --letter-spacing-overline: 0.09375rem;
+
     &[data-theme=dark] {
         color-scheme: dark;
         --header-background: #212121;
@@ -21,6 +56,9 @@ html {
         --pressed-overlay: rgba(255, 255, 255, 0.10);
         --selected-overlay: rgba(255, 255, 255, 0.08);
         --dragged-overlay: rgba(255, 255, 255, 0.08);
+        --color-active: rgba(255, 255, 255, 0.87);
+        --color-inactive: rgba(255, 255, 255, 0.60);
+        --color-disabled: rgba(255, 255, 255, 0.38);
     }
 }
 
@@ -47,8 +85,9 @@ CSS Reset
 }
 
 body {
-    font: normal normal 400 1rem/normal 'Roboto', arial, sans-serif;
-    line-height: calc(1em + 0.5rem);
+    font: var(--font-body-2);
+    letter-spacing: var(--letter-spacing-body-2);
+    color: var(--color-active);
     -webkit-font-smoothing: antialiased;
     /* min-height: 100vh; */
 }
@@ -197,6 +236,8 @@ header {
     }
 
     .title-header {
+        font: var(--font-h6);
+        letter-spacing: var(--letter-spacing-h6);
         display: block;
         white-space: nowrap;
         overflow: hidden;
@@ -266,6 +307,14 @@ Animation Style
 @media print {
     [data-print=block] {
         display: block;
+    }
+
+    [data-print=flex] {
+        display: flex;
+    }
+
+    [data-print=grid] {
+        display: grid;
     }
 
     [data-print=inline] {
