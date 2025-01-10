@@ -216,6 +216,21 @@ table {
     border-spacing: 0;
 }
 
+a {
+    text-decoration: none;
+
+    &:focus-visible {
+        outline: none;
+        text-decoration: underline;
+    }
+}
+
+button {
+    &:focus-visible {
+        outline: none;
+    }
+}
+
 /* 
 Inline SVG Style
  */
@@ -244,6 +259,8 @@ header {
     top: 0;
     z-index: 1000;
     background: var(--header-background);
+    height: 3.5rem;
+    overflow: hidden;
 
     button {
         background: none;
@@ -288,7 +305,27 @@ header {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-left: 0.5rem;
+    }
+
+    img {
+        width: 2rem;
+        margin-right: 0.5rem;
+        aspect-ratio: 1;
+    }
+
+    [data-theme=dark] & {
+        img {
+            filter: invert(0.9);
+        }
+    }
+
+    :is(.scrolled-up, .scrolled-down) & {
+        box-shadow: var(--elevation-box-shadow-4);
+        background: var(--elevation-overlay-4);
+    }
+
+    .scrolled-down & {
+        translate: 0 -4rem;
     }
 }
 
@@ -320,26 +357,30 @@ Animation Style
         scroll-margin-top: 4rem;
     }
 
+    header {
+        transition: translate 0.3s var(--standard-easing);
+    }
+
     .sun-and-moon {
         &>.sun {
-            transition: transform .5s var(--standard-easing);
+            transition: transform 0.5s var(--standard-easing);
         }
 
         &>.sun-beams {
             transition:
-                transform .5s var(--decelerated-easing),
-                opacity .5s var(--decelerated-easing);
+                transform 0.5s var(--decelerated-easing),
+                opacity 0.5s var(--decelerated-easing);
         }
 
         [data-theme="dark"] & {
             &>.sun {
                 transition-timing-function: var(--acelerated-easing);
-                transition-duration: .25s;
+                transition-duration: 0.25s;
             }
 
             &>.sun-beams {
                 transform: rotateZ(-25deg);
-                transition-duration: .15s;
+                transition-duration: 0.15s;
             }
         }
     }
@@ -351,6 +392,10 @@ Animation Style
  */
 
 @media print {
+    @page {
+        margin: 0;
+    }
+
     [data-print=block] {
         display: block;
     }

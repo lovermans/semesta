@@ -7,7 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/start.js',
-                'resources/js/svg-sprites-icon-loader.js',
+                'resources/js/core-listener.js',
                 'resources/js/websocket-lib.js',
                 'resources/css/main.css',
                 'resources/js/main-function.js',

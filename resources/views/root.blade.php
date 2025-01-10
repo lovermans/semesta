@@ -32,10 +32,7 @@
 				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
 		</div>
 
-		{{-- {{ Vite::withEntryPoints(['resources/js/svg-sprites-icon-loader.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
-
 		<header data-print="none">
-
 			<div class="header-column" id="main-header">
 				<button class="header-button" title="Menu">
 					<svg aria-hidden="true" viewbox="0 0 24 24">
@@ -43,10 +40,12 @@
 					</svg>
 				</button>
 				<div class="title-header">
-					{{ $app->config->get('app.name') }}
+					<a href="{{ $app->url->route('start') }}" title="{{ $app->config->get('app.name') }}">
+						<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#semesta' }}">
+						{{ $app->config->get('app.name') }}
+					</a>
 				</div>
 			</div>
-
 			<div class="header-column" id="extra-header">
 				<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle" title="Toggles light & dark theme">
 					<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
@@ -58,7 +57,6 @@
 					</svg>
 				</button>
 			</div>
-
 		</header>
 
 		@hasSection('page-need-javascript-message')
@@ -74,6 +72,14 @@
 				src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}"
 				nonce="{{ Vite::cspNonce() }}"></script>
 		@endif
+
+		<script nonce="{{ Vite::cspNonce() }}" type="module">
+			import {
+				showHideTopAppBarOnScroll
+			} from "{{ Vite::asset('resources/js/core-listener.js') }}";
+
+			showHideTopAppBarOnScroll(document.body, 500);
+		</script>
 	</body>
 
 </html>
