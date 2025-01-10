@@ -1,13 +1,13 @@
 html {
     color-scheme: light;
     /* block-size: 100%; */
-    --header-background: #e0e0e0;
-    --hover-overlay: rgba(0, 0, 0, 0.04);
-    --focus-overlay: rgba(0, 0, 0, 0.12);
-    --activated-overlay: rgba(0, 0, 0, 0.12);
-    --pressed-overlay: rgba(0, 0, 0, 0.16);
-    --selected-overlay: rgba(0, 0, 0, 0.08);
-    --dragged-overlay: rgba(0, 0, 0, 0.08);
+    --header-background: Canvas;
+    --hover-overlay: color-mix(in srgb, rgb(0, 0, 0) 4%, rgb(255, 255, 255));
+    --focus-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --activated-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --pressed-overlay: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
+    --selected-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
+    --dragged-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
     --standard-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
     --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
     --acelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
@@ -16,9 +16,9 @@ html {
     Typography
      */
 
-    --color-active: rgba(0, 0, 0, 0.87);
-    --color-inactive: rgba(0, 0, 0, 0.60);
-    --color-disabled: rgba(0, 0, 0, 0.38);
+    --color-active: color-mix(in srgb, rgb(0, 0, 0) 87%, rgb(255, 255, 255));
+    --color-inactive: color-mix(in srgb, rgb(0, 0, 0) 60%, rgb(255, 255, 255));
+    --color-disabled: color-mix(in srgb, rgb(0, 0, 0) 38%, rgb(255, 255, 255));
 
     --font-h1: normal normal 300 6rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
     --letter-spacing-h1: -0.09375rem;
@@ -47,18 +47,64 @@ html {
     --font-overline: normal normal 400 0.625rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
     --letter-spacing-overline: 0.09375rem;
 
+    /* 
+    Elevation
+     */
+
+    --elevation-overlay-1: color-mix(in srgb, rgb(0, 0, 0) 5%, rgb(255, 255, 255));
+    --elevation-overlay-2: color-mix(in srgb, rgb(0, 0, 0) 7%, rgb(255, 255, 255));
+    --elevation-overlay-3: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
+    --elevation-overlay-4: color-mix(in srgb, rgb(0, 0, 0) 9%, rgb(255, 255, 255));
+    --elevation-overlay-6: color-mix(in srgb, rgb(0, 0, 0) 11%, rgb(255, 255, 255));
+    --elevation-overlay-8: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --elevation-overlay-12: color-mix(in srgb, rgb(0, 0, 0) 14%, rgb(255, 255, 255));
+    --elevation-overlay-16: color-mix(in srgb, rgb(0, 0, 0) 15%, rgb(255, 255, 255));
+    --elevation-overlay-24: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
+
+    --elevation-box-shadow-1: 0 0.125rem 0.0625rem -0.0625rem rgba(0, 0, 0, 0.2), 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.12);
+    --elevation-box-shadow-2: 0 0.1875rem 0.0625rem -0.125rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.12);
+    --elevation-box-shadow-3: 0 0.1875rem 0.1875rem 0.125rem rgba(0, 0, 0, 0.2), 0 0.1875rem 0.25rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.5rem 0 rgba(0, 0, 0, 0.12);
+    --elevation-box-shadow-4: 0 0.25rem 0.313rem 0 rgba(0, 0, 0, 0.14), 0 0.063rem 0.625rem 0 rgba(0, 0, 0, 0.12), 0 0.125rem 0.25rem -0.063rem rgba(0, 0, 0, 0.20);
+    --elevation-box-shadow-6: 0 0.375rem 0.625rem 0 rgba(0, 0, 0, 0.14), 0 0.063rem 1.125rem 0 rgba(0, 0, 0, 0.12), 0 0.188rem 0.313rem -0.063rem rgba(0, 0, 0, 0.20);
+    --elevation-box-shadow-8: 0 0.5rem 0.625rem 0.063rem rgba(0, 0, 0, 0.14), 0 0.188rem 0.875rem 0.125rem rgba(0, 0, 0, 0.12), 0 0.313rem 0.313rem -0.188rem rgba(0, 0, 0, 0.20);
+    --elevation-box-shadow-12: 0 0.4375rem 0.5rem -0.25rem rgba(0, 0, 0, 0.20), 0 0.75rem 1.0625rem 0.125rem rgba(0, 0, 0, 0.14), 0 0.3125rem 1.375rem 0.25rem rgba(0, 0, 0, 0.12);
+    --elevation-box-shadow-16: 0 1rem 1.5rem 0.125rem rgba(0, 0, 0, 0.14), 0 0.375rem 1.875rem 0.313rem rgba(0, 0, 0, 0.12), 0 0.5rem 0.625rem -0.313rem rgba(0, 0, 0, 0.20);
+    --elevation-box-shadow-24: 0 1.5rem 2.375rem 0.188rem rgba(0, 0, 0, 0.14), 0 0.563rem 2.875rem 0.5rem rgba(0, 0, 0, 0.12), 0 0.688rem 0.936rem -0.438rem rgba(0, 0, 0, 0.20);
+
     &[data-theme=dark] {
         color-scheme: dark;
-        --header-background: #212121;
-        --hover-overlay: rgba(255, 255, 255, 0.04);
-        --focus-overlay: rgba(255, 255, 255, 0.12);
-        --activated-overlay: rgba(255, 255, 255, 0.12);
-        --pressed-overlay: rgba(255, 255, 255, 0.10);
-        --selected-overlay: rgba(255, 255, 255, 0.08);
-        --dragged-overlay: rgba(255, 255, 255, 0.08);
-        --color-active: rgba(255, 255, 255, 0.87);
-        --color-inactive: rgba(255, 255, 255, 0.60);
-        --color-disabled: rgba(255, 255, 255, 0.38);
+        --header-background: Canvas;
+        --hover-overlay: color-mix(in srgb, rgb(255, 255, 255) 4%, rgb(0, 0, 0));
+        --focus-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+        --activated-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+
+        --pressed-overlay: color-mix(in srgb, rgb(255, 255, 255) 10%, rgb(0, 0, 0));
+        --selected-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
+        --dragged-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
+
+        --color-active: color-mix(in srgb, rgb(255, 255, 255) 87%, rgb(0, 0, 0));
+        --color-inactive: color-mix(in srgb, rgb(255, 255, 255) 60%, rgb(0, 0, 0));
+        --color-disabled: color-mix(in srgb, rgb(255, 255, 255) 38%, rgb(0, 0, 0));
+
+        --elevation-overlay-1: color-mix(in srgb, rgb(255, 255, 255) 5%, rgb(0, 0, 0));
+        --elevation-overlay-2: color-mix(in srgb, rgb(255, 255, 255) 7%, rgb(0, 0, 0));
+        --elevation-overlay-3: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
+        --elevation-overlay-4: color-mix(in srgb, rgb(255, 255, 255) 9%, rgb(0, 0, 0));
+        --elevation-overlay-6: color-mix(in srgb, rgb(255, 255, 255) 11%, rgb(0, 0, 0));
+        --elevation-overlay-8: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+        --elevation-overlay-12: color-mix(in srgb, rgb(255, 255, 255) 14%, rgb(0, 0, 0));
+        --elevation-overlay-16: color-mix(in srgb, rgb(255, 255, 255) 15%, rgb(0, 0, 0));
+        --elevation-overlay-24: color-mix(in srgb, rgb(255, 255, 255) 16%, rgb(0, 0, 0));
+
+        --elevation-box-shadow-1: 0 0.125rem 0.0625rem -0.0625rem rgba(255, 255, 255, 0.2), 0 0.0625rem 0.0625rem 0 rgba(255, 255, 255, 0.14), 0 0.0625rem 0.1875rem 0 rgba(255, 255, 255, 0.12);
+        --elevation-box-shadow-2: 0 0.1875rem 0.0625rem -0.125rem rgba(255, 255, 255, 0.2), 0 0.125rem 0.125rem 0 rgba(255, 255, 255, 0.14), 0 0.0625rem 0.3125rem 0 rgba(255, 255, 255, 0.12);
+        --elevation-box-shadow-3: 0 0.1875rem 0.1875rem 0.125rem rgba(255, 255, 255, 0.2), 0 0.1875rem 0.25rem 0 rgba(255, 255, 255, 0.14), 0 0.0625rem 0.5rem 0 rgba(255, 255, 255, 0.12);
+        --elevation-box-shadow-4: 0 0.25rem 0.313rem 0 rgba(255, 255, 255, 0.14), 0 0.063rem 0.625rem 0 rgba(255, 255, 255, 0.12), 0 0.125rem 0.25rem -0.063rem rgba(255, 255, 255, 0.20);
+        --elevation-box-shadow-6: 0 0.375rem 0.625rem 0 rgba(255, 255, 255, 0.14), 0 0.063rem 1.125rem 0 rgba(255, 255, 255, 0.12), 0 0.188rem 0.313rem -0.063rem rgba(255, 255, 255, 0.20);
+        --elevation-box-shadow-8: 0 0.5rem 0.625rem 0.063rem rgba(255, 255, 255, 0.14), 0 0.188rem 0.875rem 0.125rem rgba(255, 255, 255, 0.12), 0 0.313rem 0.313rem -0.188rem rgba(255, 255, 255, 0.20);
+        --elevation-box-shadow-12: 0 0.4375rem 0.5rem -0.25rem rgba(255, 255, 255, 0.20), 0 0.75rem 1.0625rem 0.125rem rgba(255, 255, 255, 0.14), 0 0.3125rem 1.375rem 0.25rem rgba(255, 255, 255, 0.12);
+        --elevation-box-shadow-16: 0 1rem 1.5rem 0.125rem rgba(255, 255, 255, 0.14), 0 0.375rem 1.875rem 0.313rem rgba(255, 255, 255, 0.12), 0 0.5rem 0.625rem -0.313rem rgba(255, 255, 255, 0.20);
+        --elevation-box-shadow-24: 0 1.5rem 2.375rem 0.188rem rgba(255, 255, 255, 0.14), 0 0.563rem 2.875rem 0.5rem rgba(255, 255, 255, 0.12), 0 0.688rem 0.936rem -0.438rem rgba(255, 255, 255, 0.20);
     }
 }
 
