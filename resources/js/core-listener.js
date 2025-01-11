@@ -1,16 +1,16 @@
+function debounce(command, milisecondDelay) {
+    let timer;
+
+    return function (...argument) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            command(...argument);
+        }, milisecondDelay);
+    };
+};
+
 export function showHideTopAppBarOnScroll(element, milisecondDelay) {
     let lastWindowScrollPosition = 0;
-
-    let debounce = (command, milisecondDelay) => {
-        let timer;
-
-        return function (...argument) {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                command(...argument);
-            }, milisecondDelay);
-        };
-    };
 
     let updateClass = (targetElement) => {
 
