@@ -18,7 +18,7 @@ html {
 
     --standard-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
     --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
-    --acelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
+    --accelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
 
     /* 
     Typography
@@ -64,15 +64,15 @@ html {
     Elevation
      */
 
-    /* --elevation-overlay-1: color-mix(in srgb, rgb(0, 0, 0) 5%, rgb(255, 255, 255));
-    --elevation-overlay-2: color-mix(in srgb, rgb(0, 0, 0) 7%, rgb(255, 255, 255));
-    --elevation-overlay-3: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
-    --elevation-overlay-4: color-mix(in srgb, rgb(0, 0, 0) 9%, rgb(255, 255, 255));
-    --elevation-overlay-6: color-mix(in srgb, rgb(0, 0, 0) 11%, rgb(255, 255, 255));
-    --elevation-overlay-8: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
-    --elevation-overlay-12: color-mix(in srgb, rgb(0, 0, 0) 14%, rgb(255, 255, 255));
-    --elevation-overlay-16: color-mix(in srgb, rgb(0, 0, 0) 15%, rgb(255, 255, 255));
-    --elevation-overlay-24: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255)); */
+    --elevation-solid-overlay-1: color-mix(in srgb, rgb(0, 0, 0) 5%, rgb(255, 255, 255));
+    --elevation-solid-overlay-2: color-mix(in srgb, rgb(0, 0, 0) 7%, rgb(255, 255, 255));
+    --elevation-solid-overlay-3: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
+    --elevation-solid-overlay-4: color-mix(in srgb, rgb(0, 0, 0) 9%, rgb(255, 255, 255));
+    --elevation-solid-overlay-6: color-mix(in srgb, rgb(0, 0, 0) 11%, rgb(255, 255, 255));
+    --elevation-solid-overlay-8: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --elevation-solid-overlay-12: color-mix(in srgb, rgb(0, 0, 0) 14%, rgb(255, 255, 255));
+    --elevation-solid-overlay-16: color-mix(in srgb, rgb(0, 0, 0) 15%, rgb(255, 255, 255));
+    --elevation-solid-overlay-24: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
 
     --elevation-overlay-1: rgba(0, 0, 0, 0.05);
     --elevation-overlay-2: rgba(0, 0, 0, 0.07);
@@ -120,15 +120,15 @@ html {
         --color-inactive: rgba(255, 255, 255, 0.60);
         --color-disabled: rgba(255, 255, 255, 0.38);
 
-        /* --elevation-overlay-1: color-mix(in srgb, rgb(255, 255, 255) 5%, rgb(0, 0, 0));
-        --elevation-overlay-2: color-mix(in srgb, rgb(255, 255, 255) 7%, rgb(0, 0, 0));
-        --elevation-overlay-3: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
-        --elevation-overlay-4: color-mix(in srgb, rgb(255, 255, 255) 9%, rgb(0, 0, 0));
-        --elevation-overlay-6: color-mix(in srgb, rgb(255, 255, 255) 11%, rgb(0, 0, 0));
-        --elevation-overlay-8: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
-        --elevation-overlay-12: color-mix(in srgb, rgb(255, 255, 255) 14%, rgb(0, 0, 0));
-        --elevation-overlay-16: color-mix(in srgb, rgb(255, 255, 255) 15%, rgb(0, 0, 0));
-        --elevation-overlay-24: color-mix(in srgb, rgb(255, 255, 255) 16%, rgb(0, 0, 0)); */
+        --elevation-solid-overlay-1: color-mix(in srgb, rgb(255, 255, 255) 5%, rgb(0, 0, 0));
+        --elevation-solid-overlay-2: color-mix(in srgb, rgb(255, 255, 255) 7%, rgb(0, 0, 0));
+        --elevation-solid-overlay-3: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
+        --elevation-solid-overlay-4: color-mix(in srgb, rgb(255, 255, 255) 9%, rgb(0, 0, 0));
+        --elevation-solid-overlay-6: color-mix(in srgb, rgb(255, 255, 255) 11%, rgb(0, 0, 0));
+        --elevation-solid-overlay-8: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+        --elevation-solid-overlay-12: color-mix(in srgb, rgb(255, 255, 255) 14%, rgb(0, 0, 0));
+        --elevation-solid-overlay-16: color-mix(in srgb, rgb(255, 255, 255) 15%, rgb(0, 0, 0));
+        --elevation-solid-overlay-24: color-mix(in srgb, rgb(255, 255, 255) 16%, rgb(0, 0, 0));
 
         --elevation-overlay-1: rgba(255, 255, 255, 0.05);
         --elevation-overlay-2: rgba(255, 255, 255, 0.07);
@@ -288,6 +288,31 @@ Inline SVG Style
 }
 
 /* 
+Skip Navigation Link Style
+ */
+
+a.jump-to-main-content {
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 1100;
+    box-shadow: var(--elevation-box-shadow-2);
+    background: var(--elevation-solid-overlay-2);
+    border-radius: 0 0 0.25rem 0;
+    translate: -50% -150%;
+
+    &:hover {
+        box-shadow: var(--elevation-box-shadow-8);
+        background: var(--elevation-solid-overlay-8);
+    }
+
+    &:focus {
+        translate: -50% 0;
+    }
+}
+
+/* 
 Header Style
  */
 
@@ -406,8 +431,12 @@ Animation Style
         scroll-margin-top: 4rem;
     }
 
+    a.jump-to-main-content {
+        transition: translate 0.25s var(--standard-easing);
+    }
+
     header {
-        transition: translate 0.3s var(--standard-easing);
+        transition: translate 0.3s var(--accelerated-easing);
     }
 
     .sun-and-moon {
@@ -423,7 +452,7 @@ Animation Style
 
         [data-theme="dark"] & {
             &>.sun {
-                transition-timing-function: var(--acelerated-easing);
+                transition-timing-function: var(--accelerated-easing);
                 transition-duration: 0.25s;
             }
 

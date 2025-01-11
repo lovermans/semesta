@@ -32,6 +32,8 @@
 				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
 		</div>
 
+		<a class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
+
 		<header data-print="none">
 			<div class="overlay">
 				<div class="header-column" id="main-header">
@@ -65,7 +67,7 @@
 			@yield('page-need-javascript-message')
 		@endif
 
-		<div id="content">
+		<div id="main-content">
 			@yield('content')
 		</div>
 
