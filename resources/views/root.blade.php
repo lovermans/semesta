@@ -22,7 +22,58 @@
 		@stack('resources')
 
 		<style nonce="{{ Vite::cspNonce() }}">
+			nav[popover] {
+				border: none;
+				border-radius: 0.25em;
+				box-shadow: var(--elevation-box-shadow-8);
+				background: Canvas;
+				overflow-y: auto;
+				max-height: calc(100dvh - 4rem);
 
+				.menu {
+					width: minmax(7rem, 40rem);
+					padding: 0.5em 0;
+					background: var(--elevation-overlay-8);
+				}
+
+				li {
+					padding: 1rem 1rem;
+					font: var(--font-body-1);
+					letter-spacing: var(--letter-spacing-body1);
+
+					a {
+						display: block;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						color: var(--color-active);
+					}
+
+					&:hover {
+						background: var(--hover-overlay);
+					}
+
+					&:focus {
+						background: var(--focus-overlay);
+						color: var(--color-focus);
+					}
+				}
+
+				&:is(:focus-within, :hover) {
+					box-shadow: var(--elevation-box-shadow-16);
+
+					.menu {
+						background: var(--elevation-overlay-16);
+					}
+				}
+			}
+
+			#main-navigation[popover] {
+				inset: unset;
+				top: anchor(--main-navigation-button bottom);
+				left: anchor(--main-navigation-button left);
+				margin: 0.25rem 0 0;
+			}
 		</style>
 	</head>
 
@@ -32,12 +83,12 @@
 				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
 		</div>
 
-		<a class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
+		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
 
-		<header data-print="none">
+		<header aria-label="Top App Bar" data-print="none">
 			<div class="overlay">
 				<div class="header-column" id="main-header">
-					<button class="header-button" title="Menu">
+					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu">
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#menu"></use>
 						</svg>
@@ -62,6 +113,34 @@
 				</div>
 			</div>
 		</header>
+
+		<nav aria-label="Main Navigation" id="main-navigation" popover>
+			<ul class="menu">
+				<li class="menu-item" tabindex="0"><a href="#home">Home</a></li>
+				<li class="menu-item" tabindex="0">
+					Services
+					<ul class="sub-menu">
+						<li class="sub-item" tabindex="0"><a href="#design">Web Design</a></li>
+						<li class="sub-item" tabindex="0">
+							Development
+							<ul class="sub-menu sub-level">
+								<li class="sub-item" tabindex="0"><a href="#frontend">Frontend</a></li>
+								<li class="sub-item" tabindex="0"><a href="#backend">Backend</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="sub-item" tabindex="0"><a href="#marketing">Digital Marketing</a></li>
+				<li class="menu-item" tabindex="0">
+					About Us
+					<ul class="sub-menu">
+						<li class="sub-item" tabindex="0"><a href="#team">Our Team</a></li>
+						<li class="sub-item" tabindex="0"><a href="#mission">Our Mission</a></li>
+					</ul>
+				</li>
+				<li class="menu-item" tabindex="0"><a href="#contact">Contact</a></li>
+			</ul>
+		</nav>
 
 		@hasSection('page-need-javascript-message')
 			@yield('page-need-javascript-message')

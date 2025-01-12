@@ -36,7 +36,7 @@
     // set early so no page flashes / CSS is made aware
     reflectThemePreference();
 
-    document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", () => {
         // set on load so screen readers can see latest value on the button
         reflectThemePreference();
 

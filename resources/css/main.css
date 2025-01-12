@@ -33,31 +33,31 @@ html {
     --color-inactive: rgba(0, 0, 0, 0.60);
     --color-disabled: rgba(0, 0, 0, 0.38);
 
-    --font-h1: normal normal 300 6rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h1: normal normal 300 6rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h1: -0.09375rem;
-    --font-h2: normal normal 300 3.75rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h2: normal normal 300 3.75rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h2: -0.03125rem;
-    --font-h3: normal normal 400 3rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h3: normal normal 400 3rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h3: 0;
-    --font-h4: normal normal 400 2.125rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h4: normal normal 400 2.125rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h4: 0.015625rem;
-    --font-h5: normal normal 400 1.5rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h5: normal normal 400 1.5rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h5: 0;
-    --font-h6: normal normal 500 1.25rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-h6: normal normal 500 1.25rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h6: 0.009375rem;
-    --font-subtitle-1: normal normal 400 1rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-subtitle-1: normal normal 400 1rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-subtitle-1: 0.009375rem;
-    --font-subtitle-2: normal normal 500 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-subtitle-2: normal normal 500 0.875rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-subtitle-2: 0.00625rem;
-    --font-body-1: normal normal 400 1rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-body-1: normal normal 400 1rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-body1: 0.03125rem;
-    --font-body-2: normal normal 400 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-body-2: normal normal 400 0.875rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-body2: 0.015625rem;
-    --font-button: normal normal 500 0.875rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-button: normal normal 500 0.875rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-button: 0.078125rem;
-    --font-caption: normal normal 400 0.75rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-caption: normal normal 400 0.75rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-caption: 0.025rem;
-    --font-overline: normal normal 400 0.625rem/calc(1em + 0.5rem) 'Roboto', arial, sans-serif;
+    --font-overline: normal normal 400 0.625rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-overline: 0.09375rem;
 
     /* 
@@ -74,7 +74,7 @@ html {
     --elevation-solid-overlay-16: color-mix(in srgb, rgb(0, 0, 0) 15%, rgb(255, 255, 255));
     --elevation-solid-overlay-24: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
 
-    --elevation-overlay-1: rgba(0, 0, 0, 0.05);
+    /* --elevation-overlay-1: rgba(0, 0, 0, 0.05);
     --elevation-overlay-2: rgba(0, 0, 0, 0.07);
     --elevation-overlay-3: rgba(0, 0, 0, 0.08);
     --elevation-overlay-4: rgba(0, 0, 0, 0.09);
@@ -82,7 +82,17 @@ html {
     --elevation-overlay-8: rgba(0, 0, 0, 0.12);
     --elevation-overlay-12: rgba(0, 0, 0, 0.14);
     --elevation-overlay-16: rgba(0, 0, 0, 0.15);
-    --elevation-overlay-24: rgba(0, 0, 0, 0.16);
+    --elevation-overlay-24: rgba(0, 0, 0, 0.16); */
+
+    --elevation-overlay-1: Canvas;
+    --elevation-overlay-2: Canvas;
+    --elevation-overlay-3: Canvas;
+    --elevation-overlay-4: Canvas;
+    --elevation-overlay-6: Canvas;
+    --elevation-overlay-8: Canvas;
+    --elevation-overlay-12: Canvas;
+    --elevation-overlay-16: Canvas;
+    --elevation-overlay-24: Canvas;
 
     --elevation-box-shadow-1: 0 0.125rem 0.0625rem -0.0625rem rgba(0, 0, 0, 0.2), 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.12);
     --elevation-box-shadow-2: 0 0.1875rem 0.0625rem -0.125rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.12);
@@ -150,6 +160,15 @@ html {
         --elevation-box-shadow-16: 0 1rem 1.5rem 0.125rem rgba(255, 255, 255, 0.14), 0 0.375rem 1.875rem 0.313rem rgba(255, 255, 255, 0.12), 0 0.5rem 0.625rem -0.313rem rgba(255, 255, 255, 0.20);
         --elevation-box-shadow-24: 0 1.5rem 2.375rem 0.188rem rgba(255, 255, 255, 0.14), 0 0.563rem 2.875rem 0.5rem rgba(255, 255, 255, 0.12), 0 0.688rem 0.936rem -0.438rem rgba(255, 255, 255, 0.20);
     }
+
+    &:has(nav[popover]:popover-open:not(dialog)) header {
+        box-shadow: var(--elevation-box-shadow-4);
+        translate: 0;
+
+        .overlay {
+            background: var(--elevation-overlay-4);
+        }
+    }
 }
 
 /* @supports not (color-scheme: dark) {
@@ -179,6 +198,7 @@ body {
     letter-spacing: var(--letter-spacing-body-2);
     color: var(--color-active);
     -webkit-font-smoothing: antialiased;
+    /* line-height: calc(1em + 0.5rem); */
     /* min-height: 100vh; */
 }
 
@@ -221,6 +241,7 @@ h4,
 h5,
 h6 {
     overflow-wrap: break-word;
+    line-height: calc(1em + 0.5rem);
 }
 
 p {
@@ -269,9 +290,11 @@ a {
     }
 }
 
-button {
+button,
+li {
     &:focus-visible {
         outline: none;
+        text-decoration: underline;
     }
 }
 
@@ -321,12 +344,15 @@ header {
     top: 0;
     z-index: 1000;
     background: Canvas;
-    height: 3.5rem;
     overflow: hidden;
 
     :is(.overlay, .header-column, .title-header) {
         display: flex;
         align-items: center;
+    }
+
+    .overlay {
+        height: 3.5rem;
     }
 
     button {
@@ -363,6 +389,7 @@ header {
     .header-column:first-child {
         flex: 1;
         min-width: 0;
+        anchor-name: --main-navigation-button;
     }
 
     .header-column:last-child {
