@@ -23,6 +23,7 @@ var RESOURCES = {
         "{{ Vite::asset('resources/fonts/woff2/Roboto-700-Italic.woff2') }}",
         "{{ Vite::asset('resources/fonts/woff2/Roboto-900-Italic.woff2') }}",
         "{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}",
+        "{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-57x57.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-60x60.png') }}",
         "{{ Vite::asset('resources/images/app-icon/apple-icon-72x72.png') }}",
@@ -47,7 +48,6 @@ var RESOURCES = {
         "{{ Vite::asset('resources/js/start.js') }}",
         "{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}",
         "{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}",
-        "{{ Vite::asset('resources/js/svg-sprites-icon-loader.js') }}",
         "{{ Vite::asset('resources/js/pusher-esm.js') }}",
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
     ],

@@ -23,6 +23,8 @@
 
 		<style nonce="{{ Vite::cspNonce() }}">
 			nav[popover] {
+				display: none;
+				opacity: 0;
 				border: none;
 				border-radius: 0.25em;
 				box-shadow: var(--elevation-box-shadow-8);
@@ -37,25 +39,26 @@
 				}
 
 				li {
-					padding: 1rem 1rem;
-					font: var(--font-body-1);
-					letter-spacing: var(--letter-spacing-body1);
 
-					a {
+					a,
+					button {
+						padding: 1rem 1rem;
+						font: var(--font-body-1);
+						letter-spacing: var(--letter-spacing-body1);
 						display: block;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
 						color: var(--color-active);
-					}
 
-					&:hover {
-						background: var(--hover-overlay);
-					}
+						&:hover {
+							background: var(--hover-overlay);
+						}
 
-					&:focus {
-						background: var(--focus-overlay);
-						color: var(--color-focus);
+						&:focus {
+							background: var(--focus-overlay);
+							color: var(--color-focus);
+						}
 					}
 				}
 
@@ -64,6 +67,15 @@
 
 					.menu {
 						background: var(--elevation-overlay-16);
+					}
+				}
+
+				&:popover-open:not(dialog) {
+					display: block;
+					opacity: 1;
+
+					@starting-style {
+						opacity: 0;
 					}
 				}
 			}
@@ -95,7 +107,7 @@
 					</button>
 					<div class="title-header">
 						<a href="{{ $app->url->route('start') }}" title="{{ $app->config->get('app.name') }}">
-							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#semesta' }}">
+							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#semesta' }}">
 							{{ $app->config->get('app.name') }}
 						</a>
 					</div>
@@ -116,29 +128,29 @@
 
 		<nav aria-label="Main Navigation" id="main-navigation" popover>
 			<ul class="menu">
-				<li class="menu-item" tabindex="0"><a href="#home">Home</a></li>
-				<li class="menu-item" tabindex="0">
-					Services
+				<li class="menu-item"><a href="#home">Home</a></li>
+				<li class="menu-item">
+					<button>Services</button>
 					<ul class="sub-menu">
-						<li class="sub-item" tabindex="0"><a href="#design">Web Design</a></li>
-						<li class="sub-item" tabindex="0">
-							Development
+						<li class="sub-item"><a href="#design">Web Design</a></li>
+						<li class="sub-item">
+							<button>Services</button>
 							<ul class="sub-menu sub-level">
-								<li class="sub-item" tabindex="0"><a href="#frontend">Frontend</a></li>
-								<li class="sub-item" tabindex="0"><a href="#backend">Backend</a></li>
+								<li class="sub-item"><a href="#frontend">Frontend</a></li>
+								<li class="sub-item"><a href="#backend">Backend</a></li>
 							</ul>
 						</li>
 					</ul>
 				</li>
-				<li class="sub-item" tabindex="0"><a href="#marketing">Digital Marketing</a></li>
-				<li class="menu-item" tabindex="0">
-					About Us
+				<li class="sub-item"><a href="#marketing">Digital Marketing</a></li>
+				<li class="menu-item">
+					<button>Services</button>
 					<ul class="sub-menu">
-						<li class="sub-item" tabindex="0"><a href="#team">Our Team</a></li>
-						<li class="sub-item" tabindex="0"><a href="#mission">Our Mission</a></li>
+						<li class="sub-item"><a href="#team">Our Team</a></li>
+						<li class="sub-item"><a href="#mission">Our Mission</a></li>
 					</ul>
 				</li>
-				<li class="menu-item" tabindex="0"><a href="#contact">Contact</a></li>
+				<li class="menu-item"><a href="#contact">Contact</a></li>
 			</ul>
 		</nav>
 
