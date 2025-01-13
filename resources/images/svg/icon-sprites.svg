@@ -55,7 +55,11 @@
             ]]>
         </style>
     </defs>
-    <g class="sprite" id="menu">
+    <g class="sprite" id="expand-more-icon">
+        <path d="M24 24H0V0h24v24z" fill="none" />
+        <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" />
+    </g>
+    <g class="sprite" id="menu-icon">
         <path d="M0 0h24v24H0V0z" fill="none" />
         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
     </g>

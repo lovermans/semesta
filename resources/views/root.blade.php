@@ -22,70 +22,7 @@
 		@stack('resources')
 
 		<style nonce="{{ Vite::cspNonce() }}">
-			nav[popover] {
-				display: none;
-				opacity: 0;
-				border: none;
-				border-radius: 0.25em;
-				box-shadow: var(--elevation-box-shadow-8);
-				background: Canvas;
-				overflow-y: auto;
-				max-height: calc(100dvh - 4rem);
 
-				.menu {
-					width: minmax(7rem, 40rem);
-					padding: 0.5em 0;
-					background: var(--elevation-overlay-8);
-				}
-
-				li {
-
-					a,
-					button {
-						padding: 1rem 1rem;
-						font: var(--font-body-1);
-						letter-spacing: var(--letter-spacing-body1);
-						display: block;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						color: var(--color-active);
-
-						&:hover {
-							background: var(--hover-overlay);
-						}
-
-						&:focus {
-							background: var(--focus-overlay);
-							color: var(--color-focus);
-						}
-					}
-				}
-
-				&:is(:focus-within, :hover) {
-					box-shadow: var(--elevation-box-shadow-16);
-
-					.menu {
-						background: var(--elevation-overlay-16);
-					}
-				}
-
-				&:popover-open:not(dialog) {
-					display: block;
-					opacity: 1;
-
-					@starting-style {
-						opacity: 0;
-					}
-				}
-			}
-
-			#main-navigation[popover] {
-				inset: unset;
-				top: anchor(--main-navigation-button bottom);
-				left: anchor(--main-navigation-button left);
-				margin: 0.25rem 0 0;
-			}
 		</style>
 	</head>
 
@@ -102,12 +39,12 @@
 				<div class="header-column" id="main-header">
 					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu">
 						<svg aria-hidden="true" viewbox="0 0 24 24">
-							<use href="#menu"></use>
+							<use href="#menu-icon"></use>
 						</svg>
 					</button>
 					<div class="title-header">
 						<a href="{{ $app->url->route('start') }}" title="{{ $app->config->get('app.name') }}">
-							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#semesta' }}">
+							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
 							{{ $app->config->get('app.name') }}
 						</a>
 					</div>
@@ -128,24 +65,48 @@
 
 		<nav aria-label="Main Navigation" id="main-navigation" popover>
 			<ul class="menu">
-				<li class="menu-item"><a href="#home">Home</a></li>
-				<li class="menu-item">
-					<button>Services</button>
-					<ul class="sub-menu">
-						<li class="sub-item"><a href="#design">Web Design</a></li>
-						<li class="sub-item">
-							<button>Services</button>
-							<ul class="sub-menu sub-level">
-								<li class="sub-item"><a href="#frontend">Frontend</a></li>
-								<li class="sub-item"><a href="#backend">Backend</a></li>
+				<li><a href="#home">Home</a></li>
+				<li>
+					<button>
+						Service
+						<svg aria-hidden="true" viewbox="0 0 24 24">
+							<use href="#expand-more-icon"></use>
+						</svg>
+					</button>
+					<ul>
+						<li><a href="#design">Web Design</a></li>
+						<li>
+							<button>
+								Development
+								<svg aria-hidden="true" viewbox="0 0 24 24">
+									<use href="#expand-more-icon"></use>
+								</svg>
+							</button>
+							<ul>
+								<li><a href="#frontend">Frontend</a></li>
+								<li>
+									<button>
+										Development B
+										<svg aria-hidden="true" viewbox="0 0 24 24">
+											<use href="#expand-more-icon"></use>
+										</svg>
+									</button>
+									<ul>
+										<li><a href="#backend">Backend</a></li>
+									</ul>
 							</ul>
 						</li>
+						<li><a href="#marketing">Digital Marketing</a></li>
 					</ul>
 				</li>
-				<li class="sub-item"><a href="#marketing">Digital Marketing</a></li>
-				<li class="menu-item">
-					<button>Services</button>
-					<ul class="sub-menu">
+				<li>
+					<button>
+						About
+						<svg aria-hidden="true" viewbox="0 0 24 24">
+							<use href="#expand-more-icon"></use>
+						</svg>
+					</button>
+					<ul>
 						<li class="sub-item"><a href="#team">Our Team</a></li>
 						<li class="sub-item"><a href="#mission">Our Mission</a></li>
 					</ul>
