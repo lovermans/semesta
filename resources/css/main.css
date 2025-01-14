@@ -412,7 +412,10 @@ header {
     .header-column:first-child {
         flex: 1;
         min-width: 0;
-        anchor-name: --main-navigation-button;
+
+        button {
+            anchor-name: --main-navigation-button;
+        }
     }
 
     .header-column:last-child {
