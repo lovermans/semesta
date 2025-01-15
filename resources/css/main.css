@@ -243,7 +243,7 @@ img {
 }
 
 :where(svg:not([fill])) {
-    fill: currentColor;
+    fill: var(--color-active);
 }
 
 /*  
@@ -303,12 +303,20 @@ table {
     border-spacing: 0;
 }
 
+:has(:target) {
+    scroll-margin-top: 4rem;
+}
+
 a {
     text-decoration: none;
 
     &:focus-visible {
         outline: none;
         text-decoration: underline;
+
+        svg {
+            fill: var(--color-focus);
+        }
     }
 }
 
@@ -320,6 +328,10 @@ button {
         outline: var(--divider);
         outline-offset: 0;
         text-decoration: underline;
+
+        svg {
+            fill: var(--color-focus);
+        }
     }
 }
 
@@ -490,8 +502,6 @@ nav[popover] {
             text-align: left;
 
             svg {
-                width: 1.5rem;
-                aspect-ratio: 1;
 
                 &:last-child {
                     transform: rotate(-90deg);
@@ -533,9 +543,12 @@ nav[popover] {
                     }
                 }
 
-                svg:last-child {
-                    margin-left: auto;
-                    transform: rotate(0deg);
+                svg {
+
+                    &:last-child {
+                        margin-left: auto;
+                        transform: rotate(0deg);
+                    }
                 }
             }
         }
@@ -613,7 +626,7 @@ Screen Breakpoint
         z-index: 10000;
 
         .menu {
-            width: 100%;
+            width: 20rem;
             height: calc(100dvh - 3.5rem);
         }
     }
@@ -630,7 +643,6 @@ Animation Style
 @media (prefers-reduced-motion: no-preference) {
     :has(:target) {
         scroll-behavior: smooth;
-        scroll-margin-top: 4rem;
     }
 
     a.jump-to-main-content {

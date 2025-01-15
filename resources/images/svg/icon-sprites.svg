@@ -5,16 +5,9 @@
             <![CDATA[
             .sprite {
                 display: none;
-                --icon-fill: hsl(210 10% 30%);
-                --icon-fill-hover: hsl(210 10% 15%);
 
                 &:target {
                     display: inline;
-                }
-
-                [data-theme=dark] & {
-                    --icon-fill: hsl(210 10% 70%);
-                    --icon-fill-hover: hsl(210 15% 90%);
                 }
             }
 
@@ -24,17 +17,17 @@
                 }
 
                 &> :is(.moon, .sun) {
-                    fill: var(--icon-fill);
+                    fill: var(--color-active);
                 }
 
                 &>.sun-beams {
-                    stroke: var(--icon-fill);
+                    stroke: var(--color-active);
                     stroke-width: 0.125rem;
                 }
 
-                .sprite:is(:hover, :focus-visible)>& {
+                .sprite:is(:focus-visible)>& {
                     &> :is(.moon, .sun, .sun-beams) {
-                        fill: var(--icon-fill-hover);
+                        fill: var(--icon-fill-focus);
                     }
                 }
 
