@@ -37,7 +37,7 @@
 		<header aria-label="Top App Bar" data-print="none">
 			<div class="overlay">
 				<div class="header-column" id="main-header">
-					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu">
+					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu" type="button">
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#menu-icon"></use>
 						</svg>
@@ -67,7 +67,7 @@
 			<ul class="menu">
 				<li><a href="#home">Home</a></li>
 				<li>
-					<button>
+					<button aria-expanded="false">
 						Service
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
@@ -76,7 +76,7 @@
 					<ul>
 						<li><a href="#design">Web Design</a></li>
 						<li>
-							<button>
+							<button aria-expanded="false">
 								Development
 								<svg aria-hidden="true" viewbox="0 0 24 24">
 									<use href="#expand-more-icon"></use>
@@ -85,7 +85,7 @@
 							<ul>
 								<li><a href="#frontend">Frontend</a></li>
 								<li>
-									<button>
+									<button aria-expanded="false">
 										Development B
 										<svg aria-hidden="true" viewbox="0 0 24 24">
 											<use href="#expand-more-icon"></use>
@@ -100,7 +100,7 @@
 					</ul>
 				</li>
 				<li>
-					<button>
+					<button aria-expanded="false">
 						About
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
@@ -131,10 +131,12 @@
 
 		<script nonce="{{ Vite::cspNonce() }}" type="module">
 			import {
-				showHideTopAppBarOnScroll
+				showHideTopAppBarOnScroll,
+				expandNavigationAccesibility
 			} from "{{ Vite::asset('resources/js/core-listener.js') }}";
 
 			showHideTopAppBarOnScroll(document.body, 500);
+			expandNavigationAccesibility();
 		</script>
 	</body>
 

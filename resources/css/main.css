@@ -481,7 +481,7 @@ nav[popover] {
 
     .menu {
         min-width: 7rem;
-        max-width: 40rem;
+        max-width: 20rem;
         padding: 0.5em 0;
         background: var(--elevation-overlay-8);
     }
@@ -527,7 +527,7 @@ nav[popover] {
             }
         }
 
-        &:focus-within {
+        &:has(:focus-within, >button[aria-expanded=true]) {
             border-top: var(--divider);
             border-bottom: var(--divider);
 
@@ -622,17 +622,18 @@ Screen Breakpoint
         opacity: 1;
         translate: 0 0;
         border-radius: 2rem 0 0 0;
-        width: 100%;
         z-index: 10000;
 
         .menu {
             width: 20rem;
-            height: calc(100dvh - 3.5rem);
+            height: calc(100dvh);
+            padding: 0.5rem 0 3rem;
+            overflow-y: auto;
         }
     }
 
     #main-content {
-        padding-right: 20rem;
+        padding-right: 21rem;
     }
 }
 
