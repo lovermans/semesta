@@ -397,7 +397,7 @@ header {
         height: 3.5rem;
     }
 
-    button {
+    button:not(:empty) {
         padding: 0.75rem;
         margin: 0.25rem;
         width: 3rem;

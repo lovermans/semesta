@@ -37,7 +37,7 @@
 		<header aria-label="Top App Bar" data-print="none">
 			<div class="overlay">
 				<div class="header-column" id="main-header">
-					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu" type="button">
+					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu">
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#menu-icon"></use>
 						</svg>
@@ -50,6 +50,8 @@
 					</div>
 				</div>
 				<div class="header-column" id="extra-header">
+					<button id="app-list"></button>
+					<button id="profile"></button>
 					<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle" title="Toggles light & dark theme">
 						<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
 							<mask class="moon" id="moon-mask">
@@ -65,6 +67,9 @@
 
 		<nav aria-label="Main Navigation" data-print="none" id="main-navigation" popover>
 			<ul class="menu">
+				@hasSection('main-navigation')
+					@yield('main-navigation')
+				@endif
 				<li><a href="#home">Home</a></li>
 				<li>
 					<button aria-disabled="true">
