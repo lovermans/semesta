@@ -1,3 +1,15 @@
+// export function expandNavigationAccesibility() {
+//     document.body.addEventListener('focus', (event) => {
+//         if (event.target.matches('.menu li>button[aria-expanded]')) {
+//             event.stopPropagation();
+
+//             if (event.target.getAttribute('aria-expanded') === 'false') {
+//                 event.target.setAttribute('aria-expanded', 'true');
+//             }
+//         }
+//     }, true);
+// };
+
 function debounce(command, milisecondDelay) {
     let timer;
 
@@ -38,16 +50,4 @@ export function showHideTopAppBarOnScroll(element, milisecondDelay) {
     updateClass = debounce(updateClass, milisecondDelay);
 
     window.addEventListener('scroll', () => updateClass(element), { passive: true });
-};
-
-export function expandNavigationAccesibility() {
-    document.body.addEventListener('focus', (event) => {
-        if (event.target.matches('.menu li>button[aria-expanded]')) {
-            event.stopPropagation();
-
-            if (event.target.getAttribute('aria-expanded') === 'false') {
-                event.target.setAttribute('aria-expanded', 'true');
-            }
-        }
-    }, true);
 };

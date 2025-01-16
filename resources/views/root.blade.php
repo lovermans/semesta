@@ -63,11 +63,11 @@
 			</div>
 		</header>
 
-		<nav aria-label="Main Navigation" id="main-navigation" popover>
+		<nav aria-label="Main Navigation" data-print="none" id="main-navigation" popover>
 			<ul class="menu">
 				<li><a href="#home">Home</a></li>
 				<li>
-					<button aria-expanded="false">
+					<button aria-disabled="true">
 						Service
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
@@ -76,7 +76,7 @@
 					<ul>
 						<li><a href="#design">Web Design</a></li>
 						<li>
-							<button aria-expanded="false">
+							<button aria-disabled="true">
 								Development
 								<svg aria-hidden="true" viewbox="0 0 24 24">
 									<use href="#expand-more-icon"></use>
@@ -85,7 +85,7 @@
 							<ul>
 								<li><a href="#frontend">Frontend</a></li>
 								<li>
-									<button aria-expanded="false">
+									<button aria-disabled="true">
 										Development B
 										<svg aria-hidden="true" viewbox="0 0 24 24">
 											<use href="#expand-more-icon"></use>
@@ -100,7 +100,7 @@
 					</ul>
 				</li>
 				<li>
-					<button aria-expanded="false">
+					<button aria-disabled="true">
 						About
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
@@ -120,7 +120,7 @@
 		@endif
 
 		<div id="main-content">
-			@yield('content')
+			@yield('main-content')
 		</div>
 
 		@sectionMissing('page-need-javascript-message')
@@ -131,12 +131,10 @@
 
 		<script nonce="{{ Vite::cspNonce() }}" type="module">
 			import {
-				showHideTopAppBarOnScroll,
-				expandNavigationAccesibility
+				showHideTopAppBarOnScroll
 			} from "{{ Vite::asset('resources/js/core-listener.js') }}";
 
-			showHideTopAppBarOnScroll(document.body, 500);
-			expandNavigationAccesibility();
+			showHideTopAppBarOnScroll(document.body, 300);
 		</script>
 	</body>
 

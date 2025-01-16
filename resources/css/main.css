@@ -79,7 +79,7 @@ html {
     --elevation-solid-overlay-16: color-mix(in srgb, rgb(0, 0, 0) 15%, rgb(255, 255, 255));
     --elevation-solid-overlay-24: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
 
-    /* --elevation-overlay-1: rgba(0, 0, 0, 0.05);
+    --elevation-overlay-1: rgba(0, 0, 0, 0.05);
     --elevation-overlay-2: rgba(0, 0, 0, 0.07);
     --elevation-overlay-3: rgba(0, 0, 0, 0.08);
     --elevation-overlay-4: rgba(0, 0, 0, 0.09);
@@ -87,9 +87,9 @@ html {
     --elevation-overlay-8: rgba(0, 0, 0, 0.12);
     --elevation-overlay-12: rgba(0, 0, 0, 0.14);
     --elevation-overlay-16: rgba(0, 0, 0, 0.15);
-    --elevation-overlay-24: rgba(0, 0, 0, 0.16); */
+    --elevation-overlay-24: rgba(0, 0, 0, 0.16);
 
-    --elevation-overlay-1: Canvas;
+    /* --elevation-overlay-1: Canvas;
     --elevation-overlay-2: Canvas;
     --elevation-overlay-3: Canvas;
     --elevation-overlay-4: Canvas;
@@ -97,7 +97,7 @@ html {
     --elevation-overlay-8: Canvas;
     --elevation-overlay-12: Canvas;
     --elevation-overlay-16: Canvas;
-    --elevation-overlay-24: Canvas;
+    --elevation-overlay-24: Canvas; */
 
     --elevation-box-shadow-1: 0 0.125rem 0.0625rem -0.0625rem rgba(0, 0, 0, 0.2), 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.12);
     --elevation-box-shadow-2: 0 0.1875rem 0.0625rem -0.125rem rgba(0, 0, 0, 0.2), 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.14), 0 0.0625rem 0.3125rem 0 rgba(0, 0, 0, 0.12);
@@ -523,11 +523,16 @@ nav[popover] {
             align-items: center;
 
             &+ul {
-                display: none;
+                /* display: none; */
+                /* visibility: hidden; */
+                position: absolute;
+                top: -200vh;
+                left: -200vw;
             }
         }
 
-        &:has(:focus-within, >button[aria-expanded=true]) {
+        /* &:has(:focus-within, >button[aria-expanded=true]) { */
+        &:focus-within {
             border-top: var(--divider);
             border-bottom: var(--divider);
 
@@ -536,7 +541,9 @@ nav[popover] {
                 color: var(--color-focus);
 
                 &+ul {
-                    display: block;
+                    /* display: block; */
+                    /* visibility: visible; */
+                    position: static;
 
                     a {
                         padding: 1rem 1rem 1rem 2rem;
@@ -580,6 +587,10 @@ nav[popover] {
             translate: -120% 0;
         }
     }
+}
+
+#main-content {
+    padding: 1rem;
 }
 
 /* 
@@ -633,7 +644,7 @@ Screen Breakpoint
     }
 
     #main-content {
-        padding-right: 21rem;
+        padding: 1rem 21rem 1rem 1rem;
     }
 }
 
