@@ -50,8 +50,8 @@
 					</div>
 				</div>
 				<div class="header-column" id="extra-header">
-					<button id="app-list"></button>
-					<button id="profile"></button>
+					<button id="app-list" title="App List"></button>
+					<button id="profile" title="Profile"></button>
 					<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle" title="Toggles light & dark theme">
 						<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
 							<mask class="moon" id="moon-mask">
