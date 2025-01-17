@@ -48,7 +48,6 @@ var RESOURCES = {
         "{{ Vite::asset('resources/js/start.js') }}",
         "{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}",
         "{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}",
-        "{{ Vite::asset('resources/js/pusher-esm.js') }}",
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
     ],
     pages: [
