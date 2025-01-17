@@ -1,53 +1,52 @@
-(() => {
-    const THEME_STORAGE_KEY = 'theme-preference';
 
-    function saveThemePreference() {
-        // flip current value
-        theme.value = theme.value === 'light' ? 'dark' : 'light';
+const THEME_STORAGE_KEY = 'theme-preference';
 
-        setThemePreference();
-    };
+function saveThemePreference() {
+    // flip current value
+    theme.value = theme.value === 'light' ? 'dark' : 'light';
 
-    function getThemePreference() {
-        if (localStorage.getItem(THEME_STORAGE_KEY)) {
-            return localStorage.getItem(THEME_STORAGE_KEY)
-        }
-        else {
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-    };
+    setThemePreference();
+};
 
-    function setThemePreference() {
-        localStorage.setItem(THEME_STORAGE_KEY, theme.value);
+function getThemePreference() {
+    if (localStorage.getItem(THEME_STORAGE_KEY)) {
+        return localStorage.getItem(THEME_STORAGE_KEY)
+    }
+    else {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+};
 
-        reflectThemePreference();
-    };
+function setThemePreference() {
+    localStorage.setItem(THEME_STORAGE_KEY, theme.value);
 
-    function reflectThemePreference() {
-        document.firstElementChild.setAttribute('data-theme', theme.value);
+    reflectThemePreference();
+};
 
-        document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
-    };
+function reflectThemePreference() {
+    document.firstElementChild.setAttribute('data-theme', theme.value);
 
-    let theme = {
-        value: getThemePreference()
-    };
+    document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+};
 
-    // set early so no page flashes / CSS is made aware
+let theme = {
+    value: getThemePreference()
+};
+
+// set early so no page flashes / CSS is made aware
+reflectThemePreference();
+
+window.addEventListener("DOMContentLoaded", () => {
+    // set on load so screen readers can see latest value on the button
     reflectThemePreference();
 
-    window.addEventListener("DOMContentLoaded", () => {
-        // set on load so screen readers can see latest value on the button
-        reflectThemePreference();
+    // now this script can find and listen for clicks on the control
+    document.querySelector('#theme-toggle')?.addEventListener('click', saveThemePreference);
+});
 
-        // now this script can find and listen for clicks on the control
-        document.querySelector('#theme-toggle')?.addEventListener('click', saveThemePreference);
-    });
+// sync with system changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
+    theme.value = isDark ? 'dark' : 'light';
 
-    // sync with system changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
-        theme.value = isDark ? 'dark' : 'light';
-
-        setThemePreference();
-    });
-})();
+    setThemePreference();
+});

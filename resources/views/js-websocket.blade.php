@@ -1,5 +1,4 @@
-import PusherBrowser from "{{ Vite::asset('resources/js/pusher-esm.js') }}";
-import EchoBrowser from "{{ Vite::asset('resources/js/echo-esm.js') }}";
+import Echo from "{{ Vite::asset('resources/js/echo-esm.js') }}";
 
 let echoConfig = {
 	broadcaster: "{{ $app->config->get('broadcasting.default') }}",
@@ -7,7 +6,12 @@ let echoConfig = {
 	cluster: "{{ $app->config->get('broadcasting.connections.pusher.options.cluster') }}",
 	wsHost: "{{ $app->request->getHttpHost() }}",
 	wsPath: "{{ $app->request->getBasePath() }}",
-	authEndpoint: "{{ $app->request->getBasePath() . '/broadcasting/auth' }}",
+	channelAuthorization: {
+		endpoint: "{{ $app->request->getBasePath() . '/broadcasting/user' }}",
+		headers: {
+			["X-CSRF-TOKEN"]: "{{ $app->session->token() }}"
+		}
+	},
 	userAuthentication: {
 		endpoint: "{{ $app->request->getBasePath() . '/broadcasting/user-auth' }}",
 		headers: {
@@ -24,8 +28,7 @@ let echoConfig = {
 	disabledTransports: ['sockjs', 'xhr_polling', 'xhr_streaming']
 };
 
-/* const pusherProtocol = new PusherBrowser(echoConfig.key, echoConfig); */
-export const soketi = new EchoBrowser({
+export let soketi = new Echo({
 	...echoConfig,
-	client: new PusherBrowser(echoConfig.key, echoConfig)
+	// client: new PusherBrowser(echoConfig.key, echoConfig)
 });

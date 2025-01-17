@@ -1,3 +1,4 @@
+import PusherWeb from './pusher-esm';
 /**
  * This class represents a basic channel.
  */
@@ -232,280 +233,280 @@ class PusherPresenceChannel extends PusherPrivateChannel {
 /**
  * This class represents a Socket.io channel.
  */
-class SocketIoChannel extends Channel {
-    /**
-     * Create a new class instance.
-     */
-    constructor(socket, name, options) {
-        super();
-        /**
-         * The event callbacks applied to the socket.
-         */
-        this.events = {};
-        /**
-         * User supplied callbacks for events on this channel.
-         */
-        this.listeners = {};
-        this.name = name;
-        this.socket = socket;
-        this.options = options;
-        this.eventFormatter = new EventFormatter(this.options.namespace);
-        this.subscribe();
-    }
-    /**
-     * Subscribe to a Socket.io channel.
-     */
-    subscribe() {
-        this.socket.emit('subscribe', {
-            channel: this.name,
-            auth: this.options.auth || {},
-        });
-    }
-    /**
-     * Unsubscribe from channel and ubind event callbacks.
-     */
-    unsubscribe() {
-        this.unbind();
-        this.socket.emit('unsubscribe', {
-            channel: this.name,
-            auth: this.options.auth || {},
-        });
-    }
-    /**
-     * Listen for an event on the channel instance.
-     */
-    listen(event, callback) {
-        this.on(this.eventFormatter.format(event), callback);
-        return this;
-    }
-    /**
-     * Stop listening for an event on the channel instance.
-     */
-    stopListening(event, callback) {
-        this.unbindEvent(this.eventFormatter.format(event), callback);
-        return this;
-    }
-    /**
-     * Register a callback to be called anytime a subscription succeeds.
-     */
-    subscribed(callback) {
-        this.on('connect', (socket) => {
-            callback(socket);
-        });
-        return this;
-    }
-    /**
-     * Register a callback to be called anytime an error occurs.
-     */
-    error(callback) {
-        return this;
-    }
-    /**
-     * Bind the channel's socket to an event and store the callback.
-     */
-    on(event, callback) {
-        this.listeners[event] = this.listeners[event] || [];
-        if (!this.events[event]) {
-            this.events[event] = (channel, data) => {
-                if (this.name === channel && this.listeners[event]) {
-                    this.listeners[event].forEach((cb) => cb(data));
-                }
-            };
-            this.socket.on(event, this.events[event]);
-        }
-        this.listeners[event].push(callback);
-        return this;
-    }
-    /**
-     * Unbind the channel's socket from all stored event callbacks.
-     */
-    unbind() {
-        Object.keys(this.events).forEach((event) => {
-            this.unbindEvent(event);
-        });
-    }
-    /**
-     * Unbind the listeners for the given event.
-     */
-    unbindEvent(event, callback) {
-        this.listeners[event] = this.listeners[event] || [];
-        if (callback) {
-            this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
-        }
-        if (!callback || this.listeners[event].length === 0) {
-            if (this.events[event]) {
-                this.socket.removeListener(event, this.events[event]);
-                delete this.events[event];
-            }
-            delete this.listeners[event];
-        }
-    }
-}
+// class SocketIoChannel extends Channel {
+//     /**
+//      * Create a new class instance.
+//      */
+//     constructor(socket, name, options) {
+//         super();
+//         /**
+//          * The event callbacks applied to the socket.
+//          */
+//         this.events = {};
+//         /**
+//          * User supplied callbacks for events on this channel.
+//          */
+//         this.listeners = {};
+//         this.name = name;
+//         this.socket = socket;
+//         this.options = options;
+//         this.eventFormatter = new EventFormatter(this.options.namespace);
+//         this.subscribe();
+//     }
+//     /**
+//      * Subscribe to a Socket.io channel.
+//      */
+//     subscribe() {
+//         this.socket.emit('subscribe', {
+//             channel: this.name,
+//             auth: this.options.auth || {},
+//         });
+//     }
+//     /**
+//      * Unsubscribe from channel and ubind event callbacks.
+//      */
+//     unsubscribe() {
+//         this.unbind();
+//         this.socket.emit('unsubscribe', {
+//             channel: this.name,
+//             auth: this.options.auth || {},
+//         });
+//     }
+//     /**
+//      * Listen for an event on the channel instance.
+//      */
+//     listen(event, callback) {
+//         this.on(this.eventFormatter.format(event), callback);
+//         return this;
+//     }
+//     /**
+//      * Stop listening for an event on the channel instance.
+//      */
+//     stopListening(event, callback) {
+//         this.unbindEvent(this.eventFormatter.format(event), callback);
+//         return this;
+//     }
+//     /**
+//      * Register a callback to be called anytime a subscription succeeds.
+//      */
+//     subscribed(callback) {
+//         this.on('connect', (socket) => {
+//             callback(socket);
+//         });
+//         return this;
+//     }
+//     /**
+//      * Register a callback to be called anytime an error occurs.
+//      */
+//     error(callback) {
+//         return this;
+//     }
+//     /**
+//      * Bind the channel's socket to an event and store the callback.
+//      */
+//     on(event, callback) {
+//         this.listeners[event] = this.listeners[event] || [];
+//         if (!this.events[event]) {
+//             this.events[event] = (channel, data) => {
+//                 if (this.name === channel && this.listeners[event]) {
+//                     this.listeners[event].forEach((cb) => cb(data));
+//                 }
+//             };
+//             this.socket.on(event, this.events[event]);
+//         }
+//         this.listeners[event].push(callback);
+//         return this;
+//     }
+//     /**
+//      * Unbind the channel's socket from all stored event callbacks.
+//      */
+//     unbind() {
+//         Object.keys(this.events).forEach((event) => {
+//             this.unbindEvent(event);
+//         });
+//     }
+//     /**
+//      * Unbind the listeners for the given event.
+//      */
+//     unbindEvent(event, callback) {
+//         this.listeners[event] = this.listeners[event] || [];
+//         if (callback) {
+//             this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
+//         }
+//         if (!callback || this.listeners[event].length === 0) {
+//             if (this.events[event]) {
+//                 this.socket.removeListener(event, this.events[event]);
+//                 delete this.events[event];
+//             }
+//             delete this.listeners[event];
+//         }
+//     }
+// }
 
-/**
- * This class represents a Socket.io private channel.
- */
-class SocketIoPrivateChannel extends SocketIoChannel {
-    /**
-     * Send a whisper event to other clients in the channel.
-     */
-    whisper(eventName, data) {
-        this.socket.emit('client event', {
-            channel: this.name,
-            event: `client-${eventName}`,
-            data: data,
-        });
-        return this;
-    }
-}
+// /**
+//  * This class represents a Socket.io private channel.
+//  */
+// class SocketIoPrivateChannel extends SocketIoChannel {
+//     /**
+//      * Send a whisper event to other clients in the channel.
+//      */
+//     whisper(eventName, data) {
+//         this.socket.emit('client event', {
+//             channel: this.name,
+//             event: `client-${eventName}`,
+//             data: data,
+//         });
+//         return this;
+//     }
+// }
 
-/**
- * This class represents a Socket.io presence channel.
- */
-class SocketIoPresenceChannel extends SocketIoPrivateChannel {
-    /**
-     * Register a callback to be called anytime the member list changes.
-     */
-    here(callback) {
-        this.on('presence:subscribed', (members) => {
-            callback(members.map((m) => m.user_info));
-        });
-        return this;
-    }
-    /**
-     * Listen for someone joining the channel.
-     */
-    joining(callback) {
-        this.on('presence:joining', (member) => callback(member.user_info));
-        return this;
-    }
-    /**
-     * Send a whisper event to other clients in the channel.
-     */
-    whisper(eventName, data) {
-        this.socket.emit('client event', {
-            channel: this.name,
-            event: `client-${eventName}`,
-            data: data,
-        });
-        return this;
-    }
-    /**
-     * Listen for someone leaving the channel.
-     */
-    leaving(callback) {
-        this.on('presence:leaving', (member) => callback(member.user_info));
-        return this;
-    }
-}
+// /**
+//  * This class represents a Socket.io presence channel.
+//  */
+// class SocketIoPresenceChannel extends SocketIoPrivateChannel {
+//     /**
+//      * Register a callback to be called anytime the member list changes.
+//      */
+//     here(callback) {
+//         this.on('presence:subscribed', (members) => {
+//             callback(members.map((m) => m.user_info));
+//         });
+//         return this;
+//     }
+//     /**
+//      * Listen for someone joining the channel.
+//      */
+//     joining(callback) {
+//         this.on('presence:joining', (member) => callback(member.user_info));
+//         return this;
+//     }
+//     /**
+//      * Send a whisper event to other clients in the channel.
+//      */
+//     whisper(eventName, data) {
+//         this.socket.emit('client event', {
+//             channel: this.name,
+//             event: `client-${eventName}`,
+//             data: data,
+//         });
+//         return this;
+//     }
+//     /**
+//      * Listen for someone leaving the channel.
+//      */
+//     leaving(callback) {
+//         this.on('presence:leaving', (member) => callback(member.user_info));
+//         return this;
+//     }
+// }
 
-/**
- * This class represents a null channel.
- */
-class NullChannel extends Channel {
-    /**
-     * Subscribe to a channel.
-     */
-    subscribe() {
-        //
-    }
-    /**
-     * Unsubscribe from a channel.
-     */
-    unsubscribe() {
-        //
-    }
-    /**
-     * Listen for an event on the channel instance.
-     */
-    listen(event, callback) {
-        return this;
-    }
-    /**
-     * Listen for all events on the channel instance.
-     */
-    listenToAll(callback) {
-        return this;
-    }
-    /**
-     * Stop listening for an event on the channel instance.
-     */
-    stopListening(event, callback) {
-        return this;
-    }
-    /**
-     * Register a callback to be called anytime a subscription succeeds.
-     */
-    subscribed(callback) {
-        return this;
-    }
-    /**
-     * Register a callback to be called anytime an error occurs.
-     */
-    error(callback) {
-        return this;
-    }
-    /**
-     * Bind a channel to an event.
-     */
-    on(event, callback) {
-        return this;
-    }
-}
+// /**
+//  * This class represents a null channel.
+//  */
+// class NullChannel extends Channel {
+//     /**
+//      * Subscribe to a channel.
+//      */
+//     subscribe() {
+//         //
+//     }
+//     /**
+//      * Unsubscribe from a channel.
+//      */
+//     unsubscribe() {
+//         //
+//     }
+//     /**
+//      * Listen for an event on the channel instance.
+//      */
+//     listen(event, callback) {
+//         return this;
+//     }
+//     /**
+//      * Listen for all events on the channel instance.
+//      */
+//     listenToAll(callback) {
+//         return this;
+//     }
+//     /**
+//      * Stop listening for an event on the channel instance.
+//      */
+//     stopListening(event, callback) {
+//         return this;
+//     }
+//     /**
+//      * Register a callback to be called anytime a subscription succeeds.
+//      */
+//     subscribed(callback) {
+//         return this;
+//     }
+//     /**
+//      * Register a callback to be called anytime an error occurs.
+//      */
+//     error(callback) {
+//         return this;
+//     }
+//     /**
+//      * Bind a channel to an event.
+//      */
+//     on(event, callback) {
+//         return this;
+//     }
+// }
 
-/**
- * This class represents a null private channel.
- */
-class NullPrivateChannel extends NullChannel {
-    /**
-     * Send a whisper event to other clients in the channel.
-     */
-    whisper(eventName, data) {
-        return this;
-    }
-}
+// /**
+//  * This class represents a null private channel.
+//  */
+// class NullPrivateChannel extends NullChannel {
+//     /**
+//      * Send a whisper event to other clients in the channel.
+//      */
+//     whisper(eventName, data) {
+//         return this;
+//     }
+// }
 
-/**
- * This class represents a null private channel.
- */
-class NullEncryptedPrivateChannel extends NullChannel {
-    /**
-     * Send a whisper event to other clients in the channel.
-     */
-    whisper(eventName, data) {
-        return this;
-    }
-}
+// /**
+//  * This class represents a null private channel.
+//  */
+// class NullEncryptedPrivateChannel extends NullChannel {
+//     /**
+//      * Send a whisper event to other clients in the channel.
+//      */
+//     whisper(eventName, data) {
+//         return this;
+//     }
+// }
 
-/**
- * This class represents a null presence channel.
- */
-class NullPresenceChannel extends NullPrivateChannel {
-    /**
-     * Register a callback to be called anytime the member list changes.
-     */
-    here(callback) {
-        return this;
-    }
-    /**
-     * Listen for someone joining the channel.
-     */
-    joining(callback) {
-        return this;
-    }
-    /**
-     * Send a whisper event to other clients in the channel.
-     */
-    whisper(eventName, data) {
-        return this;
-    }
-    /**
-     * Listen for someone leaving the channel.
-     */
-    leaving(callback) {
-        return this;
-    }
-}
+// /**
+//  * This class represents a null presence channel.
+//  */
+// class NullPresenceChannel extends NullPrivateChannel {
+//     /**
+//      * Register a callback to be called anytime the member list changes.
+//      */
+//     here(callback) {
+//         return this;
+//     }
+//     /**
+//      * Listen for someone joining the channel.
+//      */
+//     joining(callback) {
+//         return this;
+//     }
+//     /**
+//      * Send a whisper event to other clients in the channel.
+//      */
+//     whisper(eventName, data) {
+//         return this;
+//     }
+//     /**
+//      * Listen for someone leaving the channel.
+//      */
+//     leaving(callback) {
+//         return this;
+//     }
+// }
 
 class Connector {
     /**
@@ -594,7 +595,7 @@ class PusherConnector extends Connector {
             this.pusher = new this.options.Pusher(this.options.key, this.options);
         }
         else {
-            this.pusher = new Pusher(this.options.key, this.options);
+            this.pusher = new PusherWeb(this.options.key, this.options);
         }
 
         this.pusher.connection.bind('connected', () => {
@@ -685,190 +686,191 @@ class PusherConnector extends Connector {
 /**
  * This class creates a connnector to a Socket.io server.
  */
-class SocketIoConnector extends Connector {
-    constructor() {
-        super(...arguments);
-        /**
-         * All of the subscribed channel names.
-         */
-        this.channels = {};
-    }
-    /**
-     * Create a fresh Socket.io connection.
-     */
-    connect() {
-        let io = this.getSocketIO();
-        this.socket = io(this.options.host, this.options);
-        this.socket.on('reconnect', () => {
-            Object.values(this.channels).forEach((channel) => {
-                channel.subscribe();
-            });
-        });
-        return this.socket;
-    }
-    /**
-     * Get socket.io module from global scope or options.
-     */
-    getSocketIO() {
-        if (typeof this.options.client !== 'undefined') {
-            return this.options.client;
-        }
-        if (typeof io !== 'undefined') {
-            return io;
-        }
-        throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
-    }
-    /**
-     * Listen for an event on a channel instance.
-     */
-    listen(name, event, callback) {
-        return this.channel(name).listen(event, callback);
-    }
-    /**
-     * Get a channel instance by name.
-     */
-    channel(name) {
-        if (!this.channels[name]) {
-            this.channels[name] = new SocketIoChannel(this.socket, name, this.options);
-        }
-        return this.channels[name];
-    }
-    /**
-     * Get a private channel instance by name.
-     */
-    privateChannel(name) {
-        if (!this.channels['private-' + name]) {
-            this.channels['private-' + name] = new SocketIoPrivateChannel(this.socket, 'private-' + name, this.options);
-        }
-        return this.channels['private-' + name];
-    }
-    /**
-     * Get a presence channel instance by name.
-     */
-    presenceChannel(name) {
-        if (!this.channels['presence-' + name]) {
-            this.channels['presence-' + name] = new SocketIoPresenceChannel(this.socket, 'presence-' + name, this.options);
-        }
-        return this.channels['presence-' + name];
-    }
-    /**
-     * Leave the given channel, as well as its private and presence variants.
-     */
-    leave(name) {
-        let channels = [name, 'private-' + name, 'presence-' + name];
-        channels.forEach((name) => {
-            this.leaveChannel(name);
-        });
-    }
-    /**
-     * Leave the given channel.
-     */
-    leaveChannel(name) {
-        if (this.channels[name]) {
-            this.channels[name].unsubscribe();
-            delete this.channels[name];
-        }
-    }
-    /**
-     * Get the socket ID for the connection.
-     */
-    socketId() {
-        return this.socket.id;
-    }
-    /**
-     * Disconnect Socketio connection.
-     */
-    disconnect() {
-        this.socket.disconnect();
-    }
-}
+// class SocketIoConnector extends Connector {
+//     constructor() {
+//         super(...arguments);
+//         /**
+//          * All of the subscribed channel names.
+//          */
+//         this.channels = {};
+//     }
+//     /**
+//      * Create a fresh Socket.io connection.
+//      */
+//     connect() {
+//         let io = this.getSocketIO();
+//         this.socket = io(this.options.host, this.options);
+//         this.socket.on('reconnect', () => {
+//             Object.values(this.channels).forEach((channel) => {
+//                 channel.subscribe();
+//             });
+//         });
+//         return this.socket;
+//     }
+//     /**
+//      * Get socket.io module from global scope or options.
+//      */
+//     getSocketIO() {
+//         if (typeof this.options.client !== 'undefined') {
+//             return this.options.client;
+//         }
+//         if (typeof io !== 'undefined') {
+//             return io;
+//         }
+//         throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
+//     }
+//     /**
+//      * Listen for an event on a channel instance.
+//      */
+//     listen(name, event, callback) {
+//         return this.channel(name).listen(event, callback);
+//     }
+//     /**
+//      * Get a channel instance by name.
+//      */
+//     channel(name) {
+//         if (!this.channels[name]) {
+//             this.channels[name] = new SocketIoChannel(this.socket, name, this.options);
+//         }
+//         return this.channels[name];
+//     }
+//     /**
+//      * Get a private channel instance by name.
+//      */
+//     privateChannel(name) {
+//         if (!this.channels['private-' + name]) {
+//             this.channels['private-' + name] = new SocketIoPrivateChannel(this.socket, 'private-' + name, this.options);
+//         }
+//         return this.channels['private-' + name];
+//     }
+//     /**
+//      * Get a presence channel instance by name.
+//      */
+//     presenceChannel(name) {
+//         if (!this.channels['presence-' + name]) {
+//             this.channels['presence-' + name] = new SocketIoPresenceChannel(this.socket, 'presence-' + name, this.options);
+//         }
+//         return this.channels['presence-' + name];
+//     }
+//     /**
+//      * Leave the given channel, as well as its private and presence variants.
+//      */
+//     leave(name) {
+//         let channels = [name, 'private-' + name, 'presence-' + name];
+//         channels.forEach((name) => {
+//             this.leaveChannel(name);
+//         });
+//     }
+//     /**
+//      * Leave the given channel.
+//      */
+//     leaveChannel(name) {
+//         if (this.channels[name]) {
+//             this.channels[name].unsubscribe();
+//             delete this.channels[name];
+//         }
+//     }
+//     /**
+//      * Get the socket ID for the connection.
+//      */
+//     socketId() {
+//         return this.socket.id;
+//     }
+//     /**
+//      * Disconnect Socketio connection.
+//      */
+//     disconnect() {
+//         this.socket.disconnect();
+//     }
+// }
 
-/**
- * This class creates a null connector.
- */
-class NullConnector extends Connector {
-    constructor() {
-        super(...arguments);
-        /**
-         * All of the subscribed channel names.
-         */
-        this.channels = {};
-    }
-    /**
-     * Create a fresh connection.
-     */
-    connect() {
-        //
-    }
-    /**
-     * Listen for an event on a channel instance.
-     */
-    listen(name, event, callback) {
-        return new NullChannel();
-    }
-    /**
-     * Get a channel instance by name.
-     */
-    channel(name) {
-        return new NullChannel();
-    }
-    /**
-     * Get a private channel instance by name.
-     */
-    privateChannel(name) {
-        return new NullPrivateChannel();
-    }
-    /**
-     * Get a private encrypted channel instance by name.
-     */
-    encryptedPrivateChannel(name) {
-        return new NullEncryptedPrivateChannel();
-    }
-    /**
-     * Get a presence channel instance by name.
-     */
-    presenceChannel(name) {
-        return new NullPresenceChannel();
-    }
-    /**
-     * Leave the given channel, as well as its private and presence variants.
-     */
-    leave(name) {
-        //
-    }
-    /**
-     * Leave the given channel.
-     */
-    leaveChannel(name) {
-        //
-    }
-    /**
-     * Get the socket ID for the connection.
-     */
-    socketId() {
-        return 'fake-socket-id';
-    }
-    /**
-     * Disconnect the connection.
-     */
-    disconnect() {
-        //
-    }
-}
+// /**
+//  * This class creates a null connector.
+//  */
+// class NullConnector extends Connector {
+//     constructor() {
+//         super(...arguments);
+//         /**
+//          * All of the subscribed channel names.
+//          */
+//         this.channels = {};
+//     }
+//     /**
+//      * Create a fresh connection.
+//      */
+//     connect() {
+//         //
+//     }
+//     /**
+//      * Listen for an event on a channel instance.
+//      */
+//     listen(name, event, callback) {
+//         return new NullChannel();
+//     }
+//     /**
+//      * Get a channel instance by name.
+//      */
+//     channel(name) {
+//         return new NullChannel();
+//     }
+//     /**
+//      * Get a private channel instance by name.
+//      */
+//     privateChannel(name) {
+//         return new NullPrivateChannel();
+//     }
+//     /**
+//      * Get a private encrypted channel instance by name.
+//      */
+//     encryptedPrivateChannel(name) {
+//         return new NullEncryptedPrivateChannel();
+//     }
+//     /**
+//      * Get a presence channel instance by name.
+//      */
+//     presenceChannel(name) {
+//         return new NullPresenceChannel();
+//     }
+//     /**
+//      * Leave the given channel, as well as its private and presence variants.
+//      */
+//     leave(name) {
+//         //
+//     }
+//     /**
+//      * Leave the given channel.
+//      */
+//     leaveChannel(name) {
+//         //
+//     }
+//     /**
+//      * Get the socket ID for the connection.
+//      */
+//     socketId() {
+//         return 'fake-socket-id';
+//     }
+//     /**
+//      * Disconnect the connection.
+//      */
+//     disconnect() {
+//         //
+//     }
+// }
 
 /**
  * This class is the primary API for interacting with broadcasting.
  */
-class Echo {
+class EchoWeb {
     /**
      * Create a new class instance.
      */
     constructor(options) {
         this.options = options;
-        this.connect();
-        if (!this.options.withoutInterceptors) {
-            this.registerInterceptors();
-        }
+        // this.connect();
+        // if (!this.options.withoutInterceptors) {
+        //     this.registerInterceptors();
+        // }
+        return this;
     }
     /**
      * Get a channel instance by name.
@@ -880,19 +882,22 @@ class Echo {
      * Create a new connection.
      */
     connect() {
-        if (this.options.broadcaster == 'reverb') {
+        if (this.connector) {
+            this.connector = this.connector;
+        }
+        else if (!this.connector && this.options.broadcaster == 'reverb') {
             this.connector = new PusherConnector(Object.assign(Object.assign({}, this.options), { cluster: '' }));
         }
-        else if (this.options.broadcaster == 'pusher') {
+        else if (!this.connector && this.options.broadcaster == 'pusher') {
             this.connector = new PusherConnector(this.options);
         }
-        else if (this.options.broadcaster == 'socket.io') {
+        else if (!this.connector && this.options.broadcaster == 'socket.io') {
             this.connector = new SocketIoConnector(this.options);
         }
-        else if (this.options.broadcaster == 'null') {
+        else if (!this.connector && this.options.broadcaster == 'null') {
             this.connector = new NullConnector(this.options);
         }
-        else if (typeof this.options.broadcaster == 'function' && isConstructor(this.options.broadcaster)) {
+        else if (!this.connector && typeof this.options.broadcaster == 'function' && isConstructor(this.options.broadcaster)) {
             this.connector = new this.options.broadcaster(this.options);
         }
         else {
@@ -962,62 +967,62 @@ class Echo {
      * Register 3rd party request interceptiors. These are used to automatically
      * send a connections socket id to a Laravel app with a X-Socket-Id header.
      */
-    registerInterceptors() {
-        if (typeof Vue === 'function' && Vue.http) {
-            this.registerVueRequestInterceptor();
-        }
-        if (typeof axios === 'function') {
-            this.registerAxiosRequestInterceptor();
-        }
-        if (typeof jQuery === 'function') {
-            this.registerjQueryAjaxSetup();
-        }
-        if (typeof Turbo === 'object') {
-            this.registerTurboRequestInterceptor();
-        }
-    }
-    /**
-     * Register a Vue HTTP interceptor to add the X-Socket-ID header.
-     */
-    registerVueRequestInterceptor() {
-        Vue.http.interceptors.push((request, next) => {
-            if (this.socketId()) {
-                request.headers.set('X-Socket-ID', this.socketId());
-            }
-            next();
-        });
-    }
-    /**
-     * Register an Axios HTTP interceptor to add the X-Socket-ID header.
-     */
-    registerAxiosRequestInterceptor() {
-        axios.interceptors.request.use((config) => {
-            if (this.socketId()) {
-                config.headers['X-Socket-Id'] = this.socketId();
-            }
-            return config;
-        });
-    }
-    /**
-     * Register jQuery AjaxPrefilter to add the X-Socket-ID header.
-     */
-    registerjQueryAjaxSetup() {
-        if (typeof jQuery.ajax != 'undefined') {
-            jQuery.ajaxPrefilter((options, originalOptions, xhr) => {
-                if (this.socketId()) {
-                    xhr.setRequestHeader('X-Socket-Id', this.socketId());
-                }
-            });
-        }
-    }
-    /**
-     * Register the Turbo Request interceptor to add the X-Socket-ID header.
-     */
-    registerTurboRequestInterceptor() {
-        document.addEventListener('turbo:before-fetch-request', (event) => {
-            event.detail.fetchOptions.headers['X-Socket-Id'] = this.socketId();
-        });
-    }
+    // registerInterceptors() {
+    //     if (typeof Vue === 'function' && Vue.http) {
+    //         this.registerVueRequestInterceptor();
+    //     }
+    //     if (typeof axios === 'function') {
+    //         this.registerAxiosRequestInterceptor();
+    //     }
+    //     if (typeof jQuery === 'function') {
+    //         this.registerjQueryAjaxSetup();
+    //     }
+    //     if (typeof Turbo === 'object') {
+    //         this.registerTurboRequestInterceptor();
+    //     }
+    // }
+    // /**
+    //  * Register a Vue HTTP interceptor to add the X-Socket-ID header.
+    //  */
+    // registerVueRequestInterceptor() {
+    //     Vue.http.interceptors.push((request, next) => {
+    //         if (this.socketId()) {
+    //             request.headers.set('X-Socket-ID', this.socketId());
+    //         }
+    //         next();
+    //     });
+    // }
+    // /**
+    //  * Register an Axios HTTP interceptor to add the X-Socket-ID header.
+    //  */
+    // registerAxiosRequestInterceptor() {
+    //     axios.interceptors.request.use((config) => {
+    //         if (this.socketId()) {
+    //             config.headers['X-Socket-Id'] = this.socketId();
+    //         }
+    //         return config;
+    //     });
+    // }
+    // /**
+    //  * Register jQuery AjaxPrefilter to add the X-Socket-ID header.
+    //  */
+    // registerjQueryAjaxSetup() {
+    //     if (typeof jQuery.ajax != 'undefined') {
+    //         jQuery.ajaxPrefilter((options, originalOptions, xhr) => {
+    //             if (this.socketId()) {
+    //                 xhr.setRequestHeader('X-Socket-Id', this.socketId());
+    //             }
+    //         });
+    //     }
+    // }
+    // /**
+    //  * Register the Turbo Request interceptor to add the X-Socket-ID header.
+    //  */
+    // registerTurboRequestInterceptor() {
+    //     document.addEventListener('turbo:before-fetch-request', (event) => {
+    //         event.detail.fetchOptions.headers['X-Socket-Id'] = this.socketId();
+    //     });
+    // }
 }
 
-export { Echo as default };
+export { EchoWeb as default };
