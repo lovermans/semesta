@@ -866,11 +866,10 @@ class EchoWeb {
      */
     constructor(options) {
         this.options = options;
-        // this.connect();
+        this.connect();
         // if (!this.options.withoutInterceptors) {
         //     this.registerInterceptors();
         // }
-        return this;
     }
     /**
      * Get a channel instance by name.
@@ -882,22 +881,19 @@ class EchoWeb {
      * Create a new connection.
      */
     connect() {
-        if (this.connector) {
-            this.connector = this.connector;
-        }
-        else if (!this.connector && this.options.broadcaster == 'reverb') {
+        if (this.options.broadcaster == 'reverb') {
             this.connector = new PusherConnector(Object.assign(Object.assign({}, this.options), { cluster: '' }));
         }
-        else if (!this.connector && this.options.broadcaster == 'pusher') {
+        else if (this.options.broadcaster == 'pusher') {
             this.connector = new PusherConnector(this.options);
         }
-        else if (!this.connector && this.options.broadcaster == 'socket.io') {
-            this.connector = new SocketIoConnector(this.options);
-        }
-        else if (!this.connector && this.options.broadcaster == 'null') {
-            this.connector = new NullConnector(this.options);
-        }
-        else if (!this.connector && typeof this.options.broadcaster == 'function' && isConstructor(this.options.broadcaster)) {
+        // else if (this.options.broadcaster == 'socket.io') {
+        //     this.connector = new SocketIoConnector(this.options);
+        // }
+        // else if (this.options.broadcaster == 'null') {
+        //     this.connector = new NullConnector(this.options);
+        // }
+        else if (typeof this.options.broadcaster == 'function' && isConstructor(this.options.broadcaster)) {
             this.connector = new this.options.broadcaster(this.options);
         }
         else {

@@ -134,6 +134,16 @@
 				nonce="{{ Vite::cspNonce() }}"></script>
 		@endif
 
+		<script nonce="{{ Vite::cspNonce() }}">
+			async function applyWebsocket() {
+				let {
+					soketi
+				} = await import("{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}");
+
+				return soketi;
+			};
+		</script>
+
 		<script nonce="{{ Vite::cspNonce() }}" type="module">
 			import {
 				showHideTopAppBarOnScroll

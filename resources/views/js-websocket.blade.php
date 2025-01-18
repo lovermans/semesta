@@ -30,5 +30,4 @@ let echoConfig = {
 
 export let soketi = new Echo({
 	...echoConfig,
-	// client: new PusherBrowser(echoConfig.key, echoConfig)
 });
