@@ -51,3 +51,17 @@ export function showHideTopAppBarOnScroll(element, milisecondDelay) {
 
     window.addEventListener('scroll', () => updateClass(element), { passive: true });
 };
+
+export function updateCurrentPageNavigation() {
+    document.querySelectorAll('nav').forEach(element => {
+        element.addEventListener('click', (event) => {
+            if (event.target.matches('nav li a')) {
+                event.stopPropagation();
+                document.querySelectorAll('nav li a').forEach(element => {
+                    element.ariaCurrent = 'false';
+                });
+                event.target.ariaCurrent = 'page';
+            }
+        });
+    });
+};

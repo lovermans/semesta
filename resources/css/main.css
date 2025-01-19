@@ -394,12 +394,12 @@ header {
     }
 
     .overlay {
-        height: 3.5rem;
+        height: 3rem;
     }
 
     button:not(:empty) {
         padding: 0.75rem;
-        margin: 0.25rem;
+        margin: 0;
         width: 3rem;
         height: 3rem;
         border-radius: 50%;
@@ -501,11 +501,10 @@ nav[popover] {
             width: 100%;
             text-align: left;
 
-            svg {
-
-                &:last-child {
-                    transform: rotate(-90deg);
-                }
+            svg.menu-icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 1rem;
             }
 
             &:hover {
@@ -516,11 +515,22 @@ nav[popover] {
                 background: var(--focus-overlay);
                 color: var(--color-focus);
             }
+
+            &[aria-current=page] {
+                background: var(--pressed-overlay);
+            }
         }
 
         button {
             display: flex;
             align-items: center;
+
+            svg {
+
+                &:last-child {
+                    transform: rotate(-90deg);
+                }
+            }
 
             &+ul {
                 /* display: none; */
@@ -531,8 +541,8 @@ nav[popover] {
             }
         }
 
-        /* &:has(:focus-within, >button[aria-expanded=true]) { */
-        &:focus-within {
+        &:has(:focus-within, a[aria-current=page]) {
+            /* &:focus-within { */
             border-top: var(--divider);
             border-bottom: var(--divider);
 
@@ -546,7 +556,7 @@ nav[popover] {
                     position: static;
 
                     a {
-                        padding: 1rem 1rem 1rem 2rem;
+                        padding: 1rem 1rem 1rem 3.5rem;
                     }
                 }
 
@@ -604,6 +614,7 @@ Screen Breakpoint
         right: 0;
         border-radius: 2rem 0 0 2rem;
         box-shadow: var(--elevation-box-shadow-4);
+        background: none;
 
         .overlay {
             background: var(--elevation-overlay-4);
@@ -622,6 +633,10 @@ Screen Breakpoint
                 margin-left: 1rem;
             }
         }
+    }
+
+    nav[popover] {
+        background: none;
     }
 
     #main-navigation[popover] {

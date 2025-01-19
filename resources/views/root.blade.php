@@ -43,7 +43,7 @@
 						</svg>
 					</button>
 					<div class="title-header">
-						<a href="{{ $app->url->route('start') }}" title="{{ $app->config->get('app.name') }}">
+						<a href="{{ $app->url->route('root') }}" title="{{ $app->config->get('app.name') }}">
 							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
 							{{ $app->config->get('app.name') }}
 						</a>
@@ -59,8 +59,14 @@
 							<use href="#theme-toggle-icon"></use>
 						</svg>
 					</button>
-					<button id="app-list" title="App List"></button>
-					<button id="profile" title="Profile"></button>
+					<button id="app-list" title="App List">
+						<svg aria-hidden="true" viewbox="0 0 24 24">
+							<use href="#apps-icon"></use>
+						</svg>
+					</button>
+					<button id="user" title="User">
+						<img alt="User Menu" aria-hidden="true" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#account-circle-icon' }}">
+					</button>
 				</div>
 			</div>
 		</header>
@@ -70,9 +76,19 @@
 				@hasSection('main-navigation')
 					@yield('main-navigation')
 				@endif
-				<li><a href="#home">Home</a></li>
+				<li>
+					<a href="#home">
+						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+							<use href="#article-icon"></use>
+						</svg>
+						Home
+					</a>
+				</li>
 				<li>
 					<button aria-disabled="true">
+						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+							<use href="#article-icon"></use>
+						</svg>
 						Service
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
@@ -82,6 +98,9 @@
 						<li><a href="#design">Web Design</a></li>
 						<li>
 							<button aria-disabled="true">
+								<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+									<use href="#article-icon"></use>
+								</svg>
 								Development
 								<svg aria-hidden="true" viewbox="0 0 24 24">
 									<use href="#expand-more-icon"></use>
@@ -91,6 +110,9 @@
 								<li><a href="#frontend">Frontend</a></li>
 								<li>
 									<button aria-disabled="true">
+										<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+											<use href="#article-icon"></use>
+										</svg>
 										Development B
 										<svg aria-hidden="true" viewbox="0 0 24 24">
 											<use href="#expand-more-icon"></use>
@@ -106,17 +128,26 @@
 				</li>
 				<li>
 					<button aria-disabled="true">
+						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+							<use href="#article-icon"></use>
+						</svg>
 						About
 						<svg aria-hidden="true" viewbox="0 0 24 24">
 							<use href="#expand-more-icon"></use>
 						</svg>
 					</button>
 					<ul>
-						<li class="sub-item"><a href="#team">Our Team</a></li>
-						<li class="sub-item"><a href="#mission">Our Mission</a></li>
+						<li><a href="#team">Our Team</a></li>
+						<li><a href="#mission">Our Mission</a></li>
 					</ul>
 				</li>
-				<li class="menu-item"><a href="#contact">Contact</a></li>
+				<li>
+					<a href="#contact">
+						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+							<use href="#article-icon"></use>
+						</svg>Contact
+					</a>
+				</li>
 			</ul>
 		</nav>
 
@@ -124,9 +155,9 @@
 			@yield('page-need-javascript-message')
 		@endif
 
-		<div id="main-content">
+		<main id="main-content">
 			@yield('main-content')
-		</div>
+		</main>
 
 		@sectionMissing('page-need-javascript-message')
 			<script type="module"
@@ -146,10 +177,12 @@
 
 		<script nonce="{{ Vite::cspNonce() }}" type="module">
 			import {
-				showHideTopAppBarOnScroll
+				showHideTopAppBarOnScroll,
+				updateCurrentPageNavigation
 			} from "{{ Vite::asset('resources/js/core-listener.js') }}";
 
 			showHideTopAppBarOnScroll(document.body, 500);
+			updateCurrentPageNavigation();
 		</script>
 	</body>
 

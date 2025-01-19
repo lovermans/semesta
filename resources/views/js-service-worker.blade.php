@@ -51,7 +51,7 @@ var RESOURCES = {
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
     ],
     pages: [
-        /* "{{ $app->url->route('start') }}", */
+        /* "{{ $app->url->route('root') }}", */
     ]
 };
 
