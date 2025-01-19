@@ -2,12 +2,12 @@ html {
     color-scheme: light;
     /* block-size: 100%; */
 
-    /* --hover-overlay: color-mix(in srgb, rgb(0, 0, 0) 4%, rgb(255, 255, 255));
-    --focus-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
-    --activated-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
-    --pressed-overlay: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
-    --selected-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
-    --dragged-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255)); */
+    --hover-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 4%, rgb(255, 255, 255));
+    --focus-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --activated-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 12%, rgb(255, 255, 255));
+    --pressed-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 16%, rgb(255, 255, 255));
+    --selected-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
+    --dragged-solid-overlay: color-mix(in srgb, rgb(0, 0, 0) 8%, rgb(255, 255, 255));
 
     --hover-overlay: rgba(0, 0, 0, 0.04);
     --focus-overlay: rgba(0, 0, 0, 0.12);
@@ -20,7 +20,8 @@ html {
     --decelerated-easing: cubic-bezier(0.0, 0.0, 0.2, 1);
     --accelerated-easing: cubic-bezier(0.4, 0.0, 1, 1);
 
-    --divider: 0.0625rem solid rgba(0, 0, 0, 0.12);
+    --divider-border: 0.0625rem solid rgba(0, 0, 0, 0.12);
+    --divider-color: rgba(0, 0, 0, 0.12);
 
     /* 
     Typography
@@ -34,9 +35,7 @@ html {
     --color-active: rgba(0, 0, 0, 0.87);
     --color-inactive: rgba(0, 0, 0, 0.60);
     --color-disabled: rgba(0, 0, 0, 0.38);
-
-    --icon-fill: hsl(210 10% 30%);
-    --icon-fill-hover: hsl(210 10% 15%);
+    --color-secondary: rgba(63, 81, 181, 1);
 
     --font-h1: normal normal 300 6rem/1 'Roboto', arial, sans-serif;
     --letter-spacing-h1: -0.09375rem;
@@ -112,12 +111,12 @@ html {
     &[data-theme=dark] {
         color-scheme: dark;
 
-        /* --hover-overlay: color-mix(in srgb, rgb(255, 255, 255) 4%, rgb(0, 0, 0));
-        --focus-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
-        --activated-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
-        --pressed-overlay: color-mix(in srgb, rgb(255, 255, 255) 10%, rgb(0, 0, 0));
-        --selected-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
-        --dragged-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0)); */
+        --hover-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 4%, rgb(0, 0, 0));
+        --focus-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+        --activated-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 12%, rgb(0, 0, 0));
+        --pressed-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 10%, rgb(0, 0, 0));
+        --selected-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
+        --dragged-solid-overlay: color-mix(in srgb, rgb(255, 255, 255) 8%, rgb(0, 0, 0));
 
         --hover-overlay: rgba(255, 255, 255, 0.04);
         --focus-overlay: rgba(255, 255, 255, 0.12);
@@ -134,11 +133,10 @@ html {
         --color-active: rgba(255, 255, 255, 0.87);
         --color-inactive: rgba(255, 255, 255, 0.60);
         --color-disabled: rgba(255, 255, 255, 0.38);
+        --color-secondary: rgba(159, 168, 218, 1);
 
-        --icon-fill: hsl(210 10% 70%);
-        --icon-fill-hover: hsl(210 15% 90%);
-
-        --divider: 0.0625rem solid rgba(255, 255, 255, 0.12);
+        --divider-border: 0.0625rem solid rgba(255, 255, 255, 0.12);
+        --divider-color: 0.0625rem solid rgba(255, 255, 255, 0.12);
 
         --elevation-solid-overlay-1: color-mix(in srgb, rgb(255, 255, 255) 5%, rgb(0, 0, 0));
         --elevation-solid-overlay-2: color-mix(in srgb, rgb(255, 255, 255) 7%, rgb(0, 0, 0));
@@ -325,7 +323,7 @@ button {
     border: none;
 
     &:focus-visible {
-        outline: var(--divider);
+        outline: var(--divider--border);
         outline-offset: 0;
         text-decoration: underline;
 
@@ -335,9 +333,108 @@ button {
     }
 }
 
+a,
+button {
+    cursor: pointer;
+
+    svg {
+        vertical-align: middle;
+        margin-right: 0.5rem;
+    }
+
+    &:is(.text-button, .outlined-button) {
+        color: var(--color-secondary);
+
+        &:hover:not(:disabled) {
+            background: var(--hover-overlay);
+        }
+
+        &:focus:not(:disabled) {
+            background: var(--focus-overlay);
+        }
+
+        &:disabled {
+            color: var(--color-disabled);
+            cursor: not-allowed;
+        }
+
+        &:active:not(:disabled) {
+            background: var(--pressed-overlay);
+        }
+    }
+
+    &:is(.outlined-button, .contained-button) {
+        padding: 0 1rem;
+
+        &:has(svg, img) {
+            padding: 0 1rem 0 0.75rem;
+        }
+    }
+
+    &:is(.text-button, .outlined-button, .contained-button) {
+        font: var(--font-button);
+        letter-spacing: var(--letter-spacing-button);
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+        min-width: 4rem;
+        max-width: 100dvw;
+        height: 2.25rem;
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+
+    }
+
+    &.text-button {
+        padding: 0.675rem 0.5rem;
+    }
+
+    &.outlined-button {
+        border: var(--divider-border);
+    }
+
+    &.contained-button {
+        color: color-mix(in srgb, Canvas 87%, CanvasText);
+        background: color-mix(in srgb, CanvasText 87%, Canvas);
+
+        svg {
+            fill: color-mix(in srgb, Canvas 87%, CanvasText);
+        }
+
+        &:hover:not(:disabled) {
+            background: color-mix(in srgb, Canvas 4%, CanvasText);
+        }
+
+        &:focus:not(:disabled) {
+            background: color-mix(in srgb, Canvas 12%, CanvasText);
+        }
+
+        &:disabled {
+            color: color-mix(in srgb, Canvas 38%, CanvasText);
+            background: var(--focus-solid-overlay);
+            cursor: not-allowed;
+
+            svg {
+                fill: color-mix(in srgb, Canvas 38%, CanvasText);
+            }
+        }
+
+        &:active:not(:disabled) {
+            color: Canvas;
+            background: color-mix(in srgb, Canvas 16%, CanvasText);
+
+            svg {
+                fill: Canvas;
+            }
+        }
+    }
+}
+
 svg {
     width: 1.5rem;
     height: 1.5rem;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* 
@@ -433,6 +530,10 @@ header {
 
     .header-column:last-child {
         margin-left: auto;
+
+        a {
+            margin: 0 0.5rem;
+        }
     }
 
     .title-header {
@@ -502,8 +603,6 @@ nav[popover] {
             text-align: left;
 
             svg.menu-icon {
-                display: inline-block;
-                vertical-align: middle;
                 margin-right: 1rem;
             }
 
@@ -543,8 +642,8 @@ nav[popover] {
 
         &:has(:focus-within, a[aria-current=page]) {
             /* &:focus-within { */
-            border-top: var(--divider);
-            border-bottom: var(--divider);
+            border-top: var(--divider--border);
+            border-bottom: var(--divider--border);
 
             &>button {
                 font-weight: 500;
