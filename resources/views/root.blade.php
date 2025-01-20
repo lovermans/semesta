@@ -2,7 +2,7 @@
 <html dir="ltr" lang="{{ str_replace('_', '-', $app->getLocale()) }}">
 
 	<head>
-		@include('include-metadata')
+		@include('element-metadata')
 
 		@stack('metadata')
 
@@ -32,131 +32,16 @@
 
 		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
 
-		<header aria-label="Top App Bar" data-print="none">
-			<div class="overlay">
-				<div class="header-column" id="main-header">
-					<button class="header-button" popovertarget="main-navigation" title="Main Navigation Menu">
-						<svg aria-hidden="true" viewbox="0 0 24 24">
-							<use href="#menu-icon"></use>
-						</svg>
-					</button>
-					<div class="title-header">
-						<a href="{{ $app->url->route('root') }}" title="{{ $app->config->get('app.name') }}">
-							<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
-							{{ $app->config->get('app.name') }}
-						</a>
-					</div>
-				</div>
-				<div class="header-column" id="extra-header">
-					<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle" title="Toggles light & dark theme">
-						<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
-							<mask class="moon" id="moon-mask">
-								<rect fill="white" height="100%" width="100%" x="0" y="0"></rect>
-								<circle cx="24" cy="10" fill="black" r="6"></circle>
-							</mask>
-							<use href="#theme-toggle-icon"></use>
-						</svg>
-					</button>
-					<button title="App List">
-						<svg aria-hidden="true" viewbox="0 0 24 24">
-							<use href="#apps-icon"></use>
-						</svg>
-					</button>
-					<button title="User">
-						<img alt="User Menu" aria-hidden="true" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#account-circle-icon' }}">
-					</button>
-					<a class="text-button" href="#login" title="Login">
-						Login
-					</a>
-				</div>
-			</div>
-		</header>
+		@include('element-header')
 
-		<nav aria-label="Main Navigation" data-print="none" id="main-navigation" popover>
-			<ul class="menu">
-				@hasSection('main-navigation')
-					@yield('main-navigation')
-				@endif
-				<li>
-					<a href="#home">
-						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-							<use href="#article-icon"></use>
-						</svg>
-						Home
-					</a>
-				</li>
-				<li>
-					<button aria-disabled="true">
-						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-							<use href="#article-icon"></use>
-						</svg>
-						Service
-						<svg aria-hidden="true" viewbox="0 0 24 24">
-							<use href="#arrow-drop-down-icon"></use>
-						</svg>
-					</button>
-					<ul>
-						<li><a href="#design">Web Design</a></li>
-						<li>
-							<button aria-disabled="true">
-								<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-									<use href="#article-icon"></use>
-								</svg>
-								Development
-								<svg aria-hidden="true" viewbox="0 0 24 24">
-									<use href="#arrow-drop-down-icon"></use>
-								</svg>
-							</button>
-							<ul>
-								<li><a href="#frontend">Frontend</a></li>
-								<li>
-									<button aria-disabled="true">
-										<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-											<use href="#article-icon"></use>
-										</svg>
-										Development B
-										<svg aria-hidden="true" viewbox="0 0 24 24">
-											<use href="#arrow-drop-down-icon"></use>
-										</svg>
-									</button>
-									<ul>
-										<li><a href="#backend">Backend</a></li>
-									</ul>
-							</ul>
-						</li>
-						<li><a href="#marketing">Digital Marketing</a></li>
-					</ul>
-				</li>
-				<li>
-					<button aria-disabled="true">
-						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-							<use href="#article-icon"></use>
-						</svg>
-						About
-						<svg aria-hidden="true" viewbox="0 0 24 24">
-							<use href="#arrow-drop-down-icon"></use>
-						</svg>
-					</button>
-					<ul>
-						<li><a href="#team">Our Team</a></li>
-						<li><a href="#mission">Our Mission</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="#contact">
-						<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
-							<use href="#article-icon"></use>
-						</svg>Contact
-					</a>
-				</li>
-			</ul>
-		</nav>
+		@include('element-navigation')
 
 		@hasSection('page-need-javascript-message')
 			@yield('page-need-javascript-message')
 		@endif
 
 		<main id="main-content">
+			{{ dd(session()) }}
 			@yield('main-content')
 		</main>
 
