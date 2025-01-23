@@ -27,7 +27,11 @@ class AddSecurityHeaders
             $response->headers->set('X-XSS-Protection', '1; mode=block');
             $response->headers->set('X-Frame-Options', 'DENY');
             // $response->headers->set('Content-Security-Policy', "default-src 'self' 'nonce-".Vite::cspNonce()."' 'sha256-KnTKOmenDlnJNzjC3NQYwzUGB3sP3xj1So7Zi5TebWk=';base-uri 'self';frame-ancestors 'none';img-src 'self' * data:;script-src 'self' 'nonce-".Vite::cspNonce()."' 'strict-dynamic' 'unsafe-inline' 'unsafe-hashes' 'sha256-bqOxJgOingQ6DPZoJUJLUkKPUVrpjPZg5dihjH+kwto=' http: https:;style-src 'self' 'unsafe-inline'");
-            $response->headers->set('Content-Security-Policy', "default-src 'self' 'nonce-".Vite::cspNonce()."' 'sha256-KnTKOmenDlnJNzjC3NQYwzUGB3sP3xj1So7Zi5TebWk=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';base-uri 'self';frame-ancestors 'none';img-src 'self' * data:;script-src 'self' 'nonce-".Vite::cspNonce()."' 'strict-dynamic' 'unsafe-hashes' 'sha256-bqOxJgOingQ6DPZoJUJLUkKPUVrpjPZg5dihjH+kwto='");
+            if (!$response->exception) {
+            
+                $response->headers->set('Content-Security-Policy', "default-src 'self' 'nonce-".Vite::cspNonce()."' 'sha256-KnTKOmenDlnJNzjC3NQYwzUGB3sP3xj1So7Zi5TebWk=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';base-uri 'self';frame-ancestors 'none';img-src 'self' * data:;script-src 'self' 'nonce-".Vite::cspNonce()."' 'strict-dynamic' 'unsafe-hashes' 'sha256-bqOxJgOingQ6DPZoJUJLUkKPUVrpjPZg5dihjH+kwto='");
+            }
+            
             $response->headers->set('Vary', 'Accept,Accept-Encoding,X-PJAX');
             // $response->headers->remove('X-Powered-By');
             // $response->headers->remove('Server');

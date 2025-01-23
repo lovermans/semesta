@@ -12,7 +12,7 @@
 			</a>
 		</li>
 		<li>
-			<button aria-disabled="true">
+			<a href="#home2">
 				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
 					<use href="#article-icon"></use>
 				</svg>
@@ -20,7 +20,7 @@
 				<svg aria-hidden="true" viewbox="0 0 24 24">
 					<use href="#arrow-drop-down-icon"></use>
 				</svg>
-			</button>
+			</a>
 			<ul>
 				<li><a href="#design">Web Design</a></li>
 				<li>

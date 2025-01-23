@@ -14,7 +14,9 @@
 
 		{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
 
-		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}" nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
+		<link
+			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}"
+			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
 
@@ -27,10 +29,14 @@
 
 	<body>
 		<div aria-hidden="true">
-			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites" nonce="{{ Vite::cspNonce() }}" onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
+			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites"
+				nonce="{{ Vite::cspNonce() }}"
+				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;"
+				type="image/svg+xml"></object>
 		</div>
 
-		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
+		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main
+			Content</a>
 
 		@include('element-header')
 
@@ -41,19 +47,22 @@
 		@endif
 
 		<main id="main-content">
-			{{ dd(session()) }}
 			@yield('main-content')
 		</main>
 
 		@sectionMissing('page-need-javascript-message')
-			<script type="module" src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}" nonce="{{ Vite::cspNonce() }}"></script>
+			<script type="module"
+				src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}"
+				nonce="{{ Vite::cspNonce() }}"></script>
 		@endif
 
 		<script nonce="{{ Vite::cspNonce() }}">
 			async function applyWebsocket() {
 				let {
 					soketi
-				} = await import("{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}");
+				} = await import(
+					"{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}"
+				);
 
 				return soketi;
 			};

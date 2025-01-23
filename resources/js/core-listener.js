@@ -52,14 +52,18 @@ export function showHideTopAppBarOnScroll(element, milisecondDelay) {
     window.addEventListener('scroll', () => updateClass(element), { passive: true });
 };
 
+function updateCurrentPage(event) {
+    document.querySelectorAll('nav li a')?.forEach(element => {
+        element.ariaCurrent = 'false';
+    });
+    event.target.ariaCurrent = 'page';
+};
+
 export function handleGlobalClickEvent() {
     window.addEventListener('click', (event) => {
-        if (event.target.matches('nav li a:not([data-pjax=true])')) {
+        if (event.target.closest('nav li a:not([data-pjax=true])')) {
             event.stopPropagation();
-            document.querySelectorAll('nav li a').forEach(element => {
-                element.ariaCurrent = 'false';
-            });
-            event.target.ariaCurrent = 'page';
+            updateCurrentPage(event);
         }
     });
 };
