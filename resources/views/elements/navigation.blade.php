@@ -1,8 +1,5 @@
 <nav aria-label="Main Navigation" data-print="none" id="main-navigation" popover>
 	<ul class="menu">
-		@hasSection('main-navigation')
-			@yield('main-navigation')
-		@endif
 		<li>
 			<a href="#home">
 				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
@@ -73,6 +70,38 @@
 				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
 					<use href="#article-icon"></use>
 				</svg>Contact
+			</a>
+		</li>
+	</ul>
+</nav>
+
+<nav aria-label="App Navigation" data-print="none" id="app-navigation" popover>
+</nav>
+
+<nav aria-label="User Navigation" data-print="none" id="user-navigation" popover>
+	<ul class="menu">
+		<li>
+			<a href="#EditProfile">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Edit Profile
+			</a>
+		</li>
+		<li>
+			<a href="#ChangePassword">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Change Password
+			</a>
+		</li>
+		<li>
+			<a href="#Logout">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Logout
 			</a>
 		</li>
 	</ul>

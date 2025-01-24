@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RootController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'root')->name('root');
+Route::view('/', 'layouts.root')->name('root');
 Route::view('/offline-fallback', 'offline-fallback')->name('offline-fallback');
 Route::get('/font-face.css', [RootController::class, 'createFontFaceCSS'])->name('css-font-face');
 Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');

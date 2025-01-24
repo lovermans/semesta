@@ -53,7 +53,7 @@ export function showHideTopAppBarOnScroll(element, milisecondDelay) {
 };
 
 function updateCurrentPage(event) {
-    document.querySelectorAll('nav li a')?.forEach(element => {
+    document.querySelectorAll('a[href]')?.forEach(element => {
         element.ariaCurrent = 'false';
     });
     event.target.ariaCurrent = 'page';

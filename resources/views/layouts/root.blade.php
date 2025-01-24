@@ -2,7 +2,7 @@
 <html dir="ltr" lang="{{ str_replace('_', '-', $app->getLocale()) }}">
 
 	<head>
-		@include('element-metadata')
+		@include('elements.metadata')
 
 		@stack('metadata')
 
@@ -15,7 +15,7 @@
 		{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
 
 		<link
-			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}"
+			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
 			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
@@ -38,9 +38,9 @@
 		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main
 			Content</a>
 
-		@include('element-header')
+		@include('elements.header')
 
-		@include('element-navigation')
+		@include('elements.navigation')
 
 		@hasSection('page-need-javascript-message')
 			@yield('page-need-javascript-message')
@@ -52,7 +52,7 @@
 
 		@sectionMissing('page-need-javascript-message')
 			<script type="module"
-				src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}"
+				src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/morphs/js-register-service-worker.blade.php')) }}"
 				nonce="{{ Vite::cspNonce() }}"></script>
 		@endif
 
@@ -61,7 +61,7 @@
 				let {
 					soketi
 				} = await import(
-					"{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}"
+					"{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/morphs/js-websocket.blade.php')) }}"
 				);
 
 				return soketi;

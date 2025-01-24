@@ -542,6 +542,10 @@ header {
         a {
             margin: 0 0.5rem;
         }
+
+        button[popovertarget=user-navigation] {
+            anchor-name: --user-navigation-toggle;
+        }
     }
 
     .title-header {
@@ -580,8 +584,6 @@ header {
 }
 
 nav[popover] {
-    display: none;
-    opacity: 0;
     border: none;
     border-radius: 0.25rem;
     box-shadow: var(--elevation-box-shadow-8);
@@ -685,12 +687,10 @@ nav[popover] {
     }
 }
 
-#main-navigation[popover] {
+:is(#main-navigation, #user-navigation)[popover] {
+    display: none;
+    opacity: 0;
     inset: unset;
-    top: anchor(--main-navigation-toggle bottom);
-    left: 0;
-    margin: 0.5rem 0 0;
-    translate: -120% 0;
 
     &:popover-open:not(dialog) {
         display: block;
@@ -702,6 +702,20 @@ nav[popover] {
             translate: -120% 0;
         }
     }
+}
+
+#main-navigation[popover] {
+    top: anchor(--main-navigation-toggle bottom);
+    left: 0;
+    margin: 0.5rem 0 0;
+    translate: -120% 0;
+}
+
+#user-navigation[popover] {
+    top: anchor(--user-navigation-toggle bottom);
+    right: anchor(--user-navigation-toggle right);
+    margin: 0.5rem 0 0;
+    translate: 120% 0;
 }
 
 #main-content {
@@ -740,11 +754,8 @@ Screen Breakpoint
         }
     }
 
-    nav[popover] {
-        background: none;
-    }
-
     #main-navigation[popover] {
+        background: none;
         top: 3.5rem;
         left: calc(100% - 20rem);
         right: 0;

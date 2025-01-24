@@ -1,4 +1,4 @@
-@extends('root')
+@extends('layouts.root')
 
 @section('content')
 	<h1>You are offline</h1>
