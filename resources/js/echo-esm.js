@@ -1,4 +1,4 @@
-import PusherWeb from './pusher-esm';
+import Pusher from './pusher-esm';
 /**
  * This class represents a basic channel.
  */
@@ -521,7 +521,10 @@ class Connector {
                 endpoint: '/broadcasting/auth',
                 headers: {},
             },
-
+            auth: {
+                headers: {},
+            },
+            authEndpoint: '/broadcasting/auth',
             userAuthentication: {
                 endpoint: '/broadcasting/user-auth',
                 headers: {},
@@ -544,11 +547,13 @@ class Connector {
         let token = this.csrfToken();
         if (token) {
             this.options.channelAuthorization.headers['X-CSRF-TOKEN'] = token;
+            this.options.auth.headers['X-CSRF-TOKEN'] = token;
             this.options.userAuthentication.headers['X-CSRF-TOKEN'] = token;
         }
         token = this.options.bearerToken;
         if (token) {
             this.options.channelAuthorization.headers['Authorization'] = 'Bearer ' + token;
+            this.options.auth.headers['Authorization'] = 'Bearer ' + token;
             this.options.userAuthentication.headers['Authorization'] = 'Bearer ' + token;
         }
         return options;
@@ -595,7 +600,7 @@ class PusherConnector extends Connector {
             this.pusher = new this.options.Pusher(this.options.key, this.options);
         }
         else {
-            this.pusher = new PusherWeb(this.options.key, this.options);
+            this.pusher = new Pusher(this.options.key, this.options);
         }
 
         this.pusher.connection.bind('connected', () => {
@@ -860,7 +865,7 @@ class PusherConnector extends Connector {
 /**
  * This class is the primary API for interacting with broadcasting.
  */
-class EchoWeb {
+class Echo {
     /**
      * Create a new class instance.
      */
@@ -1021,4 +1026,4 @@ class EchoWeb {
     // }
 }
 
-export { EchoWeb as default };
+export { Echo as default };

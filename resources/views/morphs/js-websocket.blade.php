@@ -12,6 +12,7 @@ let echoConfig = {
 			["X-CSRF-TOKEN"]: "{{ $app->session->token() }}"
 		}
 	},
+	authEndpoint: "{{ $app->request->getBasePath() . '/broadcasting/user-auth' }}",
 	userAuthentication: {
 		endpoint: "{{ $app->request->getBasePath() . '/broadcasting/user-auth' }}",
 		headers: {

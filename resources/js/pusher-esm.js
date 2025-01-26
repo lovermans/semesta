@@ -15,6 +15,9 @@
  * @param {String} name the name of the object
  */
 class ScriptReceiverFactory {
+    lastId;
+    prefix;
+    name;
     constructor(prefix, name) {
         this.lastId = 0;
         this.prefix = prefix;
@@ -42,7 +45,7 @@ class ScriptReceiverFactory {
 var ScriptReceivers = new ScriptReceiverFactory('_pusher_script_', 'Pusher.ScriptReceivers');
 
 var Defaults = {
-    VERSION: "8.3.0",
+    VERSION: '8.3.0',
     PROTOCOL: 7,
     wsPort: 80,
     wssPort: 443,
@@ -69,9 +72,9 @@ var Defaults = {
         transport: 'ajax'
     },
     // CDN configuration
-    cdn_http: "http://js.pusher.com",
-    cdn_https: "https://js.pusher.com",
-    dependency_suffix: ""
+    cdn_http: 'http://js.pusher.com',
+    cdn_https: 'https://js.pusher.com',
+    dependency_suffix: 'min'
 };
 
 /** Handles loading dependency files.
@@ -90,6 +93,9 @@ var Defaults = {
  * @param {Object} options
  */
 class DependencyLoader {
+    options;
+    receivers;
+    loading;
     constructor(options) {
         this.options = options;
         this.receivers = options.receivers || ScriptReceivers;
@@ -107,7 +113,7 @@ class DependencyLoader {
         }
         else {
             self.loading[name] = [callback];
-            var request = RuntimeWeb.createScriptRequest(self.getPath(name, options));
+            var request = Runtime$1.createScriptRequest(self.getPath(name, options));
             var receiver = self.receivers.create(function (error) {
                 self.receivers.remove(receiver);
                 if (self.loading[name]) {
@@ -132,7 +138,7 @@ class DependencyLoader {
      */
     getRoot(options) {
         var cdn;
-        var protocol = RuntimeWeb.getDocument().location.protocol;
+        var protocol = Runtime$1.getDocument().location.protocol;
         if ((options && options.useTLS) || protocol === 'https:') {
             cdn = this.options.cdn_https;
         }
@@ -264,6 +270,7 @@ let UnsupportedStrategy$1 = class UnsupportedStrategy extends Error {
     }
 };
 class HTTPAuthError extends Error {
+    status;
     constructor(status, msg) {
         super(msg);
         this.status = status;
@@ -272,7 +279,7 @@ class HTTPAuthError extends Error {
 }
 
 const ajax = function (context, query, authOptions, authRequestType, callback) {
-    const xhr = RuntimeWeb.createXHR();
+    const xhr = Runtime$1.createXHR();
     xhr.open('POST', authOptions.endpoint, true);
     // add request headers
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -358,6 +365,8 @@ var btoa = window.btoa ||
     };
 
 class Timer {
+    clear;
+    timer;
     constructor(set, clear, delay, callback) {
         this.clear = clear;
         this.timer = set(() => {
@@ -767,13 +776,6 @@ function safeJSONStringify(source) {
 }
 
 class Logger {
-    constructor() {
-        this.globalLog = (message) => {
-            if (window.console && window.console.log) {
-                window.console.log(message);
-            }
-        };
-    }
     debug(...args) {
         this.log(this.globalLog, args);
     }
@@ -783,6 +785,11 @@ class Logger {
     error(...args) {
         this.log(this.globalLogError, args);
     }
+    globalLog = (message) => {
+        if (window.console && window.console.log) {
+            window.console.log(message);
+        }
+    };
     globalLogWarn(message) {
         if (window.console && window.console.warn) {
             window.console.warn(message);
@@ -801,10 +808,10 @@ class Logger {
     }
     log(defaultLoggingFunction, ...args) {
         var message = stringify.apply(this, arguments);
-        if (PusherWeb.log) {
-            PusherWeb.log(message);
+        if (Pusher.log) {
+            Pusher.log(message);
         }
-        else if (PusherWeb.logToConsole) {
+        else if (Pusher.logToConsole) {
             const log = defaultLoggingFunction.bind(this);
             log(message);
         }
@@ -846,6 +853,9 @@ var jsonp$1 = function (context, query, authOptions, authRequestType, callback) 
  * @param {String} src
  */
 class ScriptRequest {
+    src;
+    script;
+    errorScript;
     constructor(src) {
         this.src = src;
     }
@@ -923,6 +933,9 @@ class ScriptRequest {
  * @param {Object} data key-value map of data to be submitted
  */
 class JSONPRequest {
+    url;
+    data;
+    request;
     constructor(url, data) {
         this.url = url;
         this.data = data;
@@ -937,7 +950,7 @@ class JSONPRequest {
         }
         var query = buildQueryString(this.data);
         var url = this.url + '/' + receiver.number + '?' + query;
-        this.request = RuntimeWeb.createScriptRequest(url);
+        this.request = Runtime$1.createScriptRequest(url);
         this.request.send(receiver);
     }
     /** Cleans up the DOM remains of the JSONP request. */
@@ -952,8 +965,8 @@ var getAgent = function (sender, useTLS) {
     return function (data, callback) {
         var scheme = 'http' + (useTLS ? 's' : '') + '://';
         var url = scheme + (sender.host || sender.options.host) + sender.options.path;
-        var request = RuntimeWeb.createJSONPRequest(url, data);
-        var receiver = RuntimeWeb.ScriptReceivers.create(function (error, result) {
+        var request = Runtime$1.createJSONPRequest(url, data);
+        var receiver = Runtime$1.ScriptReceivers.create(function (error, result) {
             ScriptReceivers.remove(receiver);
             request.cleanup();
             if (result && result.host) {
@@ -1008,6 +1021,7 @@ var sockjs = {
 };
 
 class CallbackRegistry {
+    _callbacks;
     constructor() {
         this._callbacks = {};
     }
@@ -1062,6 +1076,9 @@ function prefix(name) {
  * @param Function failThrough called when no listeners are bound to an event
  */
 class Dispatcher {
+    callbacks;
+    global_callbacks;
+    failThrough;
     constructor(failThrough) {
         this.callbacks = new CallbackRegistry();
         this.global_callbacks = [];
@@ -1149,9 +1166,21 @@ class Dispatcher {
  * @param {Object} options
  */
 class TransportConnection extends Dispatcher {
+    hooks;
+    name;
+    priority;
+    key;
+    options;
+    state;
+    timeline;
+    activityTimeout;
+    id;
+    socket;
+    beforeOpen;
+    initialize;
     constructor(hooks, name, priority, key, options) {
         super();
-        this.initialize = RuntimeWeb.transportConnectionInitializer;
+        this.initialize = Runtime$1.transportConnectionInitializer;
         this.hooks = hooks;
         this.name = name;
         this.priority = priority;
@@ -1329,6 +1358,7 @@ class TransportConnection extends Dispatcher {
  * @param {Object} hooks object containing all needed transport hooks
  */
 class Transport {
+    hooks;
     constructor(hooks) {
         this.hooks = hooks;
     }
@@ -1363,13 +1393,13 @@ var WSTransport = new Transport({
     handlesActivityChecks: false,
     supportsPing: false,
     isInitialized: function () {
-        return Boolean(RuntimeWeb.getWebSocketAPI());
+        return Boolean(Runtime$1.getWebSocketAPI());
     },
     isSupported: function () {
-        return Boolean(RuntimeWeb.getWebSocketAPI());
+        return Boolean(Runtime$1.getWebSocketAPI());
     },
     getSocket: function (url) {
-        return RuntimeWeb.createWebSocket(url);
+        return Runtime$1.createWebSocket(url);
     }
 });
 var httpConfiguration = {
@@ -1382,17 +1412,17 @@ var httpConfiguration = {
 };
 var streamingConfiguration = extend({
     getSocket: function (url) {
-        return RuntimeWeb.HTTPFactory.createStreamingSocket(url);
+        return Runtime$1.HTTPFactory.createStreamingSocket(url);
     }
 }, httpConfiguration);
 var pollingConfiguration = extend({
     getSocket: function (url) {
-        return RuntimeWeb.HTTPFactory.createPollingSocket(url);
+        return Runtime$1.HTTPFactory.createPollingSocket(url);
     }
 }, httpConfiguration);
 var xhrConfiguration = {
     isSupported: function () {
-        return RuntimeWeb.isXHRSupported();
+        return Runtime$1.isXHRSupported();
     }
 };
 /** HTTP streaming transport using CORS-enabled XMLHttpRequest. */
@@ -1432,7 +1462,7 @@ var SockJSTransport = new Transport({
 });
 var xdrConfiguration = {
     isSupported: function (environment) {
-        var yes = RuntimeWeb.isXDRSupported(environment.useTLS);
+        var yes = Runtime$1.isXDRSupported(environment.useTLS);
         return yes;
     }
 };
@@ -1497,6 +1527,11 @@ var Network = new NetInfo();
  * @param {Object} options
  */
 class AssistantToTheTransportManager {
+    manager;
+    transport;
+    minPingDelay;
+    maxPingDelay;
+    pingDelay;
     constructor(manager, transport, options) {
         this.manager = manager;
         this.transport = transport;
@@ -1729,6 +1764,9 @@ const Protocol = {
  * @param {AbstractTransport} transport
  */
 class Connection extends Dispatcher {
+    id;
+    transport;
+    activityTimeout;
     constructor(id, transport) {
         super();
         this.id = id;
@@ -1868,6 +1906,10 @@ class Connection extends Dispatcher {
  * @param {Function} callback
  */
 class Handshake {
+    transport;
+    callback;
+    onMessage;
+    onClosed;
     constructor(transport, callback) {
         this.transport = transport;
         this.callback = callback;
@@ -1919,6 +1961,9 @@ class Handshake {
 }
 
 class TimelineSender {
+    timeline;
+    options;
+    host;
     constructor(timeline, options) {
         this.timeline = timeline;
         this.options = options || {};
@@ -1927,41 +1972,9 @@ class TimelineSender {
         if (this.timeline.isEmpty()) {
             return;
         }
-        this.timeline.send(RuntimeWeb.TimelineTransport.getAgent(this, useTLS), callback);
+        this.timeline.send(Runtime$1.TimelineTransport.getAgent(this, useTLS), callback);
     }
 }
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
-
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
 
 /** Provides base public channel interface with an event emitter.
  *
@@ -1973,6 +1986,12 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
  * @param {Pusher} pusher
  */
 class Channel extends Dispatcher {
+    name;
+    pusher;
+    subscribed;
+    subscriptionPending;
+    subscriptionCancelled;
+    subscriptionCount;
     constructor(name, pusher) {
         super(function (event, data) {
             Logger$1.debug('No callbacks on ' + name + ' for ' + event);
@@ -2106,6 +2125,10 @@ class PrivateChannel extends Channel {
 
 /** Represents a collection of members of a presence channel. */
 class Members {
+    members;
+    count;
+    myID;
+    me;
     constructor() {
         this.reset();
     }
@@ -2173,6 +2196,7 @@ class Members {
 }
 
 class PresenceChannel extends PrivateChannel {
+    members;
     /** Adds presence channel functionality to private channels.
      *
      * @param {String} name
@@ -2188,7 +2212,7 @@ class PresenceChannel extends PrivateChannel {
      * @param  {Function} callback
      */
     authorize(socketId, callback) {
-        super.authorize(socketId, (error, authData) => __awaiter(this, void 0, void 0, function* () {
+        super.authorize(socketId, async (error, authData) => {
             if (!error) {
                 authData = authData;
                 if (authData.channel_data != null) {
@@ -2196,7 +2220,7 @@ class PresenceChannel extends PrivateChannel {
                     this.members.setMyID(channelData.user_id);
                 }
                 else {
-                    yield this.pusher.user.signinDonePromise;
+                    await this.pusher.user.signinDonePromise;
                     if (this.pusher.user.user_data != null) {
                         // If the user is signed in, get the id of the authenticated user
                         // and allow the presence authorization to continue.
@@ -2213,7 +2237,7 @@ class PresenceChannel extends PrivateChannel {
                 }
             }
             callback(error, authData);
-        }));
+        });
     }
     /** Handles presence and subscription events. For internal use only.
      *
@@ -2284,37 +2308,37 @@ function requireUtf8() {
     Object.defineProperty(utf8, "__esModule", {
         value: true
     });
-    utf8.decode = utf8.encodedLength = utf8.encode = void 0;
     /**
      * Package utf8 implements UTF-8 encoding and decoding.
      */
-    const INVALID_UTF16 = "utf8: invalid string";
-    const INVALID_UTF8 = "utf8: invalid source encoding";
+    var INVALID_UTF16 = "utf8: invalid string";
+    var INVALID_UTF8 = "utf8: invalid source encoding";
     /**
      * Encodes the given string into UTF-8 byte array.
      * Throws if the source string has invalid UTF-16 encoding.
      */
     function encode(s) {
         // Calculate result length and allocate output array.
-        // encodedLength() validates string and throws errors,
+        // encodedLength() also validates string and throws errors,
         // so we don't need repeat validation here.
-        const arr = new Uint8Array(encodedLength(s));
-        let pos = 0;
-        for (let i = 0; i < s.length; i++) {
-            let c = s.charCodeAt(i);
-            if (c >= 0xd800 && c <= 0xdbff) {
-                c = (c - 0xd800 << 10) + (s.charCodeAt(++i) - 0xdc00) + 0x10000;
-            }
+        var arr = new Uint8Array(encodedLength(s));
+        var pos = 0;
+        for (var i = 0; i < s.length; i++) {
+            var c = s.charCodeAt(i);
             if (c < 0x80) {
                 arr[pos++] = c;
             } else if (c < 0x800) {
                 arr[pos++] = 0xc0 | c >> 6;
                 arr[pos++] = 0x80 | c & 0x3f;
-            } else if (c < 0x10000) {
+            } else if (c < 0xd800) {
                 arr[pos++] = 0xe0 | c >> 12;
                 arr[pos++] = 0x80 | c >> 6 & 0x3f;
                 arr[pos++] = 0x80 | c & 0x3f;
             } else {
+                i++; // get one more character
+                c = (c & 0x3ff) << 10;
+                c |= s.charCodeAt(i) & 0x3ff;
+                c += 0x10000;
                 arr[pos++] = 0xf0 | c >> 18;
                 arr[pos++] = 0x80 | c >> 12 & 0x3f;
                 arr[pos++] = 0x80 | c >> 6 & 0x3f;
@@ -2329,29 +2353,23 @@ function requireUtf8() {
      * Throws if the source string has invalid UTF-16 encoding.
      */
     function encodedLength(s) {
-        let result = 0;
-        for (let i = 0; i < s.length; i++) {
-            let c = s.charCodeAt(i);
-            if (c >= 0xd800 && c <= 0xdbff) {
-                // surrogate pair
-                if (i === s.length - 1) {
-                    throw new Error(INVALID_UTF16);
-                }
-                i++;
-                const c2 = s.charCodeAt(i);
-                if (c2 < 0xdc00 || c2 > 0xdfff) {
-                    throw new Error(INVALID_UTF16);
-                }
-                c = (c - 0xd800 << 10) + (c2 - 0xdc00) + 0x10000;
-            }
+        var result = 0;
+        for (var i = 0; i < s.length; i++) {
+            var c = s.charCodeAt(i);
             if (c < 0x80) {
                 result += 1;
             } else if (c < 0x800) {
                 result += 2;
-            } else if (c < 0x10000) {
+            } else if (c < 0xd800) {
                 result += 3;
-            } else {
+            } else if (c <= 0xdfff) {
+                if (i >= s.length - 1) {
+                    throw new Error(INVALID_UTF16);
+                }
+                i++; // "eat" next character
                 result += 4;
+            } else {
+                throw new Error(INVALID_UTF16);
             }
         }
         return result;
@@ -2362,17 +2380,17 @@ function requireUtf8() {
      * Throws if encoding is invalid.
      */
     function decode(arr) {
-        const chars = [];
-        for (let i = 0; i < arr.length; i++) {
-            let b = arr[i];
+        var chars = [];
+        for (var i = 0; i < arr.length; i++) {
+            var b = arr[i];
             if (b & 0x80) {
-                let min;
+                var min = void 0;
                 if (b < 0xe0) {
                     // Need 1 more byte.
                     if (i >= arr.length) {
                         throw new Error(INVALID_UTF8);
                     }
-                    const n1 = arr[++i];
+                    var n1 = arr[++i];
                     if ((n1 & 0xc0) !== 0x80) {
                         throw new Error(INVALID_UTF8);
                     }
@@ -2383,8 +2401,8 @@ function requireUtf8() {
                     if (i >= arr.length - 1) {
                         throw new Error(INVALID_UTF8);
                     }
-                    const n1 = arr[++i];
-                    const n2 = arr[++i];
+                    var n1 = arr[++i];
+                    var n2 = arr[++i];
                     if ((n1 & 0xc0) !== 0x80 || (n2 & 0xc0) !== 0x80) {
                         throw new Error(INVALID_UTF8);
                     }
@@ -2395,9 +2413,9 @@ function requireUtf8() {
                     if (i >= arr.length - 2) {
                         throw new Error(INVALID_UTF8);
                     }
-                    const n1 = arr[++i];
-                    const n2 = arr[++i];
-                    const n3 = arr[++i];
+                    var n1 = arr[++i];
+                    var n2 = arr[++i];
+                    var n3 = arr[++i];
                     if ((n1 & 0xc0) !== 0x80 || (n2 & 0xc0) !== 0x80 || (n3 & 0xc0) !== 0x80) {
                         throw new Error(INVALID_UTF8);
                     }
@@ -2738,9 +2756,10 @@ var base64Exports = requireBase64();
  * @param {Pusher} pusher
  */
 class EncryptedChannel extends PrivateChannel {
+    key = null;
+    nacl;
     constructor(name, pusher, nacl) {
         super(name, pusher);
-        this.key = null;
         this.nacl = nacl;
     }
     /** Authorizes the connection to use the channel.
@@ -2830,7 +2849,7 @@ class EncryptedChannel extends PrivateChannel {
         try {
             return JSON.parse(raw);
         }
-        catch (_a) {
+        catch {
             return raw;
         }
     }
@@ -2863,6 +2882,22 @@ class EncryptedChannel extends PrivateChannel {
  * @param {Object} options
  */
 class ConnectionManager extends Dispatcher {
+    key;
+    options;
+    state;
+    connection;
+    usingTLS;
+    timeline;
+    socket_id;
+    unavailableTimer;
+    activityTimer;
+    retryTimer;
+    activityTimeout;
+    strategy;
+    runner;
+    errorCallbacks;
+    handshakeCallbacks;
+    connectionCallbacks;
     constructor(key, options) {
         super();
         this.state = 'initialized';
@@ -2874,7 +2909,7 @@ class ConnectionManager extends Dispatcher {
         this.errorCallbacks = this.buildErrorCallbacks();
         this.connectionCallbacks = this.buildConnectionCallbacks(this.errorCallbacks);
         this.handshakeCallbacks = this.buildHandshakeCallbacks(this.errorCallbacks);
-        var Network = RuntimeWeb.getNetwork();
+        var Network = Runtime$1.getNetwork();
         Network.bind('online', () => {
             this.timeline.info({ netinfo: 'online' });
             if (this.state === 'connecting' || this.state === 'unavailable') {
@@ -3135,6 +3170,7 @@ class ConnectionManager extends Dispatcher {
 
 /** Handles a channel map. */
 class Channels {
+    channels;
     constructor() {
         this.channels = {};
     }
@@ -3244,6 +3280,8 @@ var Factory = {
  * @param {Object} options
  */
 class TransportManager {
+    options;
+    livesLeft;
     constructor(options) {
         this.options = options || {};
         this.livesLeft = this.options.lives || Infinity;
@@ -3283,6 +3321,11 @@ class TransportManager {
  * @param {Object} options
  */
 class SequentialStrategy {
+    strategies;
+    loop;
+    failFast;
+    timeout;
+    timeoutLimit;
     constructor(strategies, options) {
         this.strategies = strategies;
         this.loop = Boolean(options.loop);
@@ -3372,6 +3415,7 @@ class SequentialStrategy {
  * @param {Array} strategies
  */
 class BestConnectedEverStrategy {
+    strategies;
     constructor(strategies) {
         this.strategies = strategies;
     }
@@ -3442,6 +3486,11 @@ function abortRunner(runner) {
  * @param {Object} options
  */
 class WebSocketPrioritizedCachedStrategy {
+    strategy;
+    transports;
+    ttl;
+    usingTLS;
+    timeline;
     constructor(strategy, transports, options) {
         this.strategy = strategy;
         this.transports = transports;
@@ -3512,7 +3561,7 @@ function getTransportCacheKey(usingTLS) {
     return 'pusherTransport' + (usingTLS ? 'TLS' : 'NonTLS');
 }
 function fetchTransportCache(usingTLS) {
-    var storage = RuntimeWeb.getLocalStorage();
+    var storage = Runtime$1.getLocalStorage();
     if (storage) {
         try {
             var serializedCache = storage[getTransportCacheKey(usingTLS)];
@@ -3527,7 +3576,7 @@ function fetchTransportCache(usingTLS) {
     return null;
 }
 function storeTransportCache(usingTLS, transport, latency, cacheSkipCount) {
-    var storage = RuntimeWeb.getLocalStorage();
+    var storage = Runtime$1.getLocalStorage();
     if (storage) {
         try {
             storage[getTransportCacheKey(usingTLS)] = safeJSONStringify({
@@ -3543,7 +3592,7 @@ function storeTransportCache(usingTLS, transport, latency, cacheSkipCount) {
     }
 }
 function flushTransportCache(usingTLS) {
-    var storage = RuntimeWeb.getLocalStorage();
+    var storage = Runtime$1.getLocalStorage();
     if (storage) {
         try {
             delete storage[getTransportCacheKey(usingTLS)];
@@ -3563,6 +3612,8 @@ function flushTransportCache(usingTLS) {
  * @param {Object} options
  */
 class DelayedStrategy {
+    strategy;
+    options;
     constructor(strategy, { delay: number }) {
         this.strategy = strategy;
         this.options = { delay: number };
@@ -3600,6 +3651,9 @@ class DelayedStrategy {
  * @param {Strategy} falseBranch strategy used when test returns false
  */
 class IfStrategy {
+    test;
+    trueBranch;
+    falseBranch;
     constructor(test, trueBranch, falseBranch) {
         this.test = test;
         this.trueBranch = trueBranch;
@@ -3620,6 +3674,7 @@ class IfStrategy {
  * @param {Strategy} strategy
  */
 class FirstConnectedStrategy {
+    strategy;
     constructor(strategy) {
         this.strategy = strategy;
     }
@@ -3786,6 +3841,12 @@ var hooks$3 = {
 
 const MAX_BUFFER_LENGTH = 256 * 1024;
 class HTTPRequest extends Dispatcher {
+    hooks;
+    method;
+    url;
+    position;
+    xhr;
+    unloader;
     constructor(hooks, method, url) {
         super();
         this.hooks = hooks;
@@ -3798,7 +3859,7 @@ class HTTPRequest extends Dispatcher {
         this.unloader = () => {
             this.close();
         };
-        RuntimeWeb.addUnloadListener(this.unloader);
+        Runtime$1.addUnloadListener(this.unloader);
         this.xhr.open(this.method, this.url, true);
         if (this.xhr.setRequestHeader) {
             this.xhr.setRequestHeader('Content-Type', 'application/json'); // ReactNative doesn't set this header by default.
@@ -3807,7 +3868,7 @@ class HTTPRequest extends Dispatcher {
     }
     close() {
         if (this.unloader) {
-            RuntimeWeb.removeUnloadListener(this.unloader);
+            Runtime$1.removeUnloadListener(this.unloader);
             this.unloader = null;
         }
         if (this.xhr) {
@@ -3856,6 +3917,16 @@ var State$1 = State;
 
 var autoIncrement = 1;
 class HTTPSocket {
+    hooks;
+    session;
+    location;
+    readyState;
+    stream;
+    onopen;
+    onerror;
+    onclose;
+    onmessage;
+    onactivity;
     constructor(hooks, url) {
         this.hooks = hooks;
         this.session = randomNumber(1000) + '/' + randomString(8);
@@ -3876,7 +3947,7 @@ class HTTPSocket {
     sendRaw(payload) {
         if (this.readyState === State$1.OPEN) {
             try {
-                RuntimeWeb.createSocketRequest('POST', getUniqueURL(getSendURL(this.location, this.session))).start(payload);
+                Runtime$1.createSocketRequest('POST', getUniqueURL(getSendURL(this.location, this.session))).start(payload);
                 return true;
             }
             catch (e) {
@@ -3967,7 +4038,7 @@ class HTTPSocket {
         }
     }
     openStream() {
-        this.stream = RuntimeWeb.createSocketRequest('POST', getUniqueURL(this.hooks.getReceiveURL(this.location, this.session)));
+        this.stream = Runtime$1.createSocketRequest('POST', getUniqueURL(this.hooks.getReceiveURL(this.location, this.session)));
         this.stream.bind('chunk', chunk => {
             this.onChunk(chunk);
         });
@@ -4014,7 +4085,7 @@ function replaceHost(url, hostname) {
     return urlParts[1] + hostname + urlParts[3];
 }
 function randomNumber(max) {
-    return RuntimeWeb.randomInt(max);
+    return Runtime$1.randomInt(max);
 }
 function randomString(length) {
     var result = [];
@@ -4061,7 +4132,7 @@ var hooks$1 = {
 
 var hooks = {
     getRequest: function (socket) {
-        var Constructor = RuntimeWeb.getXHRAPI();
+        var Constructor = Runtime$1.getXHRAPI();
         var xhr = new Constructor();
         xhr.onreadystatechange = xhr.onprogress = function () {
             switch (xhr.readyState) {
@@ -4128,7 +4199,7 @@ var Runtime = {
         return window.WebSocket || window.MozWebSocket;
     },
     setup(PusherClass) {
-        window.Pusher = PusherClass; // JSONp requires Pusher to be in the global scope.
+        window.Pusher = PusherClass; // JSONp requires Pusher to be in the window scope.
         var initializeOnDocumentBody = () => {
             this.onDocumentBody(PusherClass.ready);
         };
@@ -4237,12 +4308,12 @@ var Runtime = {
         const random = function () {
             const crypto = window.crypto || window['msCrypto'];
             const random = crypto.getRandomValues(new Uint32Array(1))[0];
-            return random / Math.pow(2, 32);
+            return random / 2 ** 32;
         };
         return Math.floor(random() * max);
     }
 };
-var RuntimeWeb = Runtime;
+var Runtime$1 = Runtime;
 
 var TimelineLevel;
 (function (TimelineLevel) {
@@ -4253,6 +4324,12 @@ var TimelineLevel;
 var TimelineLevel$1 = TimelineLevel;
 
 class Timeline {
+    key;
+    session;
+    events;
+    options;
+    sent;
+    uniqueID;
     constructor(key, session, options) {
         this.key = key;
         this.session = session;
@@ -4317,6 +4394,10 @@ class Timeline {
  * @param {Object} options
  */
 class TransportStrategy {
+    name;
+    priority;
+    transport;
+    options;
     constructor(name, priority, transport, options) {
         this.name = name;
         this.priority = priority;
@@ -4423,7 +4504,7 @@ function failAttempt(error, callback) {
     };
 }
 
-const { Transports } = RuntimeWeb;
+const { Transports } = Runtime$1;
 var defineTransport = function (config, name, type, priority, options, manager) {
     var transportClass = Transports[type];
     if (!transportClass) {
@@ -4494,12 +4575,12 @@ const composeChannelQuery$1 = (params, authOptions) => {
     return query;
 };
 const UserAuthenticator = (authOptions) => {
-    if (typeof RuntimeWeb.getAuthorizers()[authOptions.transport] === 'undefined') {
+    if (typeof Runtime$1.getAuthorizers()[authOptions.transport] === 'undefined') {
         throw `'${authOptions.transport}' is not a recognized auth transport`;
     }
     return (params, callback) => {
         const query = composeChannelQuery$1(params, authOptions);
-        RuntimeWeb.getAuthorizers()[authOptions.transport](RuntimeWeb, query, authOptions, AuthRequestType.UserAuthentication, callback);
+        Runtime$1.getAuthorizers()[authOptions.transport](Runtime$1, query, authOptions, AuthRequestType.UserAuthentication, callback);
     };
 };
 
@@ -4526,12 +4607,12 @@ const composeChannelQuery = (params, authOptions) => {
     return query;
 };
 const ChannelAuthorizer = (authOptions) => {
-    if (typeof RuntimeWeb.getAuthorizers()[authOptions.transport] === 'undefined') {
+    if (typeof Runtime$1.getAuthorizers()[authOptions.transport] === 'undefined') {
         throw `'${authOptions.transport}' is not a recognized auth transport`;
     }
     return (params, callback) => {
         const query = composeChannelQuery(params, authOptions);
-        RuntimeWeb.getAuthorizers()[authOptions.transport](RuntimeWeb, query, authOptions, AuthRequestType.ChannelAuthorization, callback);
+        Runtime$1.getAuthorizers()[authOptions.transport](Runtime$1, query, authOptions, AuthRequestType.ChannelAuthorization, callback);
     };
 };
 
@@ -4607,7 +4688,7 @@ function getWebsocketHostFromCluster(cluster) {
     return `ws-${cluster}.pusher.com`;
 }
 function shouldUseTLS(opts) {
-    if (RuntimeWeb.getProtocol() === 'https:') {
+    if (Runtime$1.getProtocol() === 'https:') {
         return true;
     }
     else if (opts.forceTLS === false) {
@@ -4628,7 +4709,10 @@ function getEnableStatsConfig(opts) {
     return false;
 }
 function buildUserAuthenticator(opts) {
-    const userAuthentication = Object.assign(Object.assign({}, Defaults.userAuthentication), opts.userAuthentication);
+    const userAuthentication = {
+        ...Defaults.userAuthentication,
+        ...opts.userAuthentication
+    };
     if ('customHandler' in userAuthentication &&
         userAuthentication['customHandler'] != null) {
         return userAuthentication['customHandler'];
@@ -4638,7 +4722,10 @@ function buildUserAuthenticator(opts) {
 function buildChannelAuth(opts, pusher) {
     let channelAuthorization;
     if ('channelAuthorization' in opts) {
-        channelAuthorization = Object.assign(Object.assign({}, Defaults.channelAuthorization), opts.channelAuthorization);
+        channelAuthorization = {
+            ...Defaults.channelAuthorization,
+            ...opts.channelAuthorization
+        };
     }
     else {
         channelAuthorization = {
@@ -4666,6 +4753,7 @@ function buildChannelAuthorizer(opts, pusher) {
 }
 
 class WatchlistFacade extends Dispatcher {
+    pusher;
     constructor(pusher) {
         super(function (eventName, data) {
             Logger$1.debug(`No callbacks on watchlist events for ${eventName}`);
@@ -4698,27 +4786,17 @@ function flatPromise() {
 }
 
 class UserFacade extends Dispatcher {
+    pusher;
+    signin_requested = false;
+    user_data = null;
+    serverToUserChannel = null;
+    signinDonePromise = null;
+    watchlist;
+    _signinDoneResolve = null;
     constructor(pusher) {
         super(function (eventName, data) {
             Logger$1.debug('No callbacks on user for ' + eventName);
         });
-        this.signin_requested = false;
-        this.user_data = null;
-        this.serverToUserChannel = null;
-        this.signinDonePromise = null;
-        this._signinDoneResolve = null;
-        this._onAuthorize = (err, authData) => {
-            if (err) {
-                Logger$1.warn(`Error during signin: ${err}`);
-                this._cleanup();
-                return;
-            }
-            this.pusher.send_event('pusher:signin', {
-                auth: authData.auth,
-                user_data: authData.user_data
-            });
-            // Later when we get pusher:singin_success event, the user will be marked as signed in
-        };
         this.pusher = pusher;
         this.pusher.connection.bind('state_change', ({ previous, current }) => {
             if (previous !== 'connected' && current === 'connected') {
@@ -4761,6 +4839,18 @@ class UserFacade extends Dispatcher {
             socketId: this.pusher.connection.socket_id
         }, this._onAuthorize);
     }
+    _onAuthorize = (err, authData) => {
+        if (err) {
+            Logger$1.warn(`Error during signin: ${err}`);
+            this._cleanup();
+            return;
+        }
+        this.pusher.send_event('pusher:signin', {
+            auth: authData.auth,
+            user_data: authData.user_data
+        });
+        // Later when we get pusher:singin_success event, the user will be marked as signed in
+    };
     _onSigninSuccess(data) {
         try {
             this.user_data = JSON.parse(data.user_data);
@@ -4835,17 +4925,38 @@ class UserFacade extends Dispatcher {
 }
 
 class Pusher {
+    /*  STATIC PROPERTIES */
+    static instances = [];
+    static isReady = false;
+    static logToConsole = false;
+    // for jsonp
+    static Runtime = Runtime$1;
+    static ScriptReceivers = Runtime$1.ScriptReceivers;
+    static DependenciesReceivers = Runtime$1.DependenciesReceivers;
+    static auth_callbacks = Runtime$1.auth_callbacks;
     static ready() {
         Pusher.isReady = true;
         for (var i = 0, l = Pusher.instances.length; i < l; i++) {
             Pusher.instances[i].connect();
         }
     }
+    static log;
     static getClientFeatures() {
-        return keys(filterObject({ ws: RuntimeWeb.Transports.ws }, function (t) {
+        return keys(filterObject({ ws: Runtime$1.Transports.ws }, function (t) {
             return t.isSupported({});
         }));
     }
+    /* INSTANCE PROPERTIES */
+    key;
+    config;
+    channels;
+    global_emitter;
+    sessionID;
+    timeline;
+    timelineSender;
+    connection;
+    timelineSenderTimer;
+    user;
     constructor(app_key, options) {
         checkAppKey(app_key);
         validateOptions(options);
@@ -4853,7 +4964,7 @@ class Pusher {
         this.config = getConfig(options, this);
         this.channels = Factory.createChannels();
         this.global_emitter = new Dispatcher();
-        this.sessionID = RuntimeWeb.randomInt(1000000000);
+        this.sessionID = Runtime$1.randomInt(1000000000);
         this.timeline = new Timeline(this.key, this.sessionID, {
             cluster: this.config.cluster,
             features: Pusher.getClientFeatures(),
@@ -4865,11 +4976,11 @@ class Pusher {
         if (this.config.enableStats) {
             this.timelineSender = Factory.createTimelineSender(this.timeline, {
                 host: this.config.statsHost,
-                path: '/timeline/v2/' + RuntimeWeb.TimelineTransport.name
+                path: '/timeline/v2/' + Runtime$1.TimelineTransport.name
             });
         }
         var getStrategy = (options) => {
-            return RuntimeWeb.getDefaultStrategy(this.config, options, defineTransport);
+            return Runtime$1.getDefaultStrategy(this.config, options, defineTransport);
         };
         this.connection = Factory.createConnectionManager(this.key, {
             getStrategy: getStrategy,
@@ -5001,21 +5112,11 @@ class Pusher {
         this.user.signin();
     }
 }
-/*  STATIC PROPERTIES */
-Pusher.instances = [];
-Pusher.isReady = false;
-Pusher.logToConsole = false;
-// for jsonp
-Pusher.Runtime = RuntimeWeb;
-Pusher.ScriptReceivers = RuntimeWeb.ScriptReceivers;
-Pusher.DependenciesReceivers = RuntimeWeb.DependenciesReceivers;
-Pusher.auth_callbacks = RuntimeWeb.auth_callbacks;
-var PusherWeb = Pusher;
 function checkAppKey(key) {
     if (key === null || key === undefined) {
         throw 'You must pass your app key when you instantiate Pusher.';
     }
 }
-RuntimeWeb.setup(Pusher);
+Runtime$1.setup(Pusher);
 
-export { PusherWeb as default };
+export { Pusher as default };
