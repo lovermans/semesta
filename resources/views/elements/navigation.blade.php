@@ -76,6 +76,80 @@
 </nav>
 
 <nav aria-label="App Navigation" data-print="none" id="app-navigation" popover>
+	<ul class="menu flex">
+		<li>
+			<a href="#HRM">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				HRM
+			</a>
+		</li>
+		<li>
+			<a href="#LegalPR">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Legal & PR
+			</a>
+		</li>
+		<li>
+			<a href="#Finance">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Finance & Accounting
+			</a>
+		</li>
+		<li>
+			<a href="#Procurement">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Procurement
+			</a>
+		</li>
+		<li>
+			<a href="#SupplyChain">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Supply Chain
+			</a>
+		</li>
+		<li>
+			<a href="#Production">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Production
+			</a>
+		</li>
+		<li>
+			<a href="#QualityAssurance">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Quality Assurance
+			</a>
+		</li>
+		<li>
+			<a href="#Marketing">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Marketing
+			</a>
+		</li>
+		<li>
+			<a href="#CustomerSatisfaction">
+				<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#article-icon"></use>
+				</svg>
+				Customer Satisfaction
+			</a>
+		</li>
+	</ul>
 </nav>
 
 <nav aria-label="User Navigation" data-print="none" id="user-navigation" popover>

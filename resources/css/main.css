@@ -518,10 +518,10 @@ header {
         }
 
         &:has(img) {
-            padding: 0.5rem;
+            padding: 0.25rem;
 
             img {
-                width: 2rem;
+                width: 2.5rem;
                 aspect-ratio: 1;
             }
         }
@@ -541,6 +541,10 @@ header {
 
         a {
             margin: 0 0.5rem;
+        }
+
+        button[popovertarget=app-navigation] {
+            anchor-name: --app-navigation-toggle;
         }
 
         button[popovertarget=user-navigation] {
@@ -590,12 +594,38 @@ nav[popover] {
     background: Canvas;
     overflow-y: auto;
     max-height: calc(100dvh - 3.5rem);
+    min-width: 7rem;
+    max-width: 100%;
 
     .menu {
-        min-width: 7rem;
-        max-width: 20rem;
         padding: 0.5em 0;
         background: var(--elevation-overlay-8);
+
+        &.flex {
+            display: flex;
+            justify-content: space-evenly;
+            align-content: space-evenly;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            max-width: 40rem;
+
+            a {
+                width: 6rem;
+                text-align: center;
+                padding: 0.25rem;
+                font: var(--font-caption);
+                letter-spacing: var(--letter-spacing-caption);
+                font-weight: 500;
+                border-radius: 0.25rem;
+
+                svg {
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    display: block;
+                    margin: 0.5rem auto;
+                }
+            }
+        }
     }
 
     li {
@@ -605,8 +635,7 @@ nav[popover] {
             padding: 1rem;
             font: var(--font-body-1);
             letter-spacing: var(--letter-spacing-body1);
-            display: flex;
-            align-items: center;
+            display: block;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -621,7 +650,6 @@ nav[popover] {
             svg {
 
                 &:last-child:not(.menu-icon) {
-                    margin-left: auto;
                     transform: rotate(-90deg);
                 }
             }
@@ -687,7 +715,7 @@ nav[popover] {
     }
 }
 
-:is(#main-navigation, #user-navigation)[popover] {
+:is(#main-navigation, #app-navigation, #user-navigation)[popover] {
     display: none;
     opacity: 0;
     inset: unset;
@@ -709,6 +737,14 @@ nav[popover] {
     left: 0;
     margin: 0.5rem 0 0;
     translate: -120% 0;
+}
+
+#app-navigation[popover] {
+    top: anchor(--app-navigation-toggle bottom);
+    right: 0;
+    left: 0;
+    margin: 0.5rem auto 0;
+    translate: 120% 0;
 }
 
 #user-navigation[popover] {

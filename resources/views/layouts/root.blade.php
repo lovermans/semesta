@@ -14,8 +14,7 @@
 
 		{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
 
-		<link
-			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
+		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
 			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
@@ -23,16 +22,13 @@
 		@stack('resources')
 
 		<style nonce="{{ Vite::cspNonce() }}">
-
 		</style>
 	</head>
 
 	<body>
 		<div aria-hidden="true">
-			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites"
-				nonce="{{ Vite::cspNonce() }}"
-				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;"
-				type="image/svg+xml"></object>
+			<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites" nonce="{{ Vite::cspNonce() }}"
+				onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
 		</div>
 
 		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main
