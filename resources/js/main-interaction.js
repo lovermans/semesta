@@ -59,6 +59,12 @@ function updateCurrentPage(event) {
     event.target.ariaCurrent = 'page';
 };
 
+export function findCurrentPage() {
+    document.querySelectorAll('a[href]').forEach((element) => {
+        (element.href == document.location.href) ? element.ariaCurrent = 'page' : element.ariaCurrent = 'false';
+    });
+};
+
 export function handleGlobalClickEvent() {
     window.addEventListener('click', (event) => {
         if (event.target.closest('nav li a:not([data-pjax=true])')) {

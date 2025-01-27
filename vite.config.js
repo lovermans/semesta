@@ -7,7 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/js/start.js',
-                'resources/js/core-listener.js',
+                'resources/js/main-interaction.js',
                 'resources/js/echo-esm.js',
                 'resources/css/main.css',
                 'resources/js/main-function.js',

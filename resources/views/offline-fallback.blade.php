@@ -1,6 +1,6 @@
 @extends('layouts.root')
 
-@section('content')
+@section('main-content')
 	<h1>You are offline</h1>
 
 	<p>Click the button below to try reloading.</p>

@@ -46,6 +46,7 @@ var RESOURCES = {
         "{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}",
         "{{ Vite::asset('resources/css/main.css') }}",
         "{{ Vite::asset('resources/js/start.js') }}",
+        "{{ Vite::asset('resources/js/main-interaction.js') }}",
         "{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}",
         "{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/js-websocket.blade.php')) }}",
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
