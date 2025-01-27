@@ -377,6 +377,7 @@ button {
         text-align: center;
         vertical-align: middle;
         display: inline-block;
+        flex-shrink: 0;
 
         svg {
             vertical-align: middle;
@@ -395,6 +396,7 @@ button {
     &.contained-button {
         color: color-mix(in srgb, Canvas 87%, CanvasText);
         background: color-mix(in srgb, CanvasText 87%, Canvas);
+        box-shadow: var(--elevation-box-shadow-2);
 
         svg {
             fill: color-mix(in srgb, Canvas 87%, CanvasText);
@@ -406,6 +408,7 @@ button {
 
         &:focus:not(:disabled) {
             background: color-mix(in srgb, Canvas 12%, CanvasText);
+            box-shadow: var(--elevation-box-shadow-8);
         }
 
         &:disabled {
@@ -758,6 +761,38 @@ nav[popover] {
     padding: 1rem;
 }
 
+#banner {
+    display: flex;
+    align-items: center;
+    gap: .5rem 1rem;
+    position: sticky;
+    top: 3.5rem;
+    flex-wrap: wrap;
+    background: var(--elevation-solid-overlay-1);
+    box-shadow: var(--elevation-box-shadow-1);
+    margin: -1rem;
+    padding: 1rem 1rem 0.5rem;
+
+    .scrolled-down & {
+        top: 0;
+    }
+
+    p {
+        flex-basis: 24ch;
+        flex-grow: 1;
+    }
+
+    &>:is(svg, img) {
+        width: 2.5rem;
+        height: 2.5rem;
+        flex-shrink: 0;
+    }
+
+    button {
+        margin-left: auto;
+    }
+}
+
 /* 
 Screen Breakpoint
  */
@@ -813,6 +848,12 @@ Screen Breakpoint
     #main-content {
         padding: 1rem 21rem 1rem 1rem;
     }
+
+    #banner {
+        top: 0;
+        margin: 0;
+        border-radius: .25rem;
+    }
 }
 
 /* 
@@ -861,6 +902,10 @@ Animation Style
                 transition-duration: 0.15s;
             }
         }
+    }
+
+    .banner {
+        transition: top 0.3s var(--accelerated-easing);
     }
 }
 

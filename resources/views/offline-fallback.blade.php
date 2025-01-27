@@ -1,10 +1,17 @@
 @extends('layouts.root')
 
 @section('main-content')
-	<h1>You are offline</h1>
+	<div id="banner">
+		<svg aria-hidden="true" viewbox="0 0 24 24">
+			<use href="#cloud-off-icon"></use>
+		</svg>
 
-	<p>Click the button below to try reloading.</p>
-	<button id="check-network-connection" type="button">⤾ Reload</button>
+		<p>
+			You have lost connection to the internet or server. This application is offline.
+		</p>
+
+		<button class="text-button" id="check-network-connection" type="button">Reload</button>
+	</div>
 
 	<!-- Inline the page's JavaScript file. -->
 	<script type="module" nonce="{{ Vite::cspNonce() }}">

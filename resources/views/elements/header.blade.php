@@ -8,15 +8,13 @@
 			</button>
 			<div class="title-header">
 				<a href="{{ $app->url->route('root') }}" title="{{ $app->config->get('app.name') }}">
-					<img alt="{{ $app->config->get('app.name') . ' App Icon' }}"
-						src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
+					<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
 					{{ $app->config->get('app.name') }}
 				</a>
 			</div>
 		</div>
 		<div class="header-column" id="extra-header">
-			<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle"
-				title="Toggles light & dark theme">
+			<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle" title="Toggles light & dark theme">
 				<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
 					<mask class="moon" id="moon-mask">
 						<rect fill="white" height="100%" width="100%" x="0" y="0"></rect>
@@ -31,8 +29,7 @@
 				</svg>
 			</button>
 			<button popovertarget="user-navigation" title="User Menu">
-				<img alt="User Menu" aria-hidden="true"
-					src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#account-circle-icon' }}">
+				<img alt="User Menu" aria-hidden="true" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#account-circle-icon' }}">
 			</button>
 			<a class="text-button" href="#login" title="Login">
 				Login

@@ -18,6 +18,7 @@
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
 
 		<style nonce="{{ Vite::cspNonce() }}">
+
 		</style>
 	</head>
 
