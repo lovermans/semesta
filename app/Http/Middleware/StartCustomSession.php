@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Contracts\Session\Session;
-use Illuminate\Session\Middleware\StartSession as StartDefaultSession;
-use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Session\Middleware\StartSession as StartDefaultSession;
 
 class StartCustomSession extends StartDefaultSession
 {
@@ -17,7 +18,7 @@ class StartCustomSession extends StartDefaultSession
                 $session->getName(),
                 $session->getId(),
                 $this->getCookieExpirationDate(),
-                Request::getBasePath() ?: $config['path'],
+                request()->getBasePath() ?: $config['path'],
                 $config['domain'],
                 $config['secure'] ?? false,
                 $config['http_only'] ?? true,
@@ -25,6 +26,24 @@ class StartCustomSession extends StartDefaultSession
                 $config['same_site'] ?? null,
                 $config['partitioned'] ?? false
             ));
+        }
+    }
+
+    protected function storeCurrentUrl(Request $request, $session)
+    {
+        if ($request->isMethod('GET') &&
+            $request->route() instanceof Route &&
+            ! $request->ajax() &&
+            ! $request->prefetch() &&
+            ! $request->isPrecognitive()&&
+            ! in_array($request->route()->getName(), [
+                'css-font-face',
+                'json-pwa-manifest',
+                'js-register-service-worker',
+                'js-service-worker',
+                'js-websocket'
+            ])) {
+            $session->setPreviousUrl($request->fullUrl());
         }
     }
 }

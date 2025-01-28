@@ -373,8 +373,6 @@ button {
     }
 
     &:is(.outlined-button, .contained-button) {
-        padding: 0 1rem;
-
         &:has(svg, img) {
             padding: 0 1rem 0 0.75rem;
         }
@@ -393,6 +391,7 @@ button {
         vertical-align: middle;
         display: inline-block;
         flex-shrink: 0;
+        padding: 0 1rem;
 
         svg {
             vertical-align: middle;
@@ -555,7 +554,7 @@ header {
         margin-left: auto;
 
         a {
-            margin: 0 0.5rem;
+            margin-right: 0.5rem;
         }
 
         button[popovertarget=app-navigation] {

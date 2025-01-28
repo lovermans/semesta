@@ -7,10 +7,10 @@
 		</svg>
 
 		<p>
-			You have lost connection to the internet or server. This application is offline.
+			@lang('You have lost connection to the internet or server. This application is offline').
 		</p>
 
-		<button class="text-button" id="check-network-connection" type="button">Reload</button>
+		<button class="text-button" id="check-network-connection" type="button">@lang('Reload')</button>
 	</div>
 
 	<!-- Inline the page's JavaScript file. -->
