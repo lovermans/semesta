@@ -774,7 +774,8 @@ nav[popover] {
     translate: var(--translate-starting-style);
 }
 
-#main-content {
+#main-content,
+footer {
     padding: 1rem;
 }
 
@@ -870,6 +871,10 @@ Screen Breakpoint
         top: 0;
         margin: 0;
         border-radius: .25rem;
+    }
+
+    footer {
+        margin-right: 20rem;
     }
 }
 

@@ -23,7 +23,7 @@
 	</head>
 
 	<body>
-		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">Jump To Main Content</a>
+		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">@lang('Jump To Main Content')</a>
 
 		@sectionMissing('page-need-javascript-message')
 			<div aria-hidden="true">
@@ -42,6 +42,10 @@
 
 			@yield('main-content')
 		</main>
+
+		<footer>
+			Test Footer
+		</footer>
 
 		@sectionMissing('page-need-javascript-message')
 			<script type="module"
