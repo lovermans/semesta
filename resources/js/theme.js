@@ -1,6 +1,4 @@
 
-const THEME_STORAGE_KEY = 'theme-preference';
-
 function saveThemePreference() {
     // flip current value
     theme.value = theme.value === 'light' ? 'dark' : 'light';
@@ -9,8 +7,8 @@ function saveThemePreference() {
 };
 
 function getThemePreference() {
-    if (localStorage.getItem(THEME_STORAGE_KEY)) {
-        return localStorage.getItem(THEME_STORAGE_KEY)
+    if (localStorage.getItem('theme-preference')) {
+        return localStorage.getItem('theme-preference')
     }
     else {
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -18,7 +16,7 @@ function getThemePreference() {
 };
 
 function setThemePreference() {
-    localStorage.setItem(THEME_STORAGE_KEY, theme.value);
+    localStorage.setItem('theme-preference', theme.value);
 
     reflectThemePreference();
 };
@@ -29,7 +27,7 @@ function reflectThemePreference() {
     document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
 };
 
-let theme = {
+var theme = {
     value: getThemePreference()
 };
 
