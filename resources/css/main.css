@@ -301,6 +301,20 @@ table {
     border-spacing: 0;
 }
 
+i {
+    font-style: italic;
+}
+
+strong {
+    font-weight: 500;
+}
+
+p {
+    &.center {
+        text-align: center;
+    }
+}
+
 :has(:target) {
     scroll-margin-top: 4rem;
 }
@@ -730,7 +744,7 @@ nav[popover] {
 
         @starting-style {
             opacity: 0;
-            translate: -120% 0;
+            translate: var(--translate-starting-style, 0 0);
         }
     }
 }
@@ -739,7 +753,8 @@ nav[popover] {
     top: anchor(--main-navigation-toggle bottom);
     left: 0;
     margin: 0.5rem 0 0;
-    translate: -120% 0;
+    --translate-starting-style: -120% 0;
+    translate: var(--translate-starting-style);
 }
 
 #app-navigation[popover] {
@@ -747,14 +762,16 @@ nav[popover] {
     right: 0;
     left: 0;
     margin: 0.5rem auto 0;
-    translate: 120% 0;
+    --translate-starting-style: 0 -120vh;
+    translate: var(--translate-starting-style);
 }
 
 #user-navigation[popover] {
     top: anchor(--user-navigation-toggle bottom);
     right: anchor(--user-navigation-toggle right);
     margin: 0.5rem 0 0;
-    translate: 120% 0;
+    --translate-starting-style: 0 -120vh;
+    translate: var(--translate-starting-style);
 }
 
 #main-content {
@@ -861,6 +878,16 @@ Animation Style
  */
 
 @media (prefers-reduced-motion: no-preference) {
+    @keyframes rotateInfinite {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
     :has(:target) {
         scroll-behavior: smooth;
     }
@@ -871,6 +898,10 @@ Animation Style
 
     header {
         transition: translate 0.3s var(--accelerated-easing);
+
+        .title-header>a>img {
+            animation: rotateInfinite 3s linear infinite;
+        }
     }
 
     nav[popover] {

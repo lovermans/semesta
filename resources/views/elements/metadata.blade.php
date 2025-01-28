@@ -13,7 +13,7 @@
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="preconnect">
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="dns-prefetch">
 
-<meta content="{{ $app->url->route('root') }}" name="msapplication-starturl">
+<meta content="{{ $app->url->route('start') }}" name="msapplication-starturl">
 
 <meta content="{{ $app->config->get('app.name', 'Laravel') }}" name="application-name">
 <meta content="{{ $app->config->get('app.name', 'Laravel') }}" name="apple-mobile-web-app-title">

@@ -7,7 +7,7 @@
 				</svg>
 			</button>
 			<div class="title-header">
-				<a href="{{ $app->url->route('root') }}" title="{{ $app->config->get('app.name') }}">
+				<a href="{{ $app->url->route('start') }}" title="{{ $app->config->get('app.name') }}">
 					<img alt="{{ $app->config->get('app.name') . ' App Icon' }}" src="{{ Vite::asset('resources/images/app-icon/app-icon-sprites.svg') . '#app-icon' }}">
 					{{ $app->config->get('app.name') }}
 				</a>
