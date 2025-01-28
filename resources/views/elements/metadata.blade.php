@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
 <meta content="IE=edge" http-equiv="X-UA-Compatible">
-<meta content="Laravel 11" name="generator">
+<meta content="Laravel {{ Illuminate\Foundation\Application::VERSION }} - PHP {{ PHP_VERSION }}" name="generator">
 
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="preconnect">
 <link href="{{ $app->request->getSchemeAndHttpHost() }}" rel="dns-prefetch">

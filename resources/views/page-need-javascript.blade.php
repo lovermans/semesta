@@ -5,7 +5,7 @@
 		<img alt="User Menu" aria-hidden="true" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#javascript-icon' }}">
 
 		<p>
-			You have to enable javascript on the browser to run this application.
+			@lang('You have to enable javascript on the browser to run this application').
 		</p>
 	</div>
 @endsection

@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.9",
         "pusher/pusher-php-server": "^7.2",
         "spiral/roadrunner-cli": "^2.6",
-        "spiral/roadrunner-http": "^3.5"
+        "spiral/roadrunner-http": "^3.5",
+        "tanmuhittin/laravel-google-translate": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
