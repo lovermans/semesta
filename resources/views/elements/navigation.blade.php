@@ -73,6 +73,22 @@
 			</a>
 		</li>
 	</ul>
+
+	<div id="main-navigation-footer">
+		<div class="separator">
+			@lang('Theme Preference')
+		</div>
+		<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle">
+			@lang('Dark/Light Theme')
+			<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
+				<mask class="moon" id="moon-mask">
+					<rect fill="white" height="100%" width="100%" x="0" y="0"></rect>
+					<circle cx="24" cy="10" fill="black" r="6"></circle>
+				</mask>
+				<use href="#theme-toggle-icon"></use>
+			</svg>
+		</button>
+	</div>
 </nav>
 
 <nav aria-label="App Navigation" data-print="none" id="app-navigation" popover>

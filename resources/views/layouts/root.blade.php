@@ -4,6 +4,15 @@
 	<head>
 		@include('elements.metadata')
 
+		<style nonce="{{ Vite::cspNonce() }}">
+
+		</style>
+
+		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
+			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
+
+		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
+
 		@sectionMissing('page-need-javascript-message')
 			<noscript>
 				<meta HTTP-EQUIV="refresh" content="0;url='{{ $app->url->route('page-need-javascript') }}'">
@@ -11,15 +20,6 @@
 
 			{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
 		@endif
-
-		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
-			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
-
-		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
-
-		<style nonce="{{ Vite::cspNonce() }}">
-
-		</style>
 	</head>
 
 	<body>
@@ -48,33 +48,7 @@
 		</footer>
 
 		@sectionMissing('page-need-javascript-message')
-			<script type="module"
-				src="{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/morphs/js-register-service-worker.blade.php')) }}"
-				nonce="{{ Vite::cspNonce() }}"></script>
-
-			<script nonce="{{ Vite::cspNonce() }}">
-				async function applyWebsocket() {
-					let {
-						soketi
-					} = await import(
-						"{{ $app->url->route('js-websocket') . '?id=' . filemtime($app->resourcePath('views/morphs/js-websocket.blade.php')) }}"
-					);
-
-					return soketi;
-				};
-
-				window.addEventListener('popstate', (event) => {
-					console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`, );
-				});
-			</script>
-
-			<script nonce="{{ Vite::cspNonce() }}" type="module">
-				import * as root from "{{ Vite::asset('resources/js/main-interaction.js') }}";
-
-				root.findCurrentPage();
-				root.showHideTopAppBarOnScroll(document.body, 500);
-				root.handleGlobalClickEvent();
-			</script>
+			@include('elements.script')
 		@endif
 	</body>
 
