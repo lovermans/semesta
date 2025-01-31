@@ -69,15 +69,11 @@
 			</script>
 
 			<script nonce="{{ Vite::cspNonce() }}" type="module">
-				import {
-					findCurrentPage,
-					showHideTopAppBarOnScroll,
-					handleGlobalClickEvent
-				} from "{{ Vite::asset('resources/js/main-interaction.js') }}";
+				import * as root from "{{ Vite::asset('resources/js/main-interaction.js') }}";
 
-				findCurrentPage();
-				showHideTopAppBarOnScroll(document.body, 500);
-				handleGlobalClickEvent();
+				root.findCurrentPage();
+				root.showHideTopAppBarOnScroll(document.body, 500);
+				root.handleGlobalClickEvent();
 			</script>
 		@endif
 	</body>

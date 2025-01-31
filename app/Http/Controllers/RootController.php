@@ -21,7 +21,7 @@ class RootController extends Controller
 
     public function createWebSocketJs()
     {
-        return response()->view('morphs.js-websocket')->withHeaders(['Content-Type' => 'application/javascript', 'Cache-Control' => 'max-age=2592000, public']);
+        return response()->view('morphs.js-websocket')->withHeaders(['Content-Type' => 'application/javascript', 'Cache-Control' => 'no-store']);
     }
 
     public function registerServiceWorker()
