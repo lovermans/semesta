@@ -73,3 +73,9 @@ export function handleGlobalClickEvent() {
         }
     });
 };
+
+export function handleAppLocaleChange() {
+    document.getElementById('app-locale').addEventListener('change', (event) => {
+        event.target.form.submit();
+    })
+}

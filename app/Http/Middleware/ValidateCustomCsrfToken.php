@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class ValidateCustomCsrfToken extends ValidateCsrfToken
 {
+    protected $except = ['/locale-setting'];
+
     protected function newCookie($request, $config)
     {
         return new Cookie(

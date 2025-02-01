@@ -28,4 +28,11 @@ class RootController extends Controller
     {
         return response()->view('morphs.js-register-service-worker')->withHeaders(['Content-Type' => 'application/javascript', 'Cache-Control' => 'max-age=2592000, public']);
     }
+
+    public function setAppLocale()
+    {
+        session(['locale' => request('locale', 'en')]);
+        
+        return back();
+    }
 }

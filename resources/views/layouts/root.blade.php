@@ -8,7 +8,8 @@
 
 		</style>
 
-		<link href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
+		<link
+			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
 			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
@@ -27,8 +28,10 @@
 
 		@sectionMissing('page-need-javascript-message')
 			<div aria-hidden="true">
-				<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites" nonce="{{ Vite::cspNonce() }}"
-					onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;" type="image/svg+xml"></object>
+				<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites"
+					nonce="{{ Vite::cspNonce() }}"
+					onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;"
+					type="image/svg+xml"></object>
 			</div>
 
 			@include('elements.header')

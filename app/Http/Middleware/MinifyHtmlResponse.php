@@ -3,23 +3,19 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class MinifyHtmlResponse
 {
     protected array $skippedElements = [];
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
 
-        if ((strtolower(strtok($response->headers->get('Content-Type'), ';')) === 'text/html')) {
+
+        if (Str::contains(strtolower($response->headers->get('Content-Type')), ['application/javascript','application/json','text/css','text/html'])) {
 
             $html = $response->getContent();
 

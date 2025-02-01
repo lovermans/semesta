@@ -24,4 +24,5 @@
 	root.findCurrentPage();
 	root.showHideTopAppBarOnScroll(document.body, 500);
 	root.handleGlobalClickEvent();
+	root.handleAppLocaleChange();
 </script>

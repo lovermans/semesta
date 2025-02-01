@@ -737,15 +737,28 @@ nav[popover] {
     }
 
     #main-navigation-footer {
+        display: flex;
+        flex-flow: column;
         margin-top: auto;
 
         .separator {
             font: var(--font-overline);
             letter-spacing: var(--letter-spacing-overline);
             border-top: var(--divider-border);
-            padding: 1rem 1rem 0.5rem;
+            padding: 1rem 1rem 0.25rem;
             color: var(--color-inactive);
             font-weight: 500;
+        }
+
+        .language-selector {
+            display: flex;
+            padding: 0 1rem;
+            height: 3rem;
+            align-items: center;
+
+            select {
+                flex: 1;
+            }
         }
     }
 }
