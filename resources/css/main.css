@@ -2,8 +2,20 @@ html {
     color-scheme: light;
     /* block-size: 100%; */
 
-    --background-surface: hsl(0, 0%, 93%);
-    --background-surface-invert: hsl(0, 0%, 7%);
+    --hue: 115;
+    --accent-hue: calc(var(--hue) + 300);
+    --anchor-hue: calc(var(--hue) + 60);
+    /* --background-color-theme: hsl(var(--hue), 50%, 90%);
+    --overlay-color-theme: hsl(var(--hue), 50%, 95%);
+    --font-color-theme: hsl(var(--hue), 50%, 10%);
+    --accent-color-theme: hsl(var(--accent-hue), 80%, 20%);
+    --anchor-color-theme: hsl(var(--anchor-hue), 80%, 20%); */
+
+    /* --background-surface: hsl(0, 0%, 93%);
+    --background-surface-invert: hsl(0, 0%, 7%); */
+
+    --background-surface: hsl(var(--hue), 50%, 90%);
+    --background-surface-invert: hsl(var(--hue), 50%, 10%);
 
     --red: 0;
     --green: 0;
@@ -43,16 +55,27 @@ html {
 
     --font-family: 'Roboto', 'Arial', sans-serif;
 
-    --color-focus: hsl(0, 0%, 0%);
+    /* --color-focus: hsl(0, 0%, 0%);
     --color-active: hsl(0, 0%, 13%);
     --color-inactive: hsl(0, 0%, 40%);
-    --color-disabled: hsl(0, 0%, 62%);
+    --color-disabled: hsl(0, 0%, 62%); */
 
-    --color-accent: hsl(231, 99%, 59%);
+    --color-focus: hsl(var(--hue), 50%, 0%);
+    --color-active: hsl(var(--hue), 50%, 7%);
+    --color-inactive: hsl(var(--hue), 50%, 34%);
+    --color-disabled: hsl(var(--hue), 50%, 56%);
+
+    /* --color-accent: hsl(231, 99%, 59%);
     --color-accent-hover: hsl(231, 99%, 65%);
     --color-accent-selected: hsl(231, 99%, 67%);
     --color-accent-focus: hsl(231, 99%, 71%);
-    --color-accent-pressed: hsl(231, 99%, 75%);
+    --color-accent-pressed: hsl(231, 99%, 75%); */
+
+    --color-accent: hsl(var(--accent-hue), 80%, 20%);
+    --color-accent-hover: hsl(var(--accent-hue), 80%, 26%);
+    --color-accent-selected: hsl(var(--accent-hue), 80%, 28%);
+    --color-accent-focus: hsl(var(--accent-hue), 80%, 32%);
+    --color-accent-pressed: hsl(var(--accent-hue), 80%, 36%);
 
     --font-h1: normal normal 300 6rem/1em var(--font-family);
     --letter-spacing-h1: -0.09375rem;
@@ -120,8 +143,17 @@ html {
     &[data-theme=dark] {
         color-scheme: dark;
 
-        --background-surface: hsl(0, 0%, 4%);
-        --background-surface-invert: hsl(0, 0%, 96%);
+        --background-color-theme: hsl(var(--hue), 50%, 10%);
+        --overlay-color-theme: hsl(var(--hue), 50%, 15%);
+        --font-color-theme: hsl(var(--hue), 50%, 90%);
+        --accent-color-theme: hsl(var(--tertiary-hue), 80%, 80%);
+        --anchor-color-theme: hsl(var(--accent-hue), 80%, 80%);
+
+        /* --background-surface: hsl(0, 0%, 3%);
+        --background-surface-invert: hsl(0, 0%, 97%); */
+
+        --background-surface: hsl(var(--hue), 50%, 10%);
+        --background-surface-invert: hsl(var(--hue), 50%, 90%);
 
         --red: 255;
         --green: 255;
@@ -131,16 +163,27 @@ html {
         --green-invert: 0;
         --blue-invert: 0;
 
-        --color-focus: hsl(0, 0%, 100%);
+        /* --color-focus: hsl(0, 0%, 100%);
         --color-active: hsl(0, 0%, 87%);
         --color-inactive: hsl(0, 0%, 60%);
-        --color-disabled: hsl(0, 0%, 38%);
+        --color-disabled: hsl(0, 0%, 38%); */
 
-        --color-accent: hsl(231, 100%, 77%);
+        --color-focus: hsl(var(--hue), 50%, 100%);
+        --color-active: hsl(var(--hue), 50%, 93%);
+        --color-inactive: hsl(var(--hue), 50%, 66%);
+        --color-disabled: hsl(var(--hue), 50%, 44%);
+
+        /* --color-accent: hsl(231, 100%, 77%);
         --color-accent-hover: hsl(231, 100%, 83%);
         --color-accent-selected: hsl(231, 100%, 85%);
         --color-accent-focus: hsl(231, 100%, 89%);
-        --color-accent-pressed: hsl(231, 100%, 93%);
+        --color-accent-pressed: hsl(231, 100%, 93%); */
+
+        --color-accent: hsl(var(--accent-hue), 80%, 80%);
+        --color-accent-hover: hsl(var(--accent-hue), 80%, 74%);
+        --color-accent-selected: hsl(var(--accent-hue), 80%, 72%);
+        --color-accent-focus: hsl(var(--accent-hue), 80%, 68%);
+        --color-accent-pressed: hsl(var(--accent-hue), 80%, 64%);
 
         --white-layer: 0%;
     }

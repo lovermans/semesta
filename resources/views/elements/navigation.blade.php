@@ -88,9 +88,9 @@
 				<use href="#theme-toggle-icon"></use>
 			</svg>
 		</button>
-		<div class="separator">
+		<label class="separator" for="app-locale">
 			@lang('Language Preference')
-		</div>
+		</label>
 		<form action="{{ $app->url->route('locale-setting') }}" class="language-selector" method="POST">
 			<select id="app-locale" name="locale">
 				<option @selected($app->getLocale() == 'id') value="id">Indonesia</option>
