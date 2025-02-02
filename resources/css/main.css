@@ -14,8 +14,8 @@ html {
     /* --background-surface: hsl(0, 0%, 93%);
     --background-surface-invert: hsl(0, 0%, 7%); */
 
-    --background-surface: hsl(var(--hue), 50%, 90%);
-    --background-surface-invert: hsl(var(--hue), 50%, 10%);
+    --background-surface: hsl(var(--hue), 50%, 93%);
+    --background-surface-invert: hsl(var(--hue), 50%, 7%);
 
     --red: 0;
     --green: 0;
@@ -64,6 +64,11 @@ html {
     --color-active: hsl(var(--hue), 50%, 7%);
     --color-inactive: hsl(var(--hue), 50%, 34%);
     --color-disabled: hsl(var(--hue), 50%, 56%);
+
+    --color-anchor-link: hsl(var(--anchor-hue), 80%, 20%);
+    --color-anchor-hover: hsl(var(--anchor-hue), 80%, 26%);
+    --color-anchor-visited: hsl(var(--anchor-hue), 80%, 28%);
+    --color-anchor-active: hsl(var(--anchor-hue), 80%, 32%);
 
     /* --color-accent: hsl(231, 99%, 59%);
     --color-accent-hover: hsl(231, 99%, 65%);
@@ -143,17 +148,11 @@ html {
     &[data-theme=dark] {
         color-scheme: dark;
 
-        --background-color-theme: hsl(var(--hue), 50%, 10%);
-        --overlay-color-theme: hsl(var(--hue), 50%, 15%);
-        --font-color-theme: hsl(var(--hue), 50%, 90%);
-        --accent-color-theme: hsl(var(--tertiary-hue), 80%, 80%);
-        --anchor-color-theme: hsl(var(--accent-hue), 80%, 80%);
-
         /* --background-surface: hsl(0, 0%, 3%);
         --background-surface-invert: hsl(0, 0%, 97%); */
 
-        --background-surface: hsl(var(--hue), 50%, 10%);
-        --background-surface-invert: hsl(var(--hue), 50%, 90%);
+        --background-surface: hsl(var(--hue), 50%, 7%);
+        --background-surface-invert: hsl(var(--hue), 50%, 93%);
 
         --red: 255;
         --green: 255;
@@ -172,6 +171,11 @@ html {
         --color-active: hsl(var(--hue), 50%, 93%);
         --color-inactive: hsl(var(--hue), 50%, 66%);
         --color-disabled: hsl(var(--hue), 50%, 44%);
+
+        --color-anchor-link: hsl(var(--anchor-hue), 80%, 80%);
+        --color-anchor-hover: hsl(var(--anchor-hue), 80%, 74%);
+        --color-anchor-visited: hsl(var(--anchor-hue), 80%, 72%);
+        --color-anchor-active: hsl(var(--anchor-hue), 80%, 68%);
 
         /* --color-accent: hsl(231, 100%, 77%);
         --color-accent-hover: hsl(231, 100%, 83%);
@@ -342,6 +346,23 @@ p {
 a {
     text-decoration: none;
 
+    &:link {
+        color: var(--color-anchor-link);
+    }
+
+    &:visited {
+        color: var(--color-anchor-visited);
+    }
+
+    &:active {
+        color: var(--color-anchor-active);
+    }
+
+    &:hover {
+        color: var(--color-anchor-hover);
+        font-weight: 500;
+    }
+
     &:focus-visible {
         outline: none;
         text-decoration: underline;
@@ -424,12 +445,6 @@ button {
         }
     }
 
-    &:is(.outlined-button, .contained-button) {
-        &:has(svg, img) {
-            padding: 0 1rem 0 0.75rem;
-        }
-    }
-
     &:is(.text-button, .outlined-button, .contained-button) {
         font: var(--font-button);
         letter-spacing: var(--letter-spacing-button);
@@ -445,7 +460,11 @@ button {
         flex-shrink: 0;
         padding: 0 1rem;
 
-        svg {
+        &:has(svg, img) {
+            padding: 0 1rem 0 0.75rem;
+        }
+
+        :is(svg, img) {
             vertical-align: middle;
             margin-right: 0.5rem;
         }
@@ -581,7 +600,7 @@ header {
             padding: 0.25rem;
 
             img {
-                width: 2.5rem;
+                width: 2rem;
                 aspect-ratio: 1;
             }
         }
