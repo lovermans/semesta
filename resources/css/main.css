@@ -395,6 +395,8 @@ button {
         width: 100%;
         padding: 0 1rem;
         gap: 1rem;
+        font: var(--font-body-1);
+        letter-spacing: var(--letter-spacing-body1);
 
         &:hover>svg {
             background: var(--hover-overlay);
@@ -412,9 +414,9 @@ button {
             stroke-linecap: round;
             flex-shrink: 0;
             padding: 0.5rem;
-            flex-basis: 2rem;
-            width: 2rem;
-            height: 2rem;
+            flex-basis: 2.5rem;
+            width: 2.5rem;
+            aspect-ratio: 1;
             border-radius: 50%;
         }
     }
@@ -515,7 +517,7 @@ button {
 
 svg {
     width: 1.5rem;
-    height: 1.5rem;
+    aspect-ratio: 1;
     display: inline-block;
     vertical-align: middle;
 }
@@ -673,7 +675,7 @@ nav[popover] {
     overflow-y: auto;
     max-height: calc(100dvh - 3.5rem);
     min-width: 7rem;
-    max-width: 20rem;
+    max-width: min(20rem, 100%);
     display: flex;
     flex-flow: column;
     padding: 0.5em 0;
@@ -797,32 +799,6 @@ nav[popover] {
         box-shadow: var(--elevation-box-shadow-16);
         background: var(--elevation-solid-overlay-16);
     }
-
-    #main-navigation-footer {
-        display: flex;
-        flex-flow: column;
-        margin-top: auto;
-
-        .separator {
-            font: var(--font-overline);
-            letter-spacing: var(--letter-spacing-overline);
-            border-top: var(--divider-border);
-            padding: 1rem 1rem 0.25rem;
-            color: var(--color-inactive);
-            font-weight: 500;
-        }
-
-        .language-selector {
-            display: flex;
-            padding: 0 1rem;
-            height: 3rem;
-            align-items: center;
-
-            select {
-                flex: 1;
-            }
-        }
-    }
 }
 
 :is(#main-navigation, #app-navigation, #user-navigation)[popover] {
@@ -849,6 +825,71 @@ nav[popover] {
     --translate-starting-style: -120% 0;
     translate: var(--translate-starting-style);
     height: calc(100dvh - 3.5rem);
+
+    #main-navigation-footer {
+        display: flex;
+        flex-flow: column;
+        margin-top: auto;
+
+        .separator {
+            font: var(--font-overline);
+            letter-spacing: var(--letter-spacing-overline);
+            border-top: var(--divider-border);
+            padding: 1rem 1rem 0.25rem;
+            color: var(--color-inactive);
+            font-weight: 500;
+        }
+
+        .language-selector {
+            display: flex;
+            padding: 0 1rem;
+            height: 3rem;
+            align-items: center;
+
+            select {
+                flex: 1;
+                font: var(--font-body-1);
+                letter-spacing: var(--letter-spacing-body1);
+                line-height: 3rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        #app-color-slider {
+            display: flex;
+            padding: 0 1rem;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            height: 3rem;
+
+            #app-color-actions {
+                flex-shrink: 0;
+                display: flex;
+            }
+
+            button {
+                flex-shrink: 0;
+                border-radius: 50%;
+                padding: 0.5rem;
+                flex-basis: 2.5rem;
+                width: 2.5rem;
+                aspect-ratio: 1;
+
+                &:hover {
+                    background: var(--hover-overlay);
+                }
+
+                &:focus {
+                    background: var(--focus-overlay);
+                }
+
+                &:focus-within {
+                    background: var(--pressed-overlay);
+                }
+            }
+        }
+    }
 }
 
 :is(#app-navigation, #user-navigation)[popover] {
