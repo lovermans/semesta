@@ -204,13 +204,10 @@ html {
         }
     }
 
-    &:has(nav[popover]:popover-open:not(dialog)) header {
+    &:has(:is(#main-navigation, #app-navigation, #user-navigation)[popover]:popover-open:not(dialog)) header {
         box-shadow: var(--elevation-box-shadow-4);
+        background: var(--elevation-solid-overlay-4);
         translate: 0;
-
-        .overlay {
-            background: var(--elevation-solid-overlay-4);
-        }
     }
 }
 
@@ -280,6 +277,21 @@ button,
 textarea,
 select {
     outline: none;
+}
+
+input[type="range"] {
+    appearance: none;
+    height: 0.25rem;
+    background: var(--color-accent);
+    border-radius: 0.125rem;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 0.5rem;
+    height: 1.25rem;
+    background: var(--color-anchor-link);
+    border-radius: 0.125rem;
 }
 
 p,
@@ -651,14 +663,16 @@ header {
 
     :is(.scrolled-up, .scrolled-down) & {
         box-shadow: var(--elevation-box-shadow-4);
-
-        .overlay {
-            background: var(--elevation-solid-overlay-4);
-        }
+        background: var(--elevation-solid-overlay-4);
     }
 
     .scrolled-down & {
         translate: 0 -4rem;
+    }
+
+    &:has(:focus-within, :hover) {
+        box-shadow: var(--elevation-box-shadow-4);
+        background: var(--elevation-solid-overlay-4);
     }
 }
 
@@ -1035,6 +1049,11 @@ Screen Breakpoint
 @media screen and (min-width:64rem) {
     html {
         --right-sidebar-max-width: min(26.4%, 20rem);
+
+        &:has(:is(#main-navigation, #app-navigation, #user-navigation)[popover]:popover-open:not(dialog)) header {
+            box-shadow: var(--elevation-box-shadow-16);
+            background: var(--elevation-solid-overlay-16);
+        }
     }
 
     header {
