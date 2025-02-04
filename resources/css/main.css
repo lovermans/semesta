@@ -248,8 +248,7 @@ body {
 
 picture,
 video,
-canvas,
-svg {
+canvas {
     display: block;
     max-width: 100%;
 }
@@ -262,6 +261,14 @@ img {
     background-repeat: no-repeat;
     background-size: cover;
     shape-margin: 1rem;
+}
+
+svg {
+    width: 1.5rem;
+    aspect-ratio: 1;
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
 }
 
 :where(svg:not([fill])) {
@@ -513,25 +520,6 @@ button {
     }
 }
 
-svg {
-    width: 1.5rem;
-    aspect-ratio: 1;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* 
-Inline SVG Style
- */
-
-#inline-svg-icon {
-    display: none;
-
-    & .sprite {
-        display: inline-block;
-    }
-}
-
 /* 
 Skip Navigation Link Style
  */
@@ -555,6 +543,14 @@ a.jump-to-main-content {
     &:focus {
         translate: -50% 0;
     }
+}
+
+/* 
+Internal SVG Icon
+ */
+
+#inline-svg-icon {
+    display: none;
 }
 
 /* 
@@ -665,6 +661,49 @@ header {
         translate: 0 -4rem;
     }
 }
+
+/* 
+Light/Dark Icon Style
+ */
+
+.sun-and-moon {
+    &> :is(.moon, .sun, .sun-beams) {
+        transform-origin: center center;
+    }
+
+    &> :is(.moon, .sun) {
+        fill: var(--color-active);
+    }
+
+    &>.sun-beams {
+        stroke: var(--color-active);
+        stroke-width: 0.125rem;
+    }
+
+    .sprite:is(:focus-visible)>& {
+        &> :is(.moon, .sun, .sun-beams) {
+            fill: var(--icon-fill-focus);
+        }
+    }
+
+    [data-theme="dark"] & {
+        &>.moon>circle {
+            transform: translateX(-0.4375rem);
+        }
+
+        &>.sun-beams {
+            opacity: 0;
+        }
+
+        &>.sun {
+            transform: scale(1.75);
+        }
+    }
+}
+
+/* 
+Navigation Style
+ */
 
 nav[popover] {
     border: none;
@@ -945,6 +984,10 @@ nav[popover] {
 #user-navigation[popover] {
     top: anchor(--user-navigation-toggle bottom);
 }
+
+/* 
+Core Content Style
+ */
 
 #main-content,
 footer {

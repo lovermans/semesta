@@ -28,7 +28,7 @@
 
 		@sectionMissing('page-need-javascript-message')
 			<div aria-hidden="true">
-				<object data="{{ Vite::asset('resources/images/svg/icon-sprites.svg') }}" id="icon-sprites"
+				<object data="{{ Vite::asset('resources/images/svg/internal-icon-sprites.svg') }}" id="icon-sprites"
 					nonce="{{ Vite::cspNonce() }}"
 					onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;"
 					type="image/svg+xml"></object>

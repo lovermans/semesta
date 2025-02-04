@@ -21,7 +21,8 @@
 				</svg>
 			</button>
 			<button popovertarget="user-navigation" title="User Menu">
-				<img alt="User Menu" aria-hidden="true" class="svg" src="{{ Vite::asset('resources/images/svg/icon-sprites.svg') . '#account-circle-icon' }}">
+				<img alt="User Menu" aria-hidden="true" class="svg"
+					src="{{ Vite::asset('resources/images/svg/external-icon-sprites.svg') . '#account-circle-icon' }}">
 			</button>
 			<a class="text-button" href="#login" title="Login">
 				Login
