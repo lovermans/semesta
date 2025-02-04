@@ -745,11 +745,11 @@ nav[popover] {
 
             a {
                 width: 6rem;
+                display: block;
                 text-align: center;
                 padding: 0.25rem;
                 font: var(--font-caption);
                 letter-spacing: var(--letter-spacing-caption);
-                font-weight: 500;
                 border-radius: 0.25rem;
                 height: revert;
                 line-height: revert;
@@ -772,7 +772,8 @@ nav[popover] {
             padding: 0 1rem;
             font: var(--font-body-1);
             letter-spacing: var(--letter-spacing-body1);
-            display: inline-block;
+            display: flex;
+            align-items: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -785,12 +786,14 @@ nav[popover] {
 
             svg.menu-icon {
                 margin-right: 1rem;
+                flex-shrink: 0;
             }
 
             svg {
 
                 &:last-child:not(.menu-icon) {
                     transform: rotate(-90deg);
+                    margin-left: auto;
                 }
             }
 
