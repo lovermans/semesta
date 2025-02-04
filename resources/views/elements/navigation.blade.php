@@ -109,7 +109,7 @@
 		<label class="separator" for="app-locale">
 			@lang('Language')
 		</label>
-		<form action="{{ $app->url->route('locale-setting') }}" class="language-selector" method="POST">
+		<form action="{{ $app->url->route('locale-setting') }}" id="language-selector" method="POST">
 			<select id="app-locale" name="locale">
 				<option @selected($app->getLocale() == 'id') value="id">Indonesia</option>
 				<option @selected($app->getLocale() == 'en') value="en">English</option>

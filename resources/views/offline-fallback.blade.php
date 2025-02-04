@@ -1,7 +1,7 @@
 @extends('layouts.root')
 
 @section('main-content')
-	<div id="banner">
+	<div class="banner">
 		<svg aria-hidden="true" viewbox="0 0 24 24">
 			<use href="#cloud-off-icon"></use>
 		</svg>

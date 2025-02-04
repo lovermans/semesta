@@ -66,7 +66,7 @@ class MinifyHtmlResponse
         ?string $html, 
         bool $removeHtmlComments = true, 
         bool $removeBlankLinesInScriptElements = true, 
-        bool $removeWhitespaceBetweenTags = false,
+        bool $removeWhitespaceBetweenTags = true,
         bool $collapseWhitespaces = true,
         array $ignoreElements = [
             'pre',
