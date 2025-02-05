@@ -8,6 +8,10 @@
 			@include('morphs.css-font-face')
 		</style>
 
+		<style nonce="{{ Vite::cspNonce() }}">
+
+		</style>
+
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
 
 		@sectionMissing('page-need-javascript-message')
@@ -47,7 +51,14 @@
 		</main>
 
 		<footer>
-			Test Footer
+			<div class="build-with">
+				{{ Illuminate\Foundation\Application::VERSION }}
+			</div>
+			<div class="separator"></div>
+			<div class="copyright">
+				<a href="{!! $app->url->route('start') !!}">{{ $app->config->get('app.name') }}</a>
+				&copy;2025{{ date('Y') == 2025 ? '' : '-' . date('Y') }}
+			</div>
 		</footer>
 
 		@sectionMissing('page-need-javascript-message')

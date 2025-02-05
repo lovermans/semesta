@@ -106,10 +106,12 @@
 				</button>
 			</div>
 		</div>
-		<label class="separator" for="app-locale">
-			@lang('Language')
-		</label>
 		<form action="{{ $app->url->route('locale-setting') }}" id="language-selector" method="POST">
+			<label for="app-locale">
+				<svg aria-label="@lang('Language')" class="menu-icon" viewbox="0 0 24 24">
+					<use href="#translate-icon"></use>
+				</svg>
+			</label>
 			<select id="app-locale" name="locale">
 				<option @selected($app->getLocale() == 'id') value="id">Indonesia</option>
 				<option @selected($app->getLocale() == 'en') value="en">English</option>
