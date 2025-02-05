@@ -5,12 +5,8 @@
 		@include('elements.metadata')
 
 		<style nonce="{{ Vite::cspNonce() }}">
-
+			@include('morphs.css-font-face')
 		</style>
-
-		<link
-			href="{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/morphs/css-font-face.blade.php')) }}"
-			nonce="{{ Vite::cspNonce() }}" rel="stylesheet">
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
 
@@ -19,7 +15,11 @@
 				<meta HTTP-EQUIV="refresh" content="0;url='{{ $app->url->route('page-need-javascript') }}'">
 			</noscript>
 
-			{{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }}
+			<script nonce="{{ Vite::cspNonce() }}">
+				{!! Vite::content('resources/js/start.js') !!}
+			</script>
+
+			{{-- {{ Vite::withEntryPoints(['resources/js/start.js'])->useScriptTagAttributes(['type' => false])->usePreloadTagAttributes(false) }} --}}
 		@endif
 	</head>
 
