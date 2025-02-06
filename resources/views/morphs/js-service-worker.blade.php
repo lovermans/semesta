@@ -44,10 +44,9 @@ var RESOURCES = {
         "{{ Vite::asset('resources/images/app-icon/maskable_icon_x512.png') }}",
         "{{ $app->url->asset('/favicon.ico') }}",
         "{{ $app->url->asset('/favicon.svg') }}",
-        "{{ $app->url->route('css-font-face') . '?id=' . filemtime($app->resourcePath('views/css-font-face.blade.php')) }}",
         "{{ Vite::asset('resources/css/main.css') }}",
-        "{{ Vite::asset('resources/js/start.js') }}",
         "{{ Vite::asset('resources/js/main-interaction.js') }}",
+        "{{ Vite::asset('resources/js/main-function.js') }}",
         "{{ $app->url->route('js-register-service-worker') . '?id=' . filemtime($app->resourcePath('views/js-register-service-worker.blade.php')) }}",
         "{{ Vite::asset('resources/js/echo-esm.js') }}"
     ],

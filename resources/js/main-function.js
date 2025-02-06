@@ -1,6 +1,5 @@
-var text = null;
+var range = document.createRange();
 
-export function testExport() {
-    text = 'abs';
-    console.log(text);
-}
+export function renewAlert(message = '') {
+    document.getElementById('app-session').replaceChildren(range.createContextualFragment(message));
+};

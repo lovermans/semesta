@@ -4,11 +4,6 @@ namespace App\Http\Controllers;
 
 class RootController extends Controller
 {
-    public function createFontFaceCSS()
-    {
-        return response()->view('morphs.css-font-face')->withHeaders(['Content-Type' => 'text/css', 'Cache-Control' => 'max-age=2592000, public']);
-    }
-
     public function createPwaManifestJson()
     {
         return response()->view('morphs.json-pwa-manifest')->withHeaders(['Content-Type' => 'application/json']);
@@ -31,6 +26,8 @@ class RootController extends Controller
 
     public function setAppLocale()
     {
+        abort_unless(request()->isMethod('POST'), 404);
+        
         session(['locale' => request('locale', 'en')]);
         
         return back();

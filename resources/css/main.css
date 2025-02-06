@@ -580,6 +580,7 @@ header {
     top: 0;
     z-index: 1000;
     overflow: hidden;
+    background: var(--background-surface);
 
     :is(.overlay, .header-column, .title-header) {
         display: flex;
@@ -1022,41 +1023,44 @@ nav[popover] {
 Core Content Style
  */
 
-#main-content,
-footer {
-    padding: 1rem;
-}
-
-.banner {
-    display: flex;
-    align-items: center;
-    gap: .5rem 1rem;
+#top-alert {
     position: sticky;
-    top: 3.5rem;
-    flex-wrap: wrap;
-    background: var(--elevation-solid-overlay-1);
-    box-shadow: var(--elevation-box-shadow-1);
-    margin: -1rem;
-    padding: 1rem 1rem 0.5rem;
+    top: 3rem;
 
     .scrolled-down & {
         top: 0;
     }
 
-    p {
-        flex-basis: 24ch;
-        flex-grow: 1;
-    }
+    .banner {
+        display: flex;
+        align-items: center;
+        gap: .5rem 1rem;
+        flex-wrap: wrap;
+        background: var(--elevation-solid-overlay-1);
+        box-shadow: var(--elevation-box-shadow-1);
+        padding: 1rem 1rem 0.5rem;
 
-    &>:is(svg, img) {
-        width: 2.5rem;
-        height: 2.5rem;
-        flex-shrink: 0;
-    }
+        p {
+            flex-basis: 24ch;
+            flex-grow: 1;
+            margin: 0;
+        }
 
-    button {
-        margin-left: auto;
+        &>:is(svg, img) {
+            width: 2.5rem;
+            height: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        button {
+            margin-left: auto;
+        }
     }
+}
+
+#main-content,
+footer {
+    padding: 1rem;
 }
 
 footer {}
@@ -1116,14 +1120,18 @@ Screen Breakpoint
         width: var(--right-sidebar-max-width);
     }
 
+    #top-alert,
     #main-content,
     footer {
         margin-right: var(--right-sidebar-max-width);
     }
 
-    .banner {
+    #top-alert {
+        padding: 0 1rem;
         top: 0;
-        margin: 0;
+    }
+
+    .banner {
         border-radius: .25rem;
     }
 }
@@ -1196,7 +1204,7 @@ Animation Style
         }
     }
 
-    .banner {
+    #top-alert {
         transition: top 0.3s var(--accelerated-easing);
     }
 }

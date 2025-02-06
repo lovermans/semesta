@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'start')->name('start');
 Route::view('/offline-fallback', 'offline-fallback')->name('offline-fallback');
-Route::get('/font-face.css', [RootController::class, 'createFontFaceCSS'])->name('css-font-face');
-Route::post('/locale-setting', [RootController::class, 'setAppLocale'])->name('locale-setting');
+Route::match(['get', 'post'], '/locale-setting', [RootController::class, 'setAppLocale'])->name('locale-setting');
 Route::view('/page-need-javascript', 'page-need-javascript')->name('page-need-javascript');
 Route::get('/pwa-manifest.json', [RootController::class, 'createPwaManifestJson'])->name('json-pwa-manifest');
 Route::get('/register-service-worker.js', [RootController::class, 'registerServiceWorker'])->name('js-register-service-worker');

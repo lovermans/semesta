@@ -12,16 +12,22 @@
 
 		return soketi;
 	};
+
+	async function getMainFunction() {
+		let use = await import("{{ Vite::asset('resources/js/main-function.js') }}");
+
+		return use;
+	};
 </script>
 
 <script nonce="{{ Vite::cspNonce() }}" type="module">
-	import * as app from "{{ Vite::asset('resources/js/main-interaction.js') }}";
+	import * as appStart from "{{ Vite::asset('resources/js/main-interaction.js') }}";
 
-	app.getBrowserInfo('@lang('Unknown')', '@lang('version')', 'detectedBrowser');
-	app.findCurrentPage();
-	app.showHideTopAppBarOnScroll(document.body, 500);
-	app.handleGlobalClickEvent();
-	app.handleAppLocaleChange();
+	appStart.getBrowserInfo('@lang('Unknown')', '@lang('version')', 'detectedBrowser');
+	appStart.findCurrentPage();
+	appStart.showHideTopAppBarOnScroll(document.body, 500);
+	appStart.handleGlobalClickEvent();
+	appStart.handleAppLocaleChange();
 
 	window.addEventListener('popstate', (event) => {
 		console.log(`location: ${document.location}, state: ${JSON.stringify(event.state)}`, );

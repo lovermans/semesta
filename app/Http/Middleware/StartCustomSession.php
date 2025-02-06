@@ -37,11 +37,12 @@ class StartCustomSession extends StartDefaultSession
             ! $request->prefetch() &&
             ! $request->isPrecognitive()&&
             ! in_array($request->route()->getName(), [
-                'css-font-face',
                 'json-pwa-manifest',
                 'js-register-service-worker',
                 'js-service-worker',
-                'js-websocket'
+                'js-websocket',
+                'offline-fallback',
+                'page-need-javascript'
             ])) {
             $session->setPreviousUrl($request->fullUrl());
         }
