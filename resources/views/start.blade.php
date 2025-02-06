@@ -3,7 +3,7 @@
 @section('main-content')
 	<p class="browser-info">
 		<strong>
-			@lang('Best use on Google Chrome at least version 133 compatible browser')
+			@lang('Best used with a Browser at least compatible with Google Chrome version 133')
 		</strong>
 		&nbsp; - &nbsp;
 		<i>

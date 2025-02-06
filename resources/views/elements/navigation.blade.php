@@ -76,29 +76,27 @@
 
 	<div id="main-navigation-footer">
 		<div class="separator">
-			@lang('Theme')
+			@lang('Theme & Language Preference')
 		</div>
-		<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle">
-			@lang('Dark/Light')
-			<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
-				<mask class="moon" id="moon-mask">
-					<rect fill="white" height="100%" width="100%" x="0" y="0"></rect>
-					<circle cx="24" cy="10" fill="black" r="6"></circle>
-				</mask>
-				<use href="#theme-toggle-icon"></use>
-			</svg>
-		</button>
-		<label class="separator" for="app-color-theme">
-			@lang('Color')
-		</label>
 		<div id="app-color-slider">
-			<input id="app-color-theme" max="360" min="0" type="range" value="115">
+			<button aria-label="auto" aria-live="polite" class="header-button theme-toggle" id="theme-toggle"
+				title="@lang('Change Dark/Light Theme')">
+				<svg aria-hidden="true" class="sun-and-moon" viewBox="0 0 24 24">
+					<mask class="moon" id="moon-mask">
+						<rect fill="white" height="100%" width="100%" x="0" y="0"></rect>
+						<circle cx="24" cy="10" fill="black" r="6"></circle>
+					</mask>
+					<use href="#theme-toggle-icon"></use>
+				</svg>
+			</button>
+			<input id="app-color-theme" max="360" min="0" title="@lang('Slide To Change Color Theme')" type="range" value="115">
 			<div id="app-color-actions">
-				<button id="shuffle-app-color-theme" title="@lang('Shuffle')">
+				<label aria-label="@lang('Shuffle Color')" for="app-color-theme" id="shuffle-app-color-theme" tabindex="0"
+					title="@lang('Shuffle Color')">
 					<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
 						<use href="#shuffle-icon"></use>
 					</svg>
-				</button>
+				</label>
 				<button id="save-app-color-theme" title="@lang('Save')">
 					<svg aria-hidden="true" class="menu-icon" viewbox="0 0 24 24">
 						<use href="#save-icon"></use>

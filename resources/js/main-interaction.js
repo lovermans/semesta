@@ -21,6 +21,57 @@ function debounce(command, milisecondDelay) {
     };
 };
 
+export function findCurrentPage() {
+    document.querySelectorAll('a[href]').forEach((element) => {
+        (element.href == document.location.href) ? element.ariaCurrent = 'page' : element.ariaCurrent = 'false';
+    });
+};
+
+export function getBrowserInfo(unknown, version, elementId) {
+    const userAgent = navigator.userAgent;
+    let browserName = unknown;
+    let browserVersion = unknown;
+
+    if (/chrome|crios|crmo/i.test(userAgent) && !/edg/i.test(userAgent)) {
+        browserName = 'Google Chrome';
+        browserVersion = userAgent.match(/chrome\/([0-9]+)/i)?.[1] || unknown;
+    } else if (/firefox|fxios/i.test(userAgent)) {
+        browserName = 'Mozilla Firefox';
+        browserVersion = userAgent.match(/firefox\/([0-9]+)/i)?.[1] || unknown;
+    } else if (/safari/i.test(userAgent) && !/chrome|crios|crmo|edg/i.test(userAgent)) {
+        browserName = 'Safari';
+        browserVersion = userAgent.match(/version\/([0-9]+)/i)?.[1] || unknown;
+    } else if (/edg/i.test(userAgent)) {
+        browserName = 'Microsoft Edge';
+        browserVersion = userAgent.match(/edge\/([0-9]+)/i)?.[1] || unknown;
+    } else if (/opera|opr/i.test(userAgent)) {
+        browserName = 'Opera';
+        browserVersion = userAgent.match(/(?:opera|opr)\/([0-9]+)/i)?.[1] || unknown;
+    };
+
+    let detectedBrowser = `${browserName} version ${browserVersion}`;
+    let detectedBrowserAnchor = document.getElementById(elementId);
+
+    if (detectedBrowserAnchor) {
+        detectedBrowserAnchor.textContent = detectedBrowser;
+    };
+};
+
+export function handleAppLocaleChange() {
+    document.getElementById('app-locale').addEventListener('change', (event) => {
+        event.target.form.submit();
+    })
+};
+
+export function handleGlobalClickEvent() {
+    window.addEventListener('click', (event) => {
+        if (event.target.closest('nav li a:not([data-pjax=true])')) {
+            event.stopPropagation();
+            updateCurrentPage(event);
+        }
+    });
+};
+
 export function showHideTopAppBarOnScroll(element, milisecondDelay) {
     let lastWindowScrollPosition = 0;
 
@@ -58,24 +109,3 @@ function updateCurrentPage(event) {
     });
     event.target.ariaCurrent = 'page';
 };
-
-export function findCurrentPage() {
-    document.querySelectorAll('a[href]').forEach((element) => {
-        (element.href == document.location.href) ? element.ariaCurrent = 'page' : element.ariaCurrent = 'false';
-    });
-};
-
-export function handleGlobalClickEvent() {
-    window.addEventListener('click', (event) => {
-        if (event.target.closest('nav li a:not([data-pjax=true])')) {
-            event.stopPropagation();
-            updateCurrentPage(event);
-        }
-    });
-};
-
-export function handleAppLocaleChange() {
-    document.getElementById('app-locale').addEventListener('change', (event) => {
-        event.target.form.submit();
-    })
-}

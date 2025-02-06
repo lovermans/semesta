@@ -275,7 +275,8 @@ svg {
 input,
 button,
 textarea,
-select {
+select,
+label {
     outline: none;
 }
 
@@ -405,7 +406,7 @@ button {
     }
 
     &#theme-toggle {
-        display: flex;
+        /* display: flex;
         justify-content: space-between;
         align-items: center;
         height: 3rem;
@@ -425,16 +426,16 @@ button {
 
         &:focus-within>svg {
             background: var(--pressed-overlay);
-        }
+        } */
 
         &>svg {
             stroke-linecap: round;
-            flex-shrink: 0;
+            /* flex-shrink: 0;
             padding: 0.5rem;
             flex-basis: 2.5rem;
             width: 2.5rem;
             aspect-ratio: 1;
-            border-radius: 50%;
+            border-radius: 50%; */
         }
     }
 }
@@ -560,6 +561,11 @@ a.jump-to-main-content {
 /* 
 Internal SVG Icon
  */
+
+.inline-svg-icon,
+#icon-sprites {
+    height: 0;
+}
 
 #inline-svg-icon {
     display: none;
@@ -967,7 +973,12 @@ nav[popover] {
                 display: flex;
             }
 
-            button {
+            input {
+                max-width: calc(100% - 9rem);
+            }
+
+            button,
+            label {
                 flex-shrink: 0;
                 border-radius: 50%;
                 padding: 0.5rem;

@@ -9,7 +9,6 @@
 		</style>
 
 		<style nonce="{{ Vite::cspNonce() }}">
-
 		</style>
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
@@ -31,7 +30,7 @@
 		<a aria-label="Link To Jump To Main Content" class="jump-to-main-content" href="#main-content">@lang('Jump To Main Content')</a>
 
 		@sectionMissing('page-need-javascript-message')
-			<div aria-hidden="true">
+			<div aria-hidden="true" class="inline-svg-icon">
 				<object data="{{ Vite::asset('resources/images/svg/internal-icon-sprites.svg') }}" id="icon-sprites"
 					nonce="{{ Vite::cspNonce() }}"
 					onload="this.parentElement.id='inline-svg-icon';this.outerHTML=this.contentDocument.documentElement.outerHTML;"
