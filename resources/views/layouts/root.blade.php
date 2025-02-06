@@ -9,6 +9,13 @@
 		</style>
 
 		<style nonce="{{ Vite::cspNonce() }}">
+			footer {
+				display: flex;
+				justify-content: space-evenly;
+				gap: 0.5rem 1rem;
+				flex-wrap: wrap;
+				background: var(--elevation-solid-overlay-24);
+			}
 		</style>
 
 		{{ Vite::withEntryPoints(['resources/css/main.css']) }}
@@ -50,6 +57,16 @@
 		</main>
 
 		<footer>
+			<p class="browser-info">
+				<strong>
+					@lang('Best used with a Browser at least compatible with Google Chrome version 133')
+				</strong>
+				&nbsp; - &nbsp;
+				<i>
+					@lang('You are using')
+					<span id="detectedBrowser">@lang('inspecting...')</span>
+				</i>
+			</p>
 			<div class="build-with">
 				{{ Illuminate\Foundation\Application::VERSION }}
 			</div>

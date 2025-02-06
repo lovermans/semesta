@@ -1059,11 +1059,7 @@ footer {
     }
 }
 
-footer {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 0.5rem 1rem;
-}
+footer {}
 
 /* 
 Screen Breakpoint
