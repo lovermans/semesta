@@ -16,7 +16,8 @@ http:
     static:
         dir: 'public'
     pool:
-        num_workers: 1
+        num_workers: 2
+        max_jobs: 500
         supervisor:
             exec_ttl: 120s
 logs:
