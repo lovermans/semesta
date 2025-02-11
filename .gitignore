@@ -24,3 +24,7 @@ yarn-error.log
 /.zed
 rr
 .rr.yaml
+
+**/caddy
+frankenphp
+frankenphp-worker.php
