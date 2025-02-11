@@ -12,8 +12,8 @@
 				align-items: end;
 				gap: 1rem;
 				flex-wrap: wrap;
-				background: Canvas;
-				color: CanvasText;
+				background: revert;
+				color: revert;
 				font: var(--font-caption);
 				letter-spacing: var(--letter-spacing-caption);
 
