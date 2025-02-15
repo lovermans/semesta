@@ -21,7 +21,7 @@ class RootController extends Controller
 
     public function registerServiceWorker()
     {
-        return response()->view('morphs.js-register-service-worker')->withHeaders(['Content-Type' => 'application/javascript', 'Cache-Control' => 'max-age=2592000, public']);
+        return response()->view('morphs.js-register-service-worker')->withHeaders(['Content-Type' => 'application/javascript', 'Cache-Control' => 'max-age=31104000, public']);
     }
 
     public function setAppLocale()
