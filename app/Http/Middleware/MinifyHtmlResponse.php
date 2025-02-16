@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class MinifyHtmlResponse
 {
-    protected array $skippedElements = [];
+    public function __construct(protected array $skippedElements = []) {
+    }
 
     public function handle(Request $request, Closure $next)
     {
